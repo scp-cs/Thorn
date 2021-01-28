@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -31,7 +32,11 @@ namespace thorn.Services
 
         public static List<UserAccount> LoadUserAccounts(string filePath)
         {
-            if (!File.Exists(filePath)) return null;
+            if (!File.Exists(filePath))
+            {
+                File.Create(filePath);
+                throw new Exception("Save file does not exist");
+            }
 
             var json = File.ReadAllText(filePath);
             var accounts = JsonConvert.DeserializeObject<List<UserAccount>>(json);
