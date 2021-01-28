@@ -1,0 +1,52 @@
+{
+  "INFO": "**Verze:** 2.0\n**Repozitář:** https://github.com/scp-cs/Thorn",
+  
+  "WELCOME_CHANNEL_ID": "666672988883779585",
+  "NEWS_CHANNEL_ID": "537063810121334784",
+  "LOGGING_CHANNEL_ID": "661982623085625364",
+  
+  "CLASS_C_ROLE_ID": "537322727225163776",
+  "INT_ROLE_ID": "537023765163409439",
+  
+  "WELCOME_BAN_REASON": "Emergency ban",
+
+  "AGRLOVE_EMOTE": "<:agrlove:796489160726544465>",
+  "SAD_EMOTE": "<:sad:796489168384950292>",
+  "999_EMOTE": "<:999:796489160546320384>",
+  "POGEY_EMOTE": "<:pogey:796489167726444585>",
+  "PING_EMOTE": "<:ping:796489166144929792>",
+  "RAGEY_EMOTE": "<:ragey:796489167655010344>",
+  "YES_EMOTE": "<:yes:778188278574612491>",
+  "NO_EMOTE": "<:no:778188289797521419>",
+  "ABSTAIN_EMOTE": "<:abstain:778188303789850645>",
+  
+  "HELP_PAGES": "3",
+  "HELP_TITLE_1": "OBECNÉ",
+  "HELP_DESCRIPTION_1": "**`help`** - Hádej :)\n\n**`ping`** - Pong!",
+  "HELP_TITLE_2": "PROFIL",
+  "HELP_DESCRIPTION_2": "Profil je místo, kde jsou uložené vaše body, osobní stránky a podobné informace.\n\n**`.profile`** - Zobrazí váš profil\n\n**`.profile set [položka] [hodnota]`** - Nastaví položku na vašem profilu\n\n**`.profile remove [položka] [hodnota]`** - Smaže položku na vašem profilu\n\n**Dostupné položky:**\n- **`wikidot`** vaše uživatelské jméno na Wikidotu\n- **`description`** popis vašeho účtu\n- **`author-page`** odkaz na vaši autorskou stránku\n- **`translator-page`** odkaz na vaši překladatelskou stránku\n- **`private-page`** odkaz na vaši osobní stránku (pokud máte spisovatelskou a překladatelskou složku sloučenou)\n- **`sandbox`** odkaz na váš sandbox\n- **`profile-color`** barva vašeho porfilu\n\nVšechno můžete zkrátit na samotná písmenka pro ušetření času, takže `.profile translator-page http://scp-cs.wikidot.com/prekladatelska-slozka-chamik` je to samé, jako `.p tp http://scp-cs.wikidot.com/prekladatelska-slozka-chamik`",
+  "HELP_TITLE_3": "ADMIN",
+  "HELP_DESCRIPTION_3": "***Všechny tyto příkazy mohou být použity pouze zaměstnanci, takže to ani nezkoušej.***\n\n**`.stop`** - Pošle stopku\n\n**`.reloadp`** - Manuální aktualizace profilů\n\n**`.reloads`** - Manuální aktualizace stringů\n\n**`.send [zpráva]`** - Pošle zprávu do aktuálního kanálu\n\n**`.send [kanál] [zpráva]`** - Pošle zprávu do daného kanálu\n\n**`.vote [hlasování]`** - Zahájí hlasování v aktuálním kanálu\n\n**`.vote [kanál] [hlasování]`** - Zahájí hlasování v daném kanálu\n\n**`.points [translation/writing/correction]`** - Nahrání souboru s překladatelskými/spisovatelskými body",
+  
+  "HELP_TITLE_TRANSLATION": "",
+  "HELP_DESCRIPTION_TRANSLATION": "",
+  "HELP_TITLE_WRITING": "",
+  "HELP_DESCRIPTION_WRITING": "",
+  "HELP_TITLE_CORRECTION": "",
+  "HELP_DESCRIPTION_CORRECTION": "",
+  "HELP_TITLE_JOIN": "",
+  "HELP_DESCRIPTION_JOIN": "",
+  
+  "LEADERBOARD_TITLE": "LEADERBOARD",
+  "LEADERBOARD_TRANSLATION_TITLE": "LEADERBOARD PŘEKLADATELŮ",
+  "LEADERBOARD_WRITING_TITLE": "LEADERBOARD SPISOVATELŮ",
+  "LEADERBOARD_CORRECTION_TITLE": "LEADERBOARD KOREKTORŮ",
+  
+  "BODIES_IN_WATER_TRIGGER": "Nepoznávám ta těla ve vodě",
+  "BODIES_IN_WATER_ERROR": "[✘] Zamítnuto. CRV uživatele není v přijatelných hodnotách. CRV uživatele je ovlivněno aktivními kognitohazardy. Prosím, zůstaňte na místě, člen lékařského tým[''///afe44/25\\\\23 s vámi bude za chvíli.",
+  "BODIES_IN_WATER_SUCCESS": "[✅] Přijato. CRV uživatele je v přijatelných hodnotách.",
+  "BODIES_IN_WATER_OHGODOHFUCK_TRIGGER": "Poznávám ta těla ve vodě",
+  "BODIES_IN_WATER_OHGODOHFUCK": "<:monkaw:796489170440159252>",
+  
+  "THANKS_THORN_TRIGGER": "Díky Thorne"
+}
