@@ -40,7 +40,7 @@ namespace thorn.Modules
         public async Task StopCommand()
         {
             await Context.Channel.SendFileAsync("Media/stop.png");
-            _logger.LogInformation($"{Context.User} used STOP in #{Context.Channel}");
+            _logger.LogInformation("{ContextUser} used STOP in #{ContextChannel}", Context.User, Context.Channel);
         }
 
         [Command("status")]
@@ -48,7 +48,7 @@ namespace thorn.Modules
         public async Task StatusCommand([Remainder] string status)
         {
             await _client.SetGameAsync(status);
-            _logger.LogInformation($"{Context.User} changed status to: {status}");
+            _logger.LogInformation("{ContextUser} changed status to: {Status}", Context.User, status);
         }
         
         [Command("say")]
@@ -58,7 +58,7 @@ namespace thorn.Modules
         {
             await Context.Message.DeleteAsync();
             await ReplyAsync(text);
-            _logger.LogInformation($"{Context.User} said \"{text}\" in #{Context.Channel}");
+            _logger.LogInformation("{ContextUser} said \"{Text}\" in #{ContextChannel}", Context.User, text, Context.Channel);
         }
 
         [Command("say")]
@@ -67,7 +67,8 @@ namespace thorn.Modules
         public async Task SayElsewhereCommand(SocketTextChannel channel, [Remainder] string text)
         {
             await channel.SendMessageAsync(text);
-            _logger.LogInformation($"{Context.User} said \"{text}\" in #{channel}");
+            // ReSharper disable once ComplexObjectDestructuringProblem - It freezes the gateway task, and that's not good lol
+            _logger.LogInformation("{ContextUser} said \"{Text}\" in #{Channel}", Context.User, text, channel);
         }
 
 
@@ -80,7 +81,7 @@ namespace thorn.Modules
         {
             var msg = await ReplyAsync(text);
             await AddVoteEmotes(msg);
-            _logger.LogInformation($"{Context.User} made a vote in #{Context.Channel}: {text}");
+            _logger.LogInformation("{ContextUser} made a vote in #{ContextChannel}: {Text}", Context.User, Context.Channel, text);
         }
 
         [Command("vote")]
@@ -90,7 +91,8 @@ namespace thorn.Modules
         {
             var msg = await channel.SendMessageAsync(text);
             await AddVoteEmotes(msg);
-            _logger.LogInformation($"{Context.User} made a vote in #{channel}: {text}");
+            // ReSharper disable once ComplexObjectDestructuringProblem - It freezes the gateway task, and that's not good lol
+            _logger.LogInformation("{ContextUser} made a vote in #{Channel}: {Text}", Context.User, channel, text);
         }
         
         
@@ -103,7 +105,7 @@ namespace thorn.Modules
         public async Task MasterPingCommand()
         {
             await ReplyAsync("Pong!");
-            _logger.LogInformation($"{Context.User} pinged!");
+            _logger.LogInformation("{ContextUser} pinged!", Context.User);
         }
 
         [Command("loads")]
@@ -112,7 +114,7 @@ namespace thorn.Modules
         public async Task ReloadStringsCommand()
         {
             await _pairs.ReloadStrings();
-            _logger.LogInformation($"{Context.User} reloaded strings");
+            _logger.LogInformation("{ContextUser} reloaded strings", Context.User);
             await ReplyAsync("Reloaded!");
         }
 
@@ -122,7 +124,7 @@ namespace thorn.Modules
         public async Task ReloadProfilesCommand()
         {
             await _accounts.LoadAccountsAsync();
-            _logger.LogInformation($"{Context.User} reloaded profiles");
+            _logger.LogInformation("{ContextUser} reloaded profiles", Context.User);
             await ReplyAsync("Reloaded!");
         }
 

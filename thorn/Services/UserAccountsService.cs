@@ -47,7 +47,7 @@ namespace thorn.Services
             var newAccount = new UserAccount(id);
 
             _accounts.Add(newAccount);
-            _logger.LogInformation($"Created account for user {id}");
+            _logger.LogInformation("Created account for user {Id}", id);
 
             await SaveAccountsAsync();
             return newAccount;

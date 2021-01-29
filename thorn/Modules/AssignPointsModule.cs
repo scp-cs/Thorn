@@ -109,7 +109,7 @@ namespace thorn.Modules
                 message = "Nejspíš si mi nahrál špatný soubor. Podívej se a zkus to znovu!";
 
             await ReplyAsync(message);
-            _logger.LogInformation(message);
+            _logger.LogInformation("Updated points: {Message}", message);
             await _accounts.UpdateRanks(type);
         }
 

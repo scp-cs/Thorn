@@ -59,8 +59,8 @@ namespace thorn.Services
                 await AssignRole(cacheable, reaction, user, UserActions.Underage);
             else if (Equals(emote, Emote.Parse(_pairs.GetString("RAGEY_EMOTE"))))
             {
-                await user.BanAsync(0);
-                _logger.LogWarning($"Emergency ban enacted by {reaction.User} on {user} ({user.Id})");
+                await user.BanAsync();
+                _logger.LogWarning("Emergency ban enacted by {ReactionUser} on {User} ({UserId})", reaction.User, user, user.Id);
             }
         }
 
@@ -90,7 +90,7 @@ namespace thorn.Services
 
             await reaction.Message.Value.DeleteAsync();
             await ((ISocketMessageChannel) _client.GetChannel(_loggingChannelId)).SendMessageAsync(message);
-            _logger.LogInformation($"{reaction.User} made action in #welcome: {message}");
+            _logger.LogInformation("{ReactionUser} made action in #welcome: {Message}", reaction.User, message);
         }
     }
 

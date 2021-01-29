@@ -63,7 +63,7 @@ namespace thorn.Modules
 
             await _userAccounts.SaveAccountsAsync();
             await Context.Message.AddReactionAsync(Emote.Parse(_pairs.GetString("YES_EMOTE")));
-            _logger.LogInformation($"{Context.User} changed their profile setting {accountItem} to: {value}");
+            _logger.LogInformation("{ContextUser} changed their profile setting {AccountItem} to: {Value}", Context.User, accountItem, value);
         }
 
         [Command("remove")]
@@ -76,7 +76,7 @@ namespace thorn.Modules
 
             await _userAccounts.SaveAccountsAsync();
             await Context.Message.AddReactionAsync(Emote.Parse(_pairs.GetString("YES_EMOTE")));
-            _logger.LogInformation($"{Context.User} removed their profile {accountItem}");
+            _logger.LogInformation("{ContextUser} removed their profile {AccountItem}", Context.User, accountItem);
         }
 
         private static bool IsSafe(UserAccount userAccount, AccountItem accountItem, string value)
