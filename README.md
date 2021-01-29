@@ -6,7 +6,7 @@ Thorn is a Discord Bot made specifically for the Czech branch Discord chat.
 ## Features
 * Custom user accounts
 	* Points for translating, writing, and correcting
-	* Links to Wikidot profile, author/writer page, and sandbox
+	* Links to Wikidot profile, author/translator page, and sandbox
 	* Custom description and color
 	* Leaderboards
 * Quick links to important guides/hubs
