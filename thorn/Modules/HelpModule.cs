@@ -33,53 +33,30 @@ namespace thorn.Modules
             await ReplyAsync(embed: embed);
         }
 
-        // TODO: make all of these a single command
-        
-        [Command("translation")]
-        [Alias("překlad", "překlady", "translations", "t")]
-        public async Task TranslationHelpCommand()
+        [Command]
+        public async Task HelpCommand(string page)
         {
+            string help;
+
+            switch (page)
+            {
+                case "translation": case "překlad": case "překlady": case "translations": case "t":
+                    help = "TRANSLATION"; break;
+                case "writing": case "psaní": case "w":
+                    help = "WRITING"; break;
+                case "correction": case "korekce": case "c":
+                    help = "CORRECTION"; break;
+                case "join": case "připoj-se": case "připojit": case "členství": case "j":
+                    help = "JOIN"; break;
+                default:
+                    return;
+            }
+            
             await ReplyAsync(embed: new EmbedBuilder
             {
-                Title = _pairs.GetString("HELP_TITLE_TRANSLATION"),
-                Description = _pairs.GetString("HELP_DESCRIPTION_TRANSLATION"),
+                Title = _pairs.GetString($"HELP_TITLE_{help}"),
+                Description = _pairs.GetString($"HELP_DESCRIPTION_{help}"),
                 Color = Color.Blue
-            }.Build());
-        }
-
-        [Command("writing")]
-        [Alias("psaní", "w")]
-        public async Task WritingHelpCommand()
-        {
-            await ReplyAsync(embed: new EmbedBuilder
-            {
-                Title = _pairs.GetString("HELP_TITLE_WRITING"),
-                Description = _pairs.GetString("HELP_DESCRIPTION_WRITING"),
-                Color = Color.Red
-            }.Build());
-        }
-
-        [Command("correction")]
-        [Alias("korekce", "c")]
-        public async Task CorrectionHelpCommand()
-        {
-            await ReplyAsync(embed: new EmbedBuilder
-            {
-                Title = _pairs.GetString("HELP_TITLE_CORRECTION"),
-                Description = _pairs.GetString("HELP_DESCRIPTION_CORRECTION"),
-                Color = Color.Green
-            }.Build());
-        }
-
-        [Command("join")]
-        [Alias("připoj-se", "připojit", "členství", "j")]
-        public async Task JoinHelpCommand()
-        {
-            await ReplyAsync(embed: new EmbedBuilder
-            {
-                Title = _pairs.GetString("HELP_TITLE_JOIN"),
-                Description = _pairs.GetString("HELP_DESCRIPTION_JOIN"),
-                Color = Color.Orange
             }.Build());
         }
     }
