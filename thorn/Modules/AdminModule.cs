@@ -45,10 +45,19 @@ namespace thorn.Modules
 
         [Command("status")]
         [RequireUserPermission(GuildPermission.Administrator)]
-        public async Task StatusCommand([Remainder] string status)
+        public async Task StatusCommand(string mode, [Remainder] string status)
         {
-            await _client.SetGameAsync(status);
-            _logger.LogInformation("{ContextUser} changed status to: {Status}", Context.User, status);
+            IActivity game = mode switch
+            {
+                "streaming" => new Game(status, ActivityType.Streaming),
+                "watching" => new Game(status, ActivityType.Watching),
+                "listening" => new Game(status, ActivityType.Listening),
+                _ => new Game(status),
+            };
+
+            await _client.SetActivityAsync(game);
+            
+            _logger.LogInformation("{ContextUser} changed {Game} status to: {Status}", Context.User, game.Type, status);
         }
         
         [Command("say")]
