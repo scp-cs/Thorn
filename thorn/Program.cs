@@ -19,6 +19,7 @@ namespace thorn
                 .MinimumLevel.Information()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
                 .WriteTo.Console()
+                .WriteTo.File("log/log.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
             var hostBuilder = Host.CreateDefaultBuilder()
