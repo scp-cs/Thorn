@@ -50,6 +50,7 @@ namespace thorn
                 {
                     collection.AddHostedService<CommandHandler>();
                     collection.AddHostedService<ReactionHandler>();
+                    collection.AddHostedService<RssHandler>();
 
                     collection.AddSingleton<PairsService>();
                     collection.AddSingleton<DataStorageService>();
