@@ -15,7 +15,7 @@ namespace thorn.UserAccounts
                 {
                     case "wikidot": case "wikidot-username": case "w":
                         return Task.FromResult(TypeReaderResult.FromSuccess(AccountItem.WikidotUsername));
-                    case "d":
+                    case "d": case "description":
                         return Task.FromResult(TypeReaderResult.FromSuccess(AccountItem.Description));
                     case "author": case "author-page": case "ap":
                         return Task.FromResult(TypeReaderResult.FromSuccess(AccountItem.AuthorPage));
@@ -23,7 +23,7 @@ namespace thorn.UserAccounts
                         return Task.FromResult(TypeReaderResult.FromSuccess(AccountItem.TranslatorPage));
                     case "private": case "private-page": case "pp":
                         return Task.FromResult(TypeReaderResult.FromSuccess(AccountItem.PrivatePage));
-                    case "s":
+                    case "s": case "sandbox":
                         return Task.FromResult(TypeReaderResult.FromSuccess(AccountItem.Sandbox));
                     case "color": case "profile-color": case "c":
                         return Task.FromResult(TypeReaderResult.FromSuccess(AccountItem.ProfileColor));
