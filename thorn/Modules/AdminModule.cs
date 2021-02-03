@@ -84,8 +84,10 @@ namespace thorn.Modules
         [RequireUserPermission(GuildPermission.Administrator)]
         public async Task EditCommand(IUserMessage message, [Remainder] string text)
         {
-            _logger.LogInformation("{User} edited message '{Message}' to '{Text}'", Context.User, message.Content, text);
+            // BUG: If the message is not in cache, it will not get edited
+            // Not sure how to resolve this, I have not found a way to download a single message by ID
             await message.ModifyAsync(x => x.Content = text);
+            _logger.LogInformation("{User} edited message '{Message}' to '{Text}'", Context.User, message.Content, text);
         }
 
 
