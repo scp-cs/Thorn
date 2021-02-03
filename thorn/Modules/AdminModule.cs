@@ -80,6 +80,14 @@ namespace thorn.Modules
             _logger.LogInformation("{ContextUser} said \"{Text}\" in #{Channel}", Context.User, text, channel);
         }
 
+        [Command("edit")]
+        [RequireUserPermission(GuildPermission.Administrator)]
+        public async Task EditCommand(IUserMessage message, [Remainder] string text)
+        {
+            _logger.LogInformation("{User} edited message '{Message}' to '{Text}'", Context.User, message.Content, text);
+            await message.ModifyAsync(x => x.Content = text);
+        }
+
 
         [Command("vote")]
         [Priority(0)]
