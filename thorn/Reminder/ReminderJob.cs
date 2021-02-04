@@ -25,7 +25,7 @@ namespace thorn.Reminder
             _pairs = pairs;
 
             _channel = client.GetChannel(ulong.Parse(pairs.GetString("GENERAL_CHANNEL_ID"))) as SocketTextChannel;
-            _daily = DataStorageService.GetDictionary<string>("Config/daily.json");
+            _daily = data.GetDictionary<string>("Config/daily.json");
         }
         
         public async Task Execute(IJobExecutionContext context)

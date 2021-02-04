@@ -60,13 +60,11 @@ namespace thorn
                     collection.AddSingleton<DataStorageService>();
                     collection.AddSingleton<UserAccountsService>();
                     
-                    // Quartz
                     collection.AddSingleton<IJobFactory, SingletonJobFactory>();
                     collection.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+                    
                     collection.AddSingleton<ReminderJob>();
-                    collection.AddSingleton(new JobSchedule(
-                        typeof(ReminderJob),
-                        "0 0 0 * * ?")); // Every day at midnight
+                    collection.AddSingleton(new JobSchedule(typeof(ReminderJob), "0 0 0 * * ?")); // Every day at midnight
                 });
 
             await hostBuilder.RunConsoleAsync();
