@@ -28,6 +28,9 @@ namespace thorn.Services
             return Task.CompletedTask;
         }
 
+        public static Dictionary<string, T> GetDictionary<T>(string path) =>
+            JsonConvert.DeserializeObject<Dictionary<string, T>>(File.ReadAllText(path));
+
         public static List<UserAccount> LoadUserAccounts(string filePath)
         {
             if (!File.Exists(filePath))
