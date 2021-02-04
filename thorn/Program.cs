@@ -5,8 +5,12 @@ using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Quartz;
+using Quartz.Impl;
+using Quartz.Spi;
 using Serilog;
 using Serilog.Events;
+using thorn.Reminder;
 using thorn.Services;
 
 namespace thorn
@@ -50,10 +54,19 @@ namespace thorn
                 {
                     collection.AddHostedService<CommandHandler>();
                     collection.AddHostedService<ReactionHandler>();
+                    collection.AddHostedService<QuartzHostedService>();
 
                     collection.AddSingleton<PairsService>();
                     collection.AddSingleton<DataStorageService>();
                     collection.AddSingleton<UserAccountsService>();
+                    
+                    // Quartz
+                    collection.AddSingleton<IJobFactory, SingletonJobFactory>();
+                    collection.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+                    collection.AddSingleton<ReminderJob>();
+                    collection.AddSingleton(new JobSchedule(
+                        typeof(ReminderJob),
+                        "0 0 0 * * ?")); // Every day at midnight
                 });
 
             await hostBuilder.RunConsoleAsync();
