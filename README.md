@@ -10,6 +10,7 @@ Thorn is a Discord Bot made specifically for the Czech branch Discord chat.
 	* Custom description and color
 	* Leaderboards
 * Quick links to important guides/hubs
+* Daily reminder with important events in the past and name-days
 
 ## Install
 This bot is private, and there are no plans on making it public. However you are free to run Thorn locally yourself.
