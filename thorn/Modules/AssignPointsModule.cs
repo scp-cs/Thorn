@@ -59,7 +59,7 @@ namespace thorn.Modules
                     File.Move("points", "writing-points", true);
                     break;
                 case PointType.Correction:
-                    pattern = "([0-9]{18});[0-9]*;([0-9]*(,[0-9]*|))";
+                    pattern = "([0-9]{18});([0-9]*(,[0-9]*|))";
                     typeString = "Korektorské";
                     File.Move("points", "correction-points", true);
                     break;
@@ -109,6 +109,9 @@ namespace thorn.Modules
                 message = "Nejspíš si mi nahrál špatný soubor. Podívej se a zkus to znovu!";
 
             await ReplyAsync(message);
+            var o5 = Context.Guild.GetTextChannel(ulong.Parse(_pairs.GetString("LOGGING_CHANNEL_ID")));
+            await o5.SendMessageAsync(message);
+            
             _logger.LogInformation("Updated points: {Message}", message);
             await _accounts.UpdateRanks(type);
         }
