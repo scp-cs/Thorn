@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Discord.Commands;
+using Discord.WebSocket;
 using Microsoft.Extensions.Logging;
 using thorn.Services;
 using thorn.UserAccounts;
@@ -21,12 +22,14 @@ namespace thorn.Modules
         private readonly UserAccountsService _accounts;
         private readonly PairsService _pairs;
         private readonly ILogger<AssignPointsModule> _logger;
+        private readonly DiscordSocketClient _client;
 
-        public AssignPointsModule(UserAccountsService accounts, PairsService pairs, ILogger<AssignPointsModule> logger)
+        public AssignPointsModule(UserAccountsService accounts, PairsService pairs, ILogger<AssignPointsModule> logger, DiscordSocketClient client)
         {
             _accounts = accounts;
             _pairs = pairs;
             _logger = logger;
+            _client = client;
 
             _webClient = new WebClient();
             
@@ -107,13 +110,15 @@ namespace thorn.Modules
             
             if (numOfChanges == 0)
                 message = "Nejspíš si mi nahrál špatný soubor. Podívej se a zkus to znovu!";
-
-            await ReplyAsync(message);
-            var o5 = Context.Guild.GetTextChannel(ulong.Parse(_pairs.GetString("LOGGING_CHANNEL_ID")));
-            await o5.SendMessageAsync(message);
             
             _logger.LogInformation("Updated points: {Message}", message);
             await _accounts.UpdateRanks(type);
+
+            await ReplyAsync(message);
+
+            if (!(_client.GetChannel(ulong.Parse(_pairs.GetString("LOGGING_CHANNEL_ID"))) is SocketTextChannel o5) 
+                || numOfChanges == 0) return;
+            await o5.SendMessageAsync(message);
         }
 
         private static float SanitizePointValue(string point)
