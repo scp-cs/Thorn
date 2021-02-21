@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 using Quartz.Spi;
 
-namespace thorn.Reminder
+namespace thorn.Jobs
 {
     public class SingletonJobFactory : IJobFactory
     {

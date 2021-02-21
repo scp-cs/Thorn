@@ -1,15 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Quartz;
 using thorn.Services;
 
-namespace thorn.Reminder
+namespace thorn.Jobs
 {
     public class ReminderJob : IJob
     {
@@ -19,7 +17,7 @@ namespace thorn.Reminder
 
         private readonly Dictionary<string, string> _daily;
         
-        public ReminderJob(ILogger<ReminderJob> logger, DiscordSocketClient client, PairsService pairs, DataStorageService data)
+        public ReminderJob(ILogger<ReminderJob> logger, DiscordSocketClient client, PairsService pairs)
         {
             _logger = logger;
             _pairs = pairs;
@@ -32,7 +30,7 @@ namespace thorn.Reminder
         {
             var day = DateTime.Now;
             var description = _daily[day.ToString("dd MM")] +
-                              $"\n\nPřeji krásný den {_pairs.GetString("AGRLOVE_EMOTE")}";
+                              $"\n\nPřeji hezký den {_pairs.GetString("AGRLOVE_EMOTE")}";
 
             var embed = new EmbedBuilder
             {

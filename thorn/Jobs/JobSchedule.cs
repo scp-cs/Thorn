@@ -1,6 +1,6 @@
 using System;
 
-namespace thorn.Reminder
+namespace thorn.Jobs
 {
     public class JobSchedule
     {

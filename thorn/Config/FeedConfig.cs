@@ -1,10 +1,9 @@
 namespace thorn.Config
 {
-    // TODO: Custom embed color for each feed
-    public struct FeedConfig
+    public class FeedConfig
     {
         public string Link { get; set; }
-        public ulong ChannelId { get; set; }
+        public ulong[] ChannelIds { get; set; }
         public string CustomDescription { get; set; }
         public uint EmbedColor { get; set; }
         public bool RequireAuth { get; set; }
