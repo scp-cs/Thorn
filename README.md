@@ -44,6 +44,7 @@ If you want to receive RSS feeds, create a `feeds.json` file in `thorn/Config/` 
 ]
 ```
 You can have as many feeds set up as you want. Or you don't have to have any at all. (In that case put just `[]` in the file)
+
 3. Run `dotnet build --configuration Release` in the root directory
 4. You're all set! Output is in `thorn/bin/Release/netcoreapp3.1/`
 
