@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CodeHollow.FeedReader;
@@ -8,6 +10,7 @@ using Discord;
 using Discord.WebSocket;
 using Html2Markdown;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Quartz;
 using thorn.Config;
 
@@ -26,25 +29,7 @@ namespace thorn.Jobs
             _channels = new Dictionary<ulong, SocketTextChannel>();
             _lastUpdates = new Dictionary<string, DateTime?>();
 
-            // TODO: Place this in a config file of some sort
-            // This will be later required anyway because of the password protected feeds
-            _configs = new List<FeedConfig>()
-            {
-                // Newest articles
-                new FeedConfig
-                {
-                    Link = "http://scp-cs.wikidot.com/feed/pages/pagename/most-recently-created/category/_default/tags/-admin/rating/%3E%3D-15/order/created_at+desc/limit/30/t/Most+Recently+Created",
-                    ChannelIds = new ulong[] {640917453169229856},
-                    EmbedColor = 16711680
-                },
-                // Latest changes
-                new FeedConfig
-                {
-                    Link = "http://scp-cs.wikidot.com/feed/site-changes.xml",
-                    ChannelIds = new ulong[] {640917453169229856},
-                    EmbedColor = 16711680
-                }
-            };
+            _configs = JsonConvert.DeserializeObject<List<FeedConfig>>(File.ReadAllText("Config/feeds.json"));
 
             foreach (var config in _configs)
             foreach (var channelId in config.ChannelIds)
@@ -59,8 +44,6 @@ namespace thorn.Jobs
 
         public async Task Execute(IJobExecutionContext context)
         {
-            _logger.LogInformation("fired"); // TODO: Remove me in production
-            
             foreach (var config in _configs)
             {
                 var newItems = await GetNewItems(config);
@@ -71,8 +54,8 @@ namespace thorn.Jobs
                 {
                     var channel = _channels[channelId];
                     if (channel is null) continue;
-                    await channel.SendMessageAsync(embed: GetEmbed(feedItem, config));
                     
+                    await channel.SendMessageAsync(embed: GetEmbed(feedItem, config));
                     _logger.LogInformation("Sent RSS feed '{Title}' to #{Channel}", feedItem.Title, channel);
                 }
             }
@@ -80,8 +63,18 @@ namespace thorn.Jobs
         
         private async Task<List<FeedItem>> GetNewItems(FeedConfig feedConfig)
         {
-            // TODO: Implement password-protected feeds
-            var feed = await FeedReader.ReadAsync(feedConfig.Link);
+            Feed feed;
+            
+            if (!feedConfig.RequireAuth)
+                feed = await FeedReader.ReadAsync(feedConfig.Link);
+            else
+            {
+                // Basic HTTP auth
+                var client = new WebClient {Credentials = new NetworkCredential(feedConfig.Username, feedConfig.Password)};
+                var response = client.DownloadString(feedConfig.Link);
+                feed = FeedReader.ReadFromString(response);
+            }
+            
             var lastUpdate = _lastUpdates[feedConfig.Link];
 
             if (lastUpdate is null)
@@ -100,20 +93,19 @@ namespace thorn.Jobs
         private Embed GetEmbed(FeedItem feedItem, FeedConfig feedConfig)
         {
             // TODO: Get UserAccount and link to appropriate pages, these bugs relate to that: 
-            // Exits when null exception (no user with that username) :
-            // Just catch it and pass a placeholder "user unknown" or something
+            // - Exits when null exception (no user with that username):
+            //      - Just catch it and pass a placeholder "user unknown" or something
+            // - People with space in their name. Haven't tested this yet but I am pretty sure it won't work
             
-            // People with space in their name. Haven't tested this yet but I am pretty sure it won't work
-
-            // BUG: the <span> tag encapsulating the username remains, get rid of it
             // BUG: There are some weird spacing issues with some items, look into it
-            // TODO: Maybe somehow limit length of the message?
-            var description = new Converter().Convert(feedItem.Description);
+            // Length limiting is done by wikidot itself
+            var description = new Converter().Convert(feedItem.Description)
+                .Replace("<span class=\"printuser\">", "").Replace("</span>", "");
 
             return new EmbedBuilder
             {
                 Title = feedItem.Title,
-                Description = description,
+                Description = string.IsNullOrEmpty(feedConfig.CustomDescription) ? description : feedConfig.CustomDescription,
                 Color = feedConfig.EmbedColor == 0 ? Color.Blue : new Color(feedConfig.EmbedColor),
                 Footer = new EmbedFooterBuilder().WithText(feedItem.PublishingDateString)
             }.Build();

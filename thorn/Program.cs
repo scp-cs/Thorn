@@ -71,7 +71,7 @@ namespace thorn
                     collection.AddSingleton<RssJob>();
                     collection.AddSingleton(new JobSchedule(
                         typeof(RssJob),
-                        "0 0/2 * * * ?"));
+                        "0 0/2 * * * ?")); // Every two minutes
                 });
 
             await hostBuilder.RunConsoleAsync();
