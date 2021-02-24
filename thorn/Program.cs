@@ -10,7 +10,7 @@ using Quartz.Impl;
 using Quartz.Spi;
 using Serilog;
 using Serilog.Events;
-using thorn.Reminder;
+using thorn.Jobs;
 using thorn.Services;
 
 namespace thorn
@@ -30,6 +30,7 @@ namespace thorn
                 .ConfigureAppConfiguration(x =>
                 {
                     x.AddJsonFile("Config/config.json");
+                    x.Build();
                 })
                 .UseSerilog()
                 .ConfigureDiscordHost<DiscordSocketClient>((context, config) =>
@@ -64,7 +65,14 @@ namespace thorn
                     collection.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
                     
                     collection.AddSingleton<ReminderJob>();
-                    collection.AddSingleton(new JobSchedule(typeof(ReminderJob), "0 0 0 * * ?")); // Every day at midnight
+
+                    collection.AddSingleton(new JobSchedule(
+                        typeof(ReminderJob),
+                        "0 0 0 * * ?")); // Every day at midnight
+                    collection.AddSingleton<RssJob>();
+                    collection.AddSingleton(new JobSchedule(
+                        typeof(RssJob),
+                        "0 0/2 * * * ?")); // Every two minutes
                 });
 
             await hostBuilder.RunConsoleAsync();

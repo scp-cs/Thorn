@@ -10,6 +10,7 @@
       <PackageReference Include="Discord.Addons.Hosting" Version="3.1.1" />
       <PackageReference Include="Discord.Addons.Preconditions" Version="2.2.0-dev3" />
       <PackageReference Include="Discord.Net" Version="2.3.0" />
+      <PackageReference Include="Html2Markdown" Version="4.0.0.427" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
       <PackageReference Include="Quartz" Version="3.2.4" />
       <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.2.4" />
@@ -31,6 +32,9 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="Config\daily.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Config\feeds.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

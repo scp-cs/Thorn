@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Quartz;
 using Quartz.Spi;
 
-namespace thorn.Reminder
+namespace thorn.Jobs
 {
     public class QuartzHostedService : IHostedService
     {

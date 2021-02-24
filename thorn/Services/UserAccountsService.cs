@@ -34,6 +34,12 @@ namespace thorn.Services
         public async Task<UserAccount> GetAccountAsync(SocketUser user) => await GetAccountAsync(user.Id);
 
         public async Task<UserAccount> GetAccountAsync(ulong id) => await GetOrCreateAccount(id);
+        
+        public UserAccount GetAccountByWikidot(string wikidotUsername)
+        {
+            var result = from a in _accounts where a[AccountItem.WikidotUsername] == wikidotUsername select a;
+            return result.FirstOrDefault();
+        }
 
         private async Task<UserAccount> GetOrCreateAccount(ulong id)
         {
