@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -12,7 +13,6 @@ using Html2Markdown;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Quartz;
-using Quartz.Impl;
 using thorn.Config;
 
 namespace thorn.Jobs
@@ -22,15 +22,15 @@ namespace thorn.Jobs
         private readonly ILogger<ReminderJob> _logger;
         private readonly List<FeedConfig> _configs;
         private readonly Dictionary<ulong, SocketTextChannel> _channels;
+        private readonly WebClient _webClient;
         private Dictionary<string, DateTime?> _lastUpdates;
-
-        private const int MaxDescriptionLength = 300;
 
         public RssJob(ILogger<ReminderJob> logger, DiscordSocketClient client)
         {
             _logger = logger;
             _channels = new Dictionary<ulong, SocketTextChannel>();
             _lastUpdates = new Dictionary<string, DateTime?>();
+            _webClient = new WebClient();
 
             _configs = JsonConvert.DeserializeObject<List<FeedConfig>>(File.ReadAllText("Config/feeds.json"));
 
@@ -73,8 +73,8 @@ namespace thorn.Jobs
             else
             {
                 // Basic HTTP auth
-                var client = new WebClient {Credentials = new NetworkCredential(feedConfig.Username, feedConfig.Password)};
-                var response = client.DownloadString(feedConfig.Link);
+                _webClient.Credentials = new NetworkCredential(feedConfig.Username, feedConfig.Password);
+                var response = _webClient.DownloadString(feedConfig.Link);
                 feed = FeedReader.ReadFromString(response);
             }
             
@@ -103,16 +103,29 @@ namespace thorn.Jobs
             //      - Just catch it and pass a placeholder "user unknown" or something
             // - People with space in their name. Haven't tested this yet but I am pretty sure it won't work
             
-            // BUG: There are some weird spacing issues with some items, look into it
             var description = new Converter().Convert(feedItem.Description)
                 .Replace("<span class=\"printuser\">", "").Replace("</span>", "");
+            
+            // There is a bug in the Html2Markdown library that inserts about 10 newlines instead of like 2 so this has to be in place
+            // (not needed cuz I got rid of the whole section lol)
+            // description = Regex.Replace(description, @"\n{4,}", "\n\n\n");
+
+            // Remove two redundant lines
+            var split = description.Split("\n").ToList();
+            split.RemoveRange(2, 2);
+            
+            // And remove the preview
+            split.RemoveRange(4, split.Count - 4);
+            if (split.Last() == "\n") split.RemoveAt(split.Count - 1);
+            description = string.Join("\n", split);
 
             return new EmbedBuilder
             {
                 Title = feedItem.Title,
                 Description = string.IsNullOrEmpty(feedConfig.CustomDescription) ? description : feedConfig.CustomDescription,
                 Color = feedConfig.EmbedColor == 0 ? Color.Blue : new Color(feedConfig.EmbedColor),
-                Footer = new EmbedFooterBuilder().WithText(feedItem.PublishingDateString)
+                // Adding one hour here cuz timezones
+                Footer = new EmbedFooterBuilder().WithText(feedItem.PublishingDate?.AddHours(1).ToString(CultureInfo.InvariantCulture))
             }.Build();
         }
 
