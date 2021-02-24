@@ -4,6 +4,7 @@ namespace thorn.Config
     {
         public string Link { get; set; }
         public ulong[] ChannelIds { get; set; }
+        public string[] Filter { get; set; }
         public string CustomDescription { get; set; }
         public uint EmbedColor { get; set; }
         public bool RequireAuth { get; set; }

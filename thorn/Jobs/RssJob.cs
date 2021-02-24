@@ -12,6 +12,7 @@ using Html2Markdown;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Quartz;
+using Quartz.Impl;
 using thorn.Config;
 
 namespace thorn.Jobs
@@ -22,6 +23,8 @@ namespace thorn.Jobs
         private readonly List<FeedConfig> _configs;
         private readonly Dictionary<ulong, SocketTextChannel> _channels;
         private Dictionary<string, DateTime?> _lastUpdates;
+
+        private const int MaxDescriptionLength = 300;
 
         public RssJob(ILogger<ReminderJob> logger, DiscordSocketClient client)
         {
@@ -87,7 +90,10 @@ namespace thorn.Jobs
             if (lastUpdate > feed.LastUpdatedDate) return null;
             
             _lastUpdates[feedConfig.Link] = feed.LastUpdatedDate;
-            return feed.Items.Where(x => x.PublishingDate > lastUpdate).ToList();
+            
+            return feedConfig.Filter is null 
+                ? feed.Items.Where(x => x.PublishingDate > lastUpdate).ToList() 
+                : feed.Items.Where(x => x.PublishingDate > lastUpdate && feedConfig.Filter.Any(x.Title.Contains)).ToList();
         }
         
         private Embed GetEmbed(FeedItem feedItem, FeedConfig feedConfig)
@@ -98,7 +104,6 @@ namespace thorn.Jobs
             // - People with space in their name. Haven't tested this yet but I am pretty sure it won't work
             
             // BUG: There are some weird spacing issues with some items, look into it
-            // Length limiting is done by wikidot itself
             var description = new Converter().Convert(feedItem.Description)
                 .Replace("<span class=\"printuser\">", "").Replace("</span>", "");
 
