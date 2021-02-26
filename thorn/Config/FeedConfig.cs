@@ -6,6 +6,7 @@ namespace thorn.Config
         public ulong[] ChannelIds { get; set; }
         public string[] Filter { get; set; }
         public string CustomDescription { get; set; }
+        public bool NewPageAnnouncement { get; set; }
         public uint EmbedColor { get; set; }
         public bool RequireAuth { get; set; }
         public string Username { get; set; }

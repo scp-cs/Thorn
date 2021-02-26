@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CodeHollow.FeedReader;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Quartz;
 using thorn.Config;
+using thorn.Services;
 
 namespace thorn.Jobs
 {
@@ -23,13 +25,17 @@ namespace thorn.Jobs
         private readonly List<FeedConfig> _configs;
         private readonly Dictionary<ulong, SocketTextChannel> _channels;
         private readonly WebClient _webClient;
-        private Dictionary<string, DateTime?> _lastUpdates;
+        private readonly UserAccountsService _accounts;
+        private readonly DiscordSocketClient _client;
+        private Dictionary<FeedConfig, DateTime?> _lastUpdates;
 
-        public RssJob(ILogger<ReminderJob> logger, DiscordSocketClient client)
+        public RssJob(ILogger<ReminderJob> logger, DiscordSocketClient client, UserAccountsService accounts)
         {
             _logger = logger;
+            _client = client;
+            _accounts = accounts;
             _channels = new Dictionary<ulong, SocketTextChannel>();
-            _lastUpdates = new Dictionary<string, DateTime?>();
+            _lastUpdates = new Dictionary<FeedConfig, DateTime?>();
             _webClient = new WebClient();
 
             _configs = JsonConvert.DeserializeObject<List<FeedConfig>>(File.ReadAllText("Config/feeds.json"));
@@ -42,7 +48,7 @@ namespace thorn.Jobs
             }
 
             foreach (var feedConfig in _configs)
-                _lastUpdates.Add(feedConfig.Link, null);
+                _lastUpdates.Add(feedConfig, null);
         }
 
         public async Task Execute(IJobExecutionContext context)
@@ -78,18 +84,18 @@ namespace thorn.Jobs
                 feed = FeedReader.ReadFromString(response);
             }
             
-            var lastUpdate = _lastUpdates[feedConfig.Link];
+            var lastUpdate = _lastUpdates[feedConfig];
 
             if (lastUpdate is null)
             {
-                _lastUpdates[feedConfig.Link] = feed.LastUpdatedDate;
+                _lastUpdates[feedConfig] = feed.LastUpdatedDate;
                 return null;
             }
 
             // If latest item is older than latest stored item, continue
             if (lastUpdate > feed.LastUpdatedDate) return null;
             
-            _lastUpdates[feedConfig.Link] = feed.LastUpdatedDate;
+            _lastUpdates[feedConfig] = feed.LastUpdatedDate;
             
             return feedConfig.Filter is null 
                 ? feed.Items.Where(x => x.PublishingDate > lastUpdate).ToList() 
@@ -105,7 +111,10 @@ namespace thorn.Jobs
             
             var description = new Converter().Convert(feedItem.Description)
                 .Replace("<span class=\"printuser\">", "").Replace("</span>", "");
-            
+
+            if (feedConfig.NewPageAnnouncement)
+                return GetAnnouncementEmbed(feedItem, feedConfig, description);
+
             // There is a bug in the Html2Markdown library that inserts about 10 newlines instead of like 2 so this has to be in place
             // (not needed cuz I got rid of the whole section lol)
             // description = Regex.Replace(description, @"\n{4,}", "\n\n\n");
@@ -129,6 +138,40 @@ namespace thorn.Jobs
             }.Build();
         }
 
-        private string GetUsername(string source) => Regex.Match(source, "user:info\\/([^\"]*)").Groups[1].Value;
+        private Embed GetAnnouncementEmbed(FeedItem feedItem, FeedConfig feedConfig, string text)
+        {
+            var title = Regex.Match(feedItem.Title, "\"(.*)\" - .*").Groups[1].Value;
+            var author = GetUsername(text);
+            var description = new StringBuilder("Nový článek na wiki! Yay! \\o/\n");
+
+            if (!(author is null))
+            {
+                var account = _accounts.GetAccountByWikidot(author);
+
+                // TODO: fix this
+                /*
+                if (!(account is null))
+                {
+                    var user = _client.GetUser(account.Id) as SocketGuildUser;
+                    description.Append($"[{title}]({feedItem.Link}) od uživatele {user?.Mention}");
+                }
+                */
+                // else
+                    description.Append($"[{title}]({feedItem.Link}) od uživatele `{author}`");
+            }
+            else
+                description.Append($"[{title}]({feedItem.Link}) od kdoví koho :/");
+
+            return new EmbedBuilder
+            {
+                Title = title,
+                Description = description.ToString(),
+                Color = feedConfig.EmbedColor == 0 ? Color.Blue : new Color(feedConfig.EmbedColor),
+                // Adding one hour here cuz timezones
+                Footer = new EmbedFooterBuilder().WithText(feedItem.PublishingDate?.AddHours(1).ToString(CultureInfo.InvariantCulture))
+            }.Build();
+        }
+
+        private string GetUsername(string source) => Regex.Match(source, "user:info\\/([^)]*)").Groups[1].Value;
     }
 }
