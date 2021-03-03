@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Discord;
@@ -17,18 +19,20 @@ namespace thorn.Services
         private readonly DiscordSocketClient _client;
         private readonly CommandService _command;
         private readonly IConfiguration _config;
+        private readonly ScpService _scp;
         
         private readonly PairsService _pairs;
         private readonly Random _random;
 
         public CommandHandler(IServiceProvider provider, DiscordSocketClient client, CommandService commandService, 
-            IConfiguration config, PairsService pairs)
+            IConfiguration config, PairsService pairs, ScpService scp)
         {
             _provider = provider;
             _client = client;
             _command = commandService;
             _config = config;
             _pairs = pairs;
+            _scp = scp;
             _random = new Random();
         }
 
@@ -49,7 +53,14 @@ namespace thorn.Services
             var argPos = 0;
             var context = new SocketCommandContext(_client, msg);
 
-            if (msg.HasStringPrefix(_config["prefix"], ref argPos))
+            var matches = Regex.Matches(m.Content, @"SCP(-| )[0-9]{3,4}((-| )(J|EX|ARC|SK|C[ZS]((-| )(J|EX|ARC)|))|)(?=(\s|$))", RegexOptions.IgnoreCase);
+            if (matches.Count > 0)
+            {
+                await m.Channel.SendMessageAsync(embed: await _scp.GetEmbedForReference(matches.Select(x => x.Value).ToList()));
+                return;
+            }
+
+            if (msg.HasStringPrefix(_config["prefix"], ref argPos)) 
                 await _command.ExecuteAsync(context, argPos, _provider);
         }
 

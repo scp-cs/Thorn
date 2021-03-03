@@ -21,18 +21,18 @@ namespace thorn.Services
     {
         public string Title { get; set; }
         public int Rating { get; set; }
-        public string ThumbnailUrl { get; set; }
+        // public string ThumbnailUrl { get; set; }
     }
 
     public class AlternateTitle
     {
-        public string Type { get; set; }
+        // public string Type { get; set; }
         public string Title { get; set; }
     }
 
     public class Attribution
     {
-        public string Type { get; set; }
+        // public string Type { get; set; }
         public User User { get; set; }
     }
 
