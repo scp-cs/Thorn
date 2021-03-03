@@ -12,6 +12,8 @@ Thorn is a Discord Bot made specifically for the Czech branch Discord chat.
 * Quick links to important guides/hubs
 * Daily reminder with important events in the past and name-days
 * RSS Feed 
+* Wiki search
+* SCP quick links
 
 ## Install
 This bot is private, and there are no plans on making it public. However you are free to run Thorn locally yourself.

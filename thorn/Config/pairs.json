@@ -1,5 +1,5 @@
 {
-  "INFO": "**Verze:** v2.2\n**Repozitář:** https://github.com/scp-cs/Thorn",
+  "INFO": "**Verze:** v2.3\n**Repozitář:** https://github.com/scp-cs/Thorn",
   
   "WELCOME_CHANNEL_ID": "666672988883779585",
   "NEWS_CHANNEL_ID": "537063810121334784",
@@ -23,9 +23,9 @@
   
   "HELP_PAGES": "3",
   "HELP_TITLE_1": "OBECNÉ",
-  "HELP_DESCRIPTION_1": "**`.help`** - Hádej :)\n\n**`.info`** - Info\n\n**`.ping`** - Pong!",
+  "HELP_DESCRIPTION_1": "**`.help`** - Hádej :)\n\n**`.info`** - Info\n\n**`.ping`** - Pong!\n\n**`.wiki [článek]`** - Vyhledej článek na wiki",
   "HELP_TITLE_2": "PROFIL",
-  "HELP_DESCRIPTION_2": "Profil je místo, kde jsou uložené vaše body, osobní stránky a podobné informace.\n\n**`.profile`** - Zobrazí váš profil\n\n**`.profile set [položka] [hodnota]`** - Nastaví položku na vašem profilu\n\n**`.profile remove [položka] [hodnota]`** - Smaže položku na vašem profilu\n\n**Dostupné položky:**\n- **`wikidot`** vaše uživatelské jméno na Wikidotu\n- **`description`** popis vašeho účtu\n- **`author-page`** odkaz na vaši autorskou stránku\n- **`translator-page`** odkaz na vaši překladatelskou stránku\n- **`private-page`** odkaz na vaši osobní stránku (pokud máte spisovatelskou a překladatelskou složku sloučenou)\n- **`sandbox`** odkaz na váš sandbox\n- **`profile-color`** barva vašeho porfilu\n\nVšechno můžete zkrátit na samotná písmenka pro ušetření času, takže `.profile translator-page http://scp-cs.wikidot.com/prekladatelska-slozka-chamik` je to samé, jako `.p tp http://scp-cs.wikidot.com/prekladatelska-slozka-chamik`",
+  "HELP_DESCRIPTION_2": "Profil je místo, kde jsou uložené vaše body, osobní stránky a podobné informace.\n\n**`.profile`** - Zobrazí váš profil\n\n**`.profile set [položka] [hodnota]`** - Nastaví položku na vašem profilu\n\n**`.profile remove [položka]`** - Smaže položku na vašem profilu\n\n**Dostupné položky:**\n- **`wikidot`** vaše uživatelské jméno na Wikidotu\n- **`description`** popis vašeho účtu\n- **`author-page`** odkaz na vaši autorskou stránku\n- **`translator-page`** odkaz na vaši překladatelskou stránku\n- **`private-page`** odkaz na vaši osobní stránku (pokud máte spisovatelskou a překladatelskou složku sloučenou)\n- **`sandbox`** odkaz na váš sandbox\n- **`profile-color`** barva vašeho porfilu\n\nVšechno můžete zkrátit na samotná písmenka pro ušetření času, takže `.profile translator-page http://scp-cs.wikidot.com/prekladatelska-slozka-chamik` je to samé, jako `.p tp http://scp-cs.wikidot.com/prekladatelska-slozka-chamik`",
   "HELP_TITLE_3": "ADMIN",
   "HELP_DESCRIPTION_3": "***Všechny tyto příkazy mohou být použity pouze zaměstnanci, takže to ani nezkoušej.***\n\n**`.stop`** - Pošle stopku\n\n**`.reloadp`** - Manuální aktualizace profilů\n\n**`.reloads`** - Manuální aktualizace stringů\n\n**`.say [zpráva]`** - Pošle zprávu do aktuálního kanálu\n\n**`.say [kanál] [zpráva]`** - Pošle zprávu do daného kanálu\n\n**`.edit [ID zprávy] [zpráva]`** - Upraví zprávu\n\n**`.vote [hlasování]`** - Zahájí hlasování v aktuálním kanálu\n\n**`.vote [kanál] [hlasování]`** - Zahájí hlasování v daném kanálu\n\n**`.points [translation/writing/correction]`** - Nahrání souboru s překladatelskými/spisovatelskými/korektorskými body\n\n**`.status [mode] [status]`** - Změní status\n\n**Reakce ve #welcome:**\n<:999:796489160546320384> - Přijmi jako Class C\n<:pogey:796489167726444585> - Přijmi jako INT\n<:sad:796489168384950292> - Nepřijmi (věková hranice)\n<:ragey:796489167655010344> - Emergency ban",
   
