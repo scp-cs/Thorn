@@ -60,7 +60,8 @@ namespace thorn
                     collection.AddSingleton<PairsService>();
                     collection.AddSingleton<DataStorageService>();
                     collection.AddSingleton<UserAccountsService>();
-                    
+                    collection.AddSingleton<ScpService>();
+
                     collection.AddSingleton<IJobFactory, SingletonJobFactory>();
                     collection.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
                     
