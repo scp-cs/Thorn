@@ -54,7 +54,7 @@ namespace thorn.Services
             var context = new SocketCommandContext(_client, msg);
 
             var matches = Regex.Matches(m.Content, @"SCP(-| )[0-9]{3,4}((-| )(J|EX|ARC|SK|C[ZS]((-| )(J|EX|ARC)|))|)(?=(\s|$))", RegexOptions.IgnoreCase);
-            if (matches.Count > 0)
+            if (matches.Count > 0 && !msg.HasStringPrefix(_config["prefix"], ref argPos))
             {
                 await m.Channel.SendMessageAsync(embed: await _scp.GetEmbedForReference(matches.Select(x => x.Value).ToList()));
                 return;
