@@ -1,7 +1,5 @@
 using System;
-using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Discord;
@@ -19,20 +17,20 @@ namespace thorn.Services
         private readonly DiscordSocketClient _client;
         private readonly CommandService _command;
         private readonly IConfiguration _config;
-        private readonly ScpService _scp;
+        private readonly QuicklinkService _quicklink;
         
         private readonly PairsService _pairs;
         private readonly Random _random;
 
         public CommandHandler(IServiceProvider provider, DiscordSocketClient client, CommandService commandService, 
-            IConfiguration config, PairsService pairs, ScpService scp)
+            IConfiguration config, PairsService pairs, QuicklinkService quicklink)
         {
             _provider = provider;
             _client = client;
             _command = commandService;
             _config = config;
             _pairs = pairs;
-            _scp = scp;
+            _quicklink = quicklink;
             _random = new Random();
         }
 
@@ -48,20 +46,19 @@ namespace thorn.Services
         private async Task HandleCommandAsync(SocketMessage m)
         {
             if (!(m is SocketUserMessage msg) || m.Source == MessageSource.Bot) return;
-            if (await HahaFunni(m)) return;
-
+            
             var argPos = 0;
-            var context = new SocketCommandContext(_client, msg);
-
-            var matches = Regex.Matches(m.Content, @"SCP(-| )[0-9]{3,4}((-| )(J|EX|ARC|SK|C[ZS]((-| )(J|EX|ARC)|))|)(?=(\s|$))", RegexOptions.IgnoreCase);
-            if (matches.Count > 0 && !msg.HasStringPrefix(_config["prefix"], ref argPos))
+            
+            if (!msg.HasStringPrefix(_config["prefix"], ref argPos))
             {
-                await m.Channel.SendMessageAsync(embed: await _scp.GetEmbedForReference(matches.Select(x => x.Value).ToList()));
-                return;
+                if (await HahaFunni(m)) return;
+                if (await _quicklink.CheckForScpReference(msg)) return;
             }
-
-            if (msg.HasStringPrefix(_config["prefix"], ref argPos)) 
+            else
+            {
+                var context = new SocketCommandContext(_client, msg);
                 await _command.ExecuteAsync(context, argPos, _provider);
+            }
         }
 
         private async Task<bool> HahaFunni(SocketMessage m)

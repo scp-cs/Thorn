@@ -13,6 +13,7 @@ namespace thorn.Services
         private readonly DiscordSocketClient _client;
         private readonly PairsService _pairs;
         private readonly ILogger<ReactionHandler> _logger;
+        private readonly QuicklinkService _quicklink;
         
         // TODO: replace with SocketTextChannel
         private readonly ulong _welcomeChannelId;
@@ -20,11 +21,13 @@ namespace thorn.Services
         private readonly ulong _classCRoleId;
         private readonly ulong _intRoleId;
 
-        public ReactionHandler(DiscordSocketClient client, PairsService pairs, ILogger<ReactionHandler> logger)
+        public ReactionHandler(DiscordSocketClient client, PairsService pairs, ILogger<ReactionHandler> logger, 
+            QuicklinkService quicklink)
         {
             _client = client;
             _pairs = pairs;
             _logger = logger;
+            _quicklink = quicklink;
 
             _welcomeChannelId = ulong.Parse(_pairs.GetString("WELCOME_CHANNEL_ID"));
             _loggingChannelId = ulong.Parse(_pairs.GetString("LOGGING_CHANNEL_ID"));
@@ -41,7 +44,14 @@ namespace thorn.Services
         private async Task ClientOnReactionAdded(Cacheable<IUserMessage, ulong> cacheable,
             ISocketMessageChannel messageChannel, SocketReaction reaction)
         {
+            if (reaction.UserId == _client.CurrentUser.Id) return;
+            
+            // Reaction handling in the #welcome channel
             if (reaction.Channel.Id == _welcomeChannelId) await HandleWelcomeReactions(cacheable, reaction);
+            
+            // User requested quick link delete
+            if (Equals(reaction.Emote, new Emoji("🗞️")) && _quicklink.IsRecentQuicklink(reaction.MessageId))
+                await reaction.Message.Value.DeleteAsync();
         }
 
         private async Task HandleWelcomeReactions(Cacheable<IUserMessage, ulong> cacheable, SocketReaction reaction)
@@ -50,7 +60,8 @@ namespace thorn.Services
 
             var emote = reaction.Emote;
             var user = (IGuildUser) cacheable.Value.Author;
-            
+
+            // TODO: Maybe create another service for this?
             if (Equals(emote, Emote.Parse(_pairs.GetString("999_EMOTE"))))
                 await AssignRole(cacheable, reaction, user, UserActions.ClassC);
             else if (Equals(emote, Emote.Parse(_pairs.GetString("POGEY_EMOTE"))))
