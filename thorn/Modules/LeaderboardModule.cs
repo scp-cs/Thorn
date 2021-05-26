@@ -44,7 +44,7 @@ namespace thorn.Modules
             {
                 var user = Context.Guild.GetUser(account.value.Id);
                 
-                // Skip to the next iteration if the user is no longer on the server
+                // Skip to the next iteration if the user is no longer in the server
                 if (user == null) {
                     continue;
                 }
