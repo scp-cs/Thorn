@@ -43,7 +43,12 @@ namespace thorn.Modules
             foreach (var account in range[page - 1].Select((value, index) => new {value, index}))
             {
                 var user = Context.Guild.GetUser(account.value.Id);
-
+                
+                // Skip to the next iteration if the user is no longer in the server
+                if (user == null) {
+                    continue;
+                }
+                
                 // No PointType defined, use the whole leaderboard
                 if (type == null)
                 {
