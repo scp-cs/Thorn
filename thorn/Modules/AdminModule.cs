@@ -152,7 +152,6 @@ namespace thorn.Modules
             await msg.AddReactionAsync(Emote.Parse(_pairs.GetString("YES_EMOTE")));
             await msg.AddReactionAsync(Emote.Parse(_pairs.GetString("NO_EMOTE")));
             await msg.AddReactionAsync(Emote.Parse(_pairs.GetString("ABSTAIN_EMOTE")));
-            await msg.AddReactionAsync(new Emoji("👁️"));
         }
     }
 }
