@@ -1,9 +1,10 @@
 name: Deploy
 
 on:
-  workflow_run: [".NET"]
-  branches: [master]
-  types: [completed]
+  workflow_run:
+    workflows: [".NET"]
+    branches: [master]
+    types: [completed]
 
 jobs:
   on-success:
@@ -18,7 +19,7 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
       - name: Trigger rebuild
         run: ssh ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} ~/Thorn/deploy.sh
-  
+
   on-failure:
     runs-on: ubuntu-latest
     if: ${{ github.event_name != 'push' || github.event.workflow_run.conclusion != 'success' }}
