@@ -9,7 +9,7 @@ on:
 jobs:
   on-success:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name == 'push' && github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Push changes to server
         uses: easingthemes/ssh-deploy@main
@@ -19,3 +19,10 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
       - name: Trigger rebuild
         run: ssh ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} /home/${{ secrets.REMOTE_USER }}/Thorn/deploy.sh
+
+  on-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'push' || github.event.workflow_run.conclusion != 'success' }}
+    steps:
+      - name: Not deploying
+        run: echo "Not deploying"
