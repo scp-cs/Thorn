@@ -4,3 +4,6 @@ bin/
 obj/
 .idea/
 thorn.sln.DotSettings.user
+/.vs/VSWorkspaceState.json
+/.vs/slnx.sqlite
+/.vs/Thorn/v16/.suo
