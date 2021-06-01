@@ -48,8 +48,8 @@ namespace thorn.Modules
                 
                 // Skip to the next iteration if the user is no longer in the server
                 if (user == null) {
-                    continue;
                     skippedIds++;
+                    continue;    
                 }
                 
                 // No PointType defined, use the whole leaderboard
