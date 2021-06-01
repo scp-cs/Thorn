@@ -40,13 +40,13 @@ namespace thorn.Modules
 
             switch (page)
             {
-                case "translation": case "překlad": case "překlady": case "translations": case "t":
+                case "translation": case "překlad": case "překlady": case "translations": case "t": case "translating":
                     help = "TRANSLATION"; break;
                 case "writing": case "psaní": case "w":
                     help = "WRITING"; break;
-                case "correction": case "korekce": case "c":
+                case "correction": case "korekce": case "c": case "correcting":
                     help = "CORRECTION"; break;
-                case "join": case "připoj-se": case "připojit": case "členství": case "j":
+                case "join": case "připoj-se": case "připojit": case "členství": case "j": case "joining":
                     help = "JOIN"; break;
                 default:
                     return;
