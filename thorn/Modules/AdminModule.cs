@@ -152,11 +152,9 @@ namespace thorn.Modules
             await msg.AddReactionAsync(Emote.Parse(_pairs.GetString("YES_EMOTE")));
             await msg.AddReactionAsync(Emote.Parse(_pairs.GetString("NO_EMOTE")));
             await msg.AddReactionAsync(Emote.Parse(_pairs.GetString("ABSTAIN_EMOTE")));
+
             // I swear to god, since when are there 2 different eye emojis?
-            //await msg.AddReactionAsync(new Emoji("👁️")); This one doesn't work, I think
-            //Just found out that the emoji is made up of two characters
-            //why
-            //It seems like removing a character from "👁️" turns it into "👁"
+            // await msg.AddReactionAsync(new Emoji("👁️")); This one doesn't work, I think
             await msg.AddReactionAsync(new Emoji("👁"));
         }
     }
