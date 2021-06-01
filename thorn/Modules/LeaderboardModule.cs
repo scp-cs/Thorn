@@ -40,15 +40,12 @@ namespace thorn.Modules
             if (page < 1 || page > range.Count) page = 1;
             var leaderboard = new StringBuilder();
 
-            int skippedIds = 0;
-
             foreach (var account in range[page - 1].Select((value, index) => new {value, index}))
             {
                 var user = Context.Guild.GetUser(account.value.Id);
                 
                 // Skip to the next iteration if the user is no longer in the server
                 if (user == null) {
-                    skippedIds++;
                     continue;
                 }
                 
@@ -57,11 +54,11 @@ namespace thorn.Modules
                 {
                     if (account.value.Id != 227114285074087938)
                         leaderboard.Append(
-                            $"**`{(page - 1) * _leaderboardSize + account.index + 1 - skippedIds}.`** {user.Nickname ?? user.Username} - " +
+                            $"**`{(page - 1) * _leaderboardSize + account.index + 1}.`** {user.Nickname ?? user.Username} - " +
                             $"**{account.value.Points.Sum(x => x.Value)}**\n");
                     else // Uty
                         leaderboard.Append(
-                            $"**`{(page - 1) * _leaderboardSize + account.index + 1 - skippedIds}.`** {user.Nickname ?? user.Username} - " +
+                            $"**`{(page - 1) * _leaderboardSize + account.index + 1}.`** {user.Nickname ?? user.Username} - " +
                             "**ano**\n");
                 }
                 // PointType defined, use only that leaderboard
@@ -69,11 +66,11 @@ namespace thorn.Modules
                 {
                     if (account.value.Id != 227114285074087938 || type != PointType.Translation)
                         leaderboard.Append(
-                            $"**`{(page - 1) * _leaderboardSize + account.index + 1 - skippedIds}.`** {user.Nickname ?? user.Username} - " +
+                            $"**`{(page - 1) * _leaderboardSize + account.index + 1}.`** {user.Nickname ?? user.Username} - " +
                             $"**{account.value.Points[type.GetValueOrDefault()]}**\n");
                     else // Uty
                         leaderboard.Append(
-                            $"**`{(page - 1) * _leaderboardSize + account.index + 1 - skippedIds}.`** {user.Nickname ?? user.Username} - " +
+                            $"**`{(page - 1) * _leaderboardSize + account.index + 1}.`** {user.Nickname ?? user.Username} - " +
                             "**ano**\n");
                 }
             }
