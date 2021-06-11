@@ -31,7 +31,7 @@ namespace thorn.Services
         }
         public async Task<bool> CheckForScpReference(SocketUserMessage m)
         {
-            IMessage msg = m;
+            var msg = (IMessage) m;
 
             if (_exemptChannelIds.Contains(m.Channel.Id)) return false;
 
@@ -58,17 +58,12 @@ namespace thorn.Services
             if (msg.Type == MessageType.Reply && _lastScp.ContainsKey(msg.Reference.MessageId.GetValueOrDefault()))
             {
                 ulong originalId = msg.Reference.MessageId.GetValueOrDefault();
-
                 if (mentions.All(_lastScp[originalId].Contains))
                     return false;
-
             }
 
             mentions.Sort();
-
-            if (_lastScp.Count > 3)
-                _lastScp.Remove(_lastScp.Keys.First());
-            _lastScp.Add(m.Id, mentions);
+            LastScpAdd(m.Id, mentions);
 
             var quicklink = await m.Channel.SendMessageAsync(embed: await _scp.GetEmbedForReference(mentions));
             await quicklink.AddReactionAsync(new Emoji("🗞️"));
@@ -81,6 +76,13 @@ namespace thorn.Services
             if (_latestLinkIds.Count > 2)
                 _latestLinkIds.RemoveAt(_latestLinkIds.Count - 1);
             _latestLinkIds.Add(id);
+        }
+
+        private void LastScpAdd(ulong id, List<string> _mentions)
+        {
+            if (_lastScp.Count > 3)
+                _lastScp.Remove(_lastScp.Keys.First());
+            _lastScp.Add(id, _mentions);
         }
 
         public bool IsRecentQuicklink(ulong messageId) => _latestLinkIds.Contains(messageId);
