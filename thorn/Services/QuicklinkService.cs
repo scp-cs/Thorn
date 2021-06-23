@@ -15,6 +15,7 @@ namespace thorn.Services
         private readonly ulong[] _exemptChannelIds;
         private Dictionary<ulong, DateTime> _lastLink;
         private List<ulong> _latestLinkIds;
+        private Dictionary<ulong, List<string>> _lastScp;
 
         private readonly TimeSpan _limit;
 
@@ -25,10 +26,13 @@ namespace thorn.Services
             _exemptChannelIds = new ulong[] {776117655119331369, 537063810121334784, 710575651664429127};
             _lastLink = new Dictionary<ulong, DateTime>();
             _latestLinkIds = new List<ulong>();
+            _lastScp = new Dictionary<ulong, List<string>>();
             _limit = TimeSpan.FromSeconds(3);
         }
         public async Task<bool> CheckForScpReference(SocketUserMessage m)
         {
+            var msg = (IMessage)m;
+
             if (_exemptChannelIds.Contains(m.Channel.Id)) return false;
 
             if (_lastLink.ContainsKey(m.Channel.Id))
@@ -50,9 +54,17 @@ namespace thorn.Services
                 if (!mentions.Contains(match.Value))
                     mentions.Add(match.Value);
             }
-            
+
+            if (msg.Type == MessageType.Reply && _lastScp.ContainsKey(msg.Reference.MessageId.GetValueOrDefault()))
+            {
+                ulong originalId = msg.Reference.MessageId.GetValueOrDefault();
+                if (mentions.All(_lastScp[originalId].Contains))
+                    return false;
+            }
+
             mentions.Sort();
-            
+            LastScpAdd(m.Id, mentions);
+
             var quicklink = await m.Channel.SendMessageAsync(embed: await _scp.GetEmbedForReference(mentions));
             await quicklink.AddReactionAsync(new Emoji("🗞️"));
             TrackIdAdd(quicklink.Id);
@@ -64,6 +76,13 @@ namespace thorn.Services
             if (_latestLinkIds.Count > 2)
                 _latestLinkIds.RemoveAt(_latestLinkIds.Count - 1);
             _latestLinkIds.Add(id);
+        }
+
+        private void LastScpAdd(ulong id, List<string> _mentions)
+        {
+            if (_lastScp.Count > 3)
+                _lastScp.Remove(_lastScp.Keys.First());
+            _lastScp.Add(id, _mentions);
         }
 
         public bool IsRecentQuicklink(ulong messageId) => _latestLinkIds.Contains(messageId);
