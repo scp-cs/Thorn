@@ -33,7 +33,7 @@ namespace thorn
                     x.Build();
                 })
                 .UseSerilog()
-                .ConfigureDiscordHost<DiscordSocketClient>((context, config) =>
+                .ConfigureDiscordHost((context, config) =>
                 {
                     config.SocketConfig = new DiscordSocketConfig
                     {

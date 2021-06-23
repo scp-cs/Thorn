@@ -8,11 +8,10 @@ using Microsoft.Extensions.Logging;
 
 namespace thorn.Services
 {
-    public class ReactionHandler : InitializedService
+    public class ReactionHandler : DiscordClientService
     {
         private readonly DiscordSocketClient _client;
         private readonly PairsService _pairs;
-        private readonly ILogger<ReactionHandler> _logger;
         private readonly QuicklinkService _quicklink;
         
         // TODO: replace with SocketTextChannel
@@ -21,12 +20,10 @@ namespace thorn.Services
         private readonly ulong _classCRoleId;
         private readonly ulong _intRoleId;
 
-        public ReactionHandler(DiscordSocketClient client, PairsService pairs, ILogger<ReactionHandler> logger, 
-            QuicklinkService quicklink)
+        public ReactionHandler(DiscordSocketClient client, PairsService pairs, ILogger<ReactionHandler> logger, QuicklinkService quicklink) : base(client, logger)
         {
             _client = client;
             _pairs = pairs;
-            _logger = logger;
             _quicklink = quicklink;
 
             _welcomeChannelId = ulong.Parse(_pairs.GetString("WELCOME_CHANNEL_ID"));
@@ -35,7 +32,7 @@ namespace thorn.Services
             _intRoleId = ulong.Parse(_pairs.GetString("INT_ROLE_ID"));
         }
 
-        public override Task InitializeAsync(CancellationToken cancellationToken)
+        protected override Task ExecuteAsync(CancellationToken cancellationToken)
         {
             _client.ReactionAdded += ClientOnReactionAdded;
             return Task.CompletedTask;
@@ -71,7 +68,7 @@ namespace thorn.Services
             else if (Equals(emote, Emote.Parse(_pairs.GetString("RAGEY_EMOTE"))))
             {
                 await user.BanAsync();
-                _logger.LogWarning("Emergency ban enacted by {ReactionUser} on {User} ({UserId})", reaction.User, user, user.Id);
+                Logger.LogWarning("Emergency ban enacted by {ReactionUser} on {User} ({UserId})", reaction.User, user, user.Id);
             }
         }
 
@@ -101,7 +98,7 @@ namespace thorn.Services
 
             await reaction.Message.Value.DeleteAsync();
             await ((ISocketMessageChannel) _client.GetChannel(_loggingChannelId)).SendMessageAsync(message);
-            _logger.LogInformation("{ReactionUser} made action in #welcome: {Message}", reaction.User, message);
+            Logger.LogInformation("{ReactionUser} made action in #welcome: {Message}", reaction.User, message);
         }
     }
 
