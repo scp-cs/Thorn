@@ -7,11 +7,12 @@ using Discord.Addons.Hosting;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using thorn.UserAccounts;
 
 namespace thorn.Services
 {
-    public class CommandHandler : InitializedService
+    public class CommandHandler : DiscordClientService
     {
         private readonly IServiceProvider _provider;
         private readonly DiscordSocketClient _client;
@@ -23,7 +24,7 @@ namespace thorn.Services
         private readonly Random _random;
 
         public CommandHandler(IServiceProvider provider, DiscordSocketClient client, CommandService commandService, 
-            IConfiguration config, PairsService pairs, QuicklinkService quicklink)
+            IConfiguration config, PairsService pairs, QuicklinkService quicklink, ILogger<CommandHandler> logger) : base(client, logger)
         {
             _provider = provider;
             _client = client;
@@ -34,10 +35,10 @@ namespace thorn.Services
             _random = new Random();
         }
 
-        public override async Task InitializeAsync(CancellationToken cancellationToken)
+        protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
             _client.MessageReceived += HandleCommandAsync;
-            
+
             _command.AddTypeReader(typeof(PointType), new PointTypeTypeReader());
             _command.AddTypeReader(typeof(AccountItem), new AccountItemTypeReader());
             await _command.AddModulesAsync(Assembly.GetEntryAssembly(), _provider);
