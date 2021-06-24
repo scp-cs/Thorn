@@ -18,12 +18,14 @@ namespace thorn.Modules
         private readonly UserAccountsService _userAccounts;
         private readonly ILogger<ProfileModule> _logger;
         private readonly PairsService _pairs;
+        private readonly SocketTextChannel _console;
 
-        public ProfileModule(UserAccountsService userAccounts, ILogger<ProfileModule> logger, PairsService pairs)
+        public ProfileModule(UserAccountsService userAccounts, ILogger<ProfileModule> logger, PairsService pairs, DiscordSocketClient client)
         {
             _userAccounts = userAccounts;
             _logger = logger;
             _pairs = pairs;
+            _console = client.GetChannel(ulong.Parse(_pairs.GetString("CONSOLE_CHANNEL_ID"))) as SocketTextChannel;
         }
 
         [Command]
@@ -64,6 +66,7 @@ namespace thorn.Modules
             await _userAccounts.SaveAccountsAsync();
             await Context.Message.AddReactionAsync(Emote.Parse(_pairs.GetString("YES_EMOTE")));
             _logger.LogInformation("{ContextUser} changed their profile setting {AccountItem} to: {Value}", Context.User, accountItem, value);
+            await _console.SendMessageAsync(embed: GetProfileUpdateEmbed($"**`{Context.User}`** změnil položku **{accountItem}** na: `{value}`", Context.User as IGuildUser, true));
         }
 
         [Command("remove")]
@@ -77,6 +80,7 @@ namespace thorn.Modules
             await _userAccounts.SaveAccountsAsync();
             await Context.Message.AddReactionAsync(Emote.Parse(_pairs.GetString("YES_EMOTE")));
             _logger.LogInformation("{ContextUser} removed their profile {AccountItem}", Context.User, accountItem);
+            await _console.SendMessageAsync(embed: GetProfileUpdateEmbed($"**`{Context.User}`** z profilu odstranil **{accountItem}**", Context.User as IGuildUser, false));
         }
 
         private static bool IsSafe(UserAccount userAccount, AccountItem accountItem, string value)
@@ -118,5 +122,14 @@ namespace thorn.Modules
             if (userAccount[AccountItem.TranslatorPage] == userAccount[AccountItem.AuthorPage])
                 userAccount[AccountItem.PrivatePage] = value;
         }
+
+        private static Embed GetProfileUpdateEmbed(string change, IGuildUser user, bool set) => new EmbedBuilder
+        {
+            Title = $"Změna profilu **{user.Nickname ?? user.Username}**",
+            Description = change,
+            Color = set ? Color.Green : Color.Red,
+            ThumbnailUrl = user.GetAvatarUrl(),
+            Timestamp = DateTimeOffset.Now.LocalDateTime
+        }.Build();
     }
 }
