@@ -55,9 +55,9 @@ namespace thorn.Services
                     mentions.Add(match.Value);
             }
 
-            if (msg.Type == MessageType.Reply && _lastScp.ContainsKey(msg.Reference.MessageId.GetValueOrDefault()))
+            if (msg.Type == MessageType.Reply && _lastScp.ContainsKey(msg.Reference.MessageId.Value))
             {
-                ulong originalId = msg.Reference.MessageId.GetValueOrDefault();
+                ulong originalId = msg.Reference.MessageId.Value;
                 if (mentions.All(_lastScp[originalId].Contains))
                     return false;
             }
@@ -81,7 +81,7 @@ namespace thorn.Services
         private void LastScpAdd(ulong id, List<string> _mentions)
         {
             if (_lastScp.Count > 3)
-                _lastScp.Remove(_lastScp.Keys.First());
+                _lastScp.Remove(_lastScp.Keys.ElementAt(_lastScp.Count - 1));
             _lastScp.Add(id, _mentions);
         }
 
