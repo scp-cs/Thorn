@@ -66,7 +66,7 @@ namespace thorn.Modules
             await _userAccounts.SaveAccountsAsync();
             await Context.Message.AddReactionAsync(Emote.Parse(_pairs.GetString("YES_EMOTE")));
             _logger.LogInformation("{ContextUser} changed their profile setting {AccountItem} to: {Value}", Context.User, accountItem, value);
-            await _console.SendMessageAsync(embed: GetProfileUpdateEmbed($"{Context.User} změnil položku {accountItem} na: {value}", Context.Guild.CurrentUser, true));
+            await _console.SendMessageAsync(embed: GetProfileUpdateEmbed($"**`{Context.User}`** změnil položku **{accountItem}** na: `{value}`", Context.User as IGuildUser, true));
         }
 
         [Command("remove")]
@@ -80,7 +80,7 @@ namespace thorn.Modules
             await _userAccounts.SaveAccountsAsync();
             await Context.Message.AddReactionAsync(Emote.Parse(_pairs.GetString("YES_EMOTE")));
             _logger.LogInformation("{ContextUser} removed their profile {AccountItem}", Context.User, accountItem);
-            await _console.SendMessageAsync(embed: GetProfileUpdateEmbed($"{Context.User} z profilu odstranil {accountItem}", Context.Guild.CurrentUser, false));
+            await _console.SendMessageAsync(embed: GetProfileUpdateEmbed($"**`{Context.User}`** z profilu odstranil **{accountItem}**", Context.User as IGuildUser, false));
         }
 
         private static bool IsSafe(UserAccount userAccount, AccountItem accountItem, string value)
@@ -127,7 +127,9 @@ namespace thorn.Modules
         {
             Title = $"Změna profilu **{user.Nickname ?? user.Username}**",
             Description = change,
-            Color = set ? Color.Green : Color.Red
+            Color = set ? Color.Green : Color.Red,
+            ThumbnailUrl = user.GetAvatarUrl(),
+            Timestamp = DateTimeOffset.Now.LocalDateTime
         }.Build();
     }
 }
