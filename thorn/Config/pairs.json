@@ -23,7 +23,7 @@
   
   "HELP_PAGES": "3",
   "HELP_TITLE_1": "OBECNÉ",
-  "HELP_DESCRIPTION_1": "**`.help`** - Hádej :)\n\n**`.help 1 — 3`** - Navigace v příkazu .help\n\n*.help writing*``** - Hádej :)\n\n**`.help translating`** - Hádej :)\n\n**`.help correcting`** - Hádej :)\n\n**`.info`** - Info\n\n**`.ping`** - Pong!\n\n**`.wiki [článek]`** - Vyhledej článek na wiki",
+  "HELP_DESCRIPTION_1": "**`.help`** - Hádej :)\n\n**`.help 1 — 3`** - Navigace v příkazu .help\n\n*.help writing*``** - Hádej :)\n\n**`.help translating`** - Hádej :)\n\n**`.help correcting`** - Hádej :)\n\n**`.info`** - Info\n\n**`.ping`** - Pong!",
   "HELP_TITLE_2": "PROFIL",
   "HELP_DESCRIPTION_2": "Profil je místo, kde jsou uložené vaše body, osobní stránky a podobné informace.\n\n**`.profile`** - Zobrazí váš profil\n\n**`.leaderboard `** - Překladatelské/Spisovatelské/Korektorské bodové pořadí\n\n**`.profile set [položka] [hodnota]`** - Nastaví položku na vašem profilu\n\n**`.profile remove [položka]`** - Smaže položku na vašem profilu\n\n**Dostupné položky:**\n- **`wikidot`** vaše uživatelské jméno na Wikidotu\n- **`description`** popis vašeho účtu\n- **`author-page`** odkaz na vaši autorskou stránku\n- **`translator-page`** odkaz na vaši překladatelskou stránku\n- **`private-page`** odkaz na vaši osobní stránku (pokud máte spisovatelskou a překladatelskou složku sloučenou)\n- **`sandbox`** odkaz na váš sandbox\n- **`profile-color`** barva vašeho porfilu\n\nVšechno můžete zkrátit na samotná písmenka pro ušetření času, takže `.profile translator-page http://scp-cs.wikidot.com/prekladatelska-slozka-chamik` je to samé, jako `.p tp http://scp-cs.wikidot.com/prekladatelska-slozka-chamik`",
   "HELP_TITLE_3": "ADMIN",
