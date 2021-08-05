@@ -114,7 +114,7 @@ namespace thorn.Modules
         }
         
         private static bool IsWikiLink(string link) => 
-            Regex.Match(link, @"^http:\/\/(scp-cs(-sandbox|)\.wikidot\.com|scp-wiki\.cz)\/[^\s]*$").Success;
+            Regex.Match(link, @"^http:\/\/(scp-cs(-sandbox(-2|)|)\.wikidot\.com|scp-wiki\.cz)\/[^\s]*$").Success;
 
         // If translator and author pages are the same, set PrivatePage so only that shows on the profile
         private static void UpdatePrivatePage(UserAccount userAccount, string value)
