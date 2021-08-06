@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -9,23 +10,24 @@ namespace thorn.Modules
     [Alias("halp", "pomoc", "cože", "hlep", "aaa", "h", "fuckme", "hwelp")]
     public class HelpModule : ModuleBase<SocketCommandContext>
     {
-        private readonly PairsService _pairs;
+        private readonly ConstantsService _constants;
 
-        public HelpModule(PairsService pairs)
+        public HelpModule(ConstantsService constants)
         {
-            _pairs = pairs;
+            _constants = constants;
         }
 
         [Command]
         public async Task HelpCommand(int page = 1)
         {
-            var maxPages = int.Parse(_pairs.GetString("HELP_PAGES"));
+            var maxPages = _constants.Help.Count;
             if (page > maxPages || page <= 0) page = 1;
+            var titleIndex = _constants.Help[page - 1].IndexOf(Environment.NewLine);
 
             var embed = new EmbedBuilder
             {
-                Title = _pairs.GetString($"HELP_TITLE_{page}"),
-                Description = _pairs.GetString($"HELP_DESCRIPTION_{page}"),
+                Title = _constants.Help[page - 1][..titleIndex],
+                Description = _constants.Help[page - 1][++titleIndex..],
                 Color = Color.LightGrey,
                 Footer = new EmbedFooterBuilder().WithText($"Strana {page} z {maxPages}")
             }.Build();
@@ -41,21 +43,20 @@ namespace thorn.Modules
             switch (page)
             {
                 case "translation": case "překlad": case "překlady": case "translations": case "t": case "translating":
-                    help = "TRANSLATION"; break;
+                    help = _constants.Strings.specificHelp.translation; break;
                 case "writing": case "psaní": case "w":
-                    help = "WRITING"; break;
+                    help = _constants.Strings.specificHelp.writing; break;
                 case "correction": case "korekce": case "c": case "correcting":
-                    help = "CORRECTION"; break;
+                    help = _constants.Strings.specificHelp.correction; break;
                 case "join": case "připoj-se": case "připojit": case "členství": case "j": case "joining":
-                    help = "JOIN"; break;
+                    help = _constants.Strings.specificHelp.join; break;
                 default:
                     return;
             }
             
             await ReplyAsync(embed: new EmbedBuilder
             {
-                Title = _pairs.GetString($"HELP_TITLE_{help}"),
-                Description = _pairs.GetString($"HELP_DESCRIPTION_{help}"),
+                Description = help,
                 Color = Color.Blue
             }.Build());
         }

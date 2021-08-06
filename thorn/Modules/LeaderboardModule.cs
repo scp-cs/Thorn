@@ -15,13 +15,13 @@ namespace thorn.Modules
     public class LeaderboardModule : ModuleBase<SocketCommandContext>
     {
         private readonly UserAccountsService _userAccounts;
-        private readonly PairsService _pairs;
+        private readonly ConstantsService _constants;
         private readonly int _leaderboardSize;
 
-        public LeaderboardModule(UserAccountsService userAccounts, PairsService pairs)
+        public LeaderboardModule(UserAccountsService userAccounts, ConstantsService constants)
         {
             _userAccounts = userAccounts;
-            _pairs = pairs;
+            _constants = constants;
             _leaderboardSize = 15;
         }
         
@@ -77,14 +77,10 @@ namespace thorn.Modules
                             "**ano**\n");
                 }
             }
-            
-            var title = type == null
-                ? _pairs.GetString("LEADERBOARD_TITLE")
-                : _pairs.GetString($"LEADERBOARD_{type.ToString()?.ToUpper()}_TITLE");
-            
+
             await ReplyAsync(embed: new EmbedBuilder
             {
-                Title = title,
+                Title = "LEADERBOARD",
                 Description = leaderboard.ToString(),
                 Footer = new EmbedFooterBuilder().WithText($"Strana {page} z {range.Count}"),
                 Color = Color.Blue

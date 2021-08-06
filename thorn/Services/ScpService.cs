@@ -12,11 +12,11 @@ namespace thorn.Services
     public class ScpService
     {
         private readonly GraphQLHttpClient _graphQlClient;
-        private readonly PairsService _pairs;
+        private readonly ConstantsService _constants;
 
-        public ScpService(PairsService pairs)
+        public ScpService(ConstantsService constants)
         {
-            _pairs = pairs;
+            _constants = constants;
             _graphQlClient = new GraphQLHttpClient("https://api.crom.avn.sh/", new NewtonsoftJsonSerializer());
         }
 
@@ -24,7 +24,7 @@ namespace thorn.Services
         {
             var request = new GraphQLHttpRequest
             {
-                Query = $"{{searchPages(query: \"{query}\") {{url}}",
+                Query = $"{{searchPages(query: \"{query}\") {{url wikidotInfo{{title}}}}}}",
             };
             
             var response = await _graphQlClient.SendQueryAsync<ResponseType>(request);

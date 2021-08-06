@@ -20,17 +20,17 @@ namespace thorn.Services
         private readonly IConfiguration _config;
         private readonly QuicklinkService _quicklink;
         
-        private readonly PairsService _pairs;
+        private readonly ConstantsService _constants;
         private readonly Random _random;
 
         public CommandHandler(IServiceProvider provider, DiscordSocketClient client, CommandService commandService, 
-            IConfiguration config, PairsService pairs, QuicklinkService quicklink, ILogger<CommandHandler> logger) : base(client, logger)
+            IConfiguration config, ConstantsService constants, QuicklinkService quicklink, ILogger<CommandHandler> logger) : base(client, logger)
         {
             _provider = provider;
             _client = client;
             _command = commandService;
             _config = config;
-            _pairs = pairs;
+            _constants = constants;
             _quicklink = quicklink;
             _random = new Random();
         }
@@ -65,21 +65,21 @@ namespace thorn.Services
         private async Task<bool> HahaFunni(SocketMessage m)
         {
             if (m.Content.Equals("good bot", StringComparison.OrdinalIgnoreCase))
-                await m.AddReactionAsync(Emote.Parse(_pairs.GetString("AGRLOVE_EMOTE")));
+                await m.AddReactionAsync(Emote.Parse((string) _constants.Strings.emote.agrlove));
             
             else if (m.Content.Equals("bad bot", StringComparison.OrdinalIgnoreCase))
-                await m.AddReactionAsync(Emote.Parse(_pairs.GetString("SAD_EMOTE")));
+                await m.AddReactionAsync(Emote.Parse((string) _constants.Strings.emote.sad));
             
-            else if (m.Content.Equals(_pairs.GetString("THANKS_THORN_TRIGGER"), StringComparison.OrdinalIgnoreCase))
-                await m.AddReactionAsync(Emote.Parse(_pairs.GetString("AGRLOVE_EMOTE")));
+            else if (m.Content.Equals("Díky Thorne", StringComparison.OrdinalIgnoreCase)) // TODO: change this to a regex
+                await m.AddReactionAsync(Emote.Parse((string) _constants.Strings.emote.agrlove));
             
-            else if (m.Content.Equals(_pairs.GetString("BODIES_IN_WATER_TRIGGER"), StringComparison.OrdinalIgnoreCase))
+            else if (m.Content.Equals(_constants.Strings.bodies.trigger, StringComparison.OrdinalIgnoreCase)) // TODO: change this to a regex as well
                 await m.Channel.SendMessageAsync(_random.Next(2) == 0 ?
-                    _pairs.GetString("BODIES_IN_WATER_ERROR") :
-                    _pairs.GetString("BODIES_IN_WATER_SUCCESS"));
+                    _constants.Strings.bodies.error :
+                    _constants.Strings.bodies.success);
             
-            else if (m.Content.Equals(_pairs.GetString("BODIES_IN_WATER_OHGODOHFUCK_TRIGGER"), StringComparison.OrdinalIgnoreCase))
-                await m.Channel.SendMessageAsync(_pairs.GetString("BODIES_IN_WATER_OHGODOHFUCK"));
+            else if (m.Content.Equals(_constants.Strings.bodies.ohgodohfuckTrigger, StringComparison.OrdinalIgnoreCase)) // TODO: and this as well
+                await m.Channel.SendMessageAsync(_constants.Strings.bodies.ohgodohfuck);
             
             else return false;
             return true;

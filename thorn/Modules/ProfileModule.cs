@@ -17,15 +17,15 @@ namespace thorn.Modules
     {
         private readonly UserAccountsService _userAccounts;
         private readonly ILogger<ProfileModule> _logger;
-        private readonly PairsService _pairs;
+        private readonly ConstantsService _constants;
         private readonly SocketTextChannel _console;
 
-        public ProfileModule(UserAccountsService userAccounts, ILogger<ProfileModule> logger, PairsService pairs, DiscordSocketClient client)
+        public ProfileModule(UserAccountsService userAccounts, ILogger<ProfileModule> logger, ConstantsService constants, DiscordSocketClient client)
         {
             _userAccounts = userAccounts;
             _logger = logger;
-            _pairs = pairs;
-            _console = client.GetChannel(ulong.Parse(_pairs.GetString("CONSOLE_CHANNEL_ID"))) as SocketTextChannel;
+            _constants = constants;
+            _console = client.GetChannel(_constants.Channels["console"]) as SocketTextChannel;
         }
 
         [Command]
@@ -64,7 +64,7 @@ namespace thorn.Modules
             account[accountItem] = value;
 
             await _userAccounts.SaveAccountsAsync();
-            await Context.Message.AddReactionAsync(Emote.Parse(_pairs.GetString("YES_EMOTE")));
+            await Context.Message.AddReactionAsync(Emote.Parse((string) _constants.Strings.emote.yes));
             _logger.LogInformation("{ContextUser} changed their profile setting {AccountItem} to: {Value}", Context.User, accountItem, value);
             await _console.SendMessageAsync(embed: GetProfileUpdateEmbed($"**`{Context.User}`** změnil položku **{accountItem}** na: `{value}`", Context.User as IGuildUser, true));
         }
@@ -78,7 +78,7 @@ namespace thorn.Modules
             profile[accountItem] = null;
 
             await _userAccounts.SaveAccountsAsync();
-            await Context.Message.AddReactionAsync(Emote.Parse(_pairs.GetString("YES_EMOTE")));
+            await Context.Message.AddReactionAsync(Emote.Parse((string) _constants.Strings.emote.yes));
             _logger.LogInformation("{ContextUser} removed their profile {AccountItem}", Context.User, accountItem);
             await _console.SendMessageAsync(embed: GetProfileUpdateEmbed($"**`{Context.User}`** z profilu odstranil **{accountItem}**", Context.User as IGuildUser, false));
         }
@@ -114,7 +114,7 @@ namespace thorn.Modules
         }
         
         private static bool IsWikiLink(string link) => 
-            Regex.Match(link, @"^http:\/\/(scp-cs(-sandbox|)\.wikidot\.com|scp-wiki\.cz)\/[^\s]*$").Success;
+            Regex.Match(link, @"^http:\/\/(scp-cs(-sandbox(-2|)|)\.wikidot\.com|scp-wiki\.cz)\/[^\s]*$").Success;
 
         // If translator and author pages are the same, set PrivatePage so only that shows on the profile
         private static void UpdatePrivatePage(UserAccount userAccount, string value)
