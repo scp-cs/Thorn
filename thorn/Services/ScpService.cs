@@ -24,7 +24,7 @@ namespace thorn.Services
         {
             var request = new GraphQLHttpRequest
             {
-                Query = $"{{searchPages(query: \"{query}\") {{url}}",
+                Query = $"{{searchPages(query: \"{query}\") {{url wikidotInfo{{title}}}}}}",
             };
             
             var response = await _graphQlClient.SendQueryAsync<ResponseType>(request);
