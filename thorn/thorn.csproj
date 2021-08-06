@@ -24,9 +24,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Config\pairs.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
       <None Update="Media\stop.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
@@ -38,6 +35,9 @@
       </None>
       <None Update="Config\feeds.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Config\constants.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
 

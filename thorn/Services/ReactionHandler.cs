@@ -11,7 +11,7 @@ namespace thorn.Services
     public class ReactionHandler : DiscordClientService
     {
         private readonly DiscordSocketClient _client;
-        private readonly PairsService _pairs;
+        private readonly ConstantsService _constants;
         private readonly QuicklinkService _quicklink;
         
         // TODO: replace with SocketTextChannel
@@ -20,16 +20,16 @@ namespace thorn.Services
         private readonly ulong _classCRoleId;
         private readonly ulong _intRoleId;
 
-        public ReactionHandler(DiscordSocketClient client, PairsService pairs, ILogger<ReactionHandler> logger, QuicklinkService quicklink) : base(client, logger)
+        public ReactionHandler(DiscordSocketClient client, ConstantsService constants, ILogger<ReactionHandler> logger, QuicklinkService quicklink) : base(client, logger)
         {
             _client = client;
-            _pairs = pairs;
+            _constants = constants;
             _quicklink = quicklink;
 
-            _welcomeChannelId = ulong.Parse(_pairs.GetString("WELCOME_CHANNEL_ID"));
-            _loggingChannelId = ulong.Parse(_pairs.GetString("LOGGING_CHANNEL_ID"));
-            _classCRoleId = ulong.Parse(_pairs.GetString("CLASS_C_ROLE_ID"));
-            _intRoleId = ulong.Parse(_pairs.GetString("INT_ROLE_ID"));
+            _welcomeChannelId = _constants.Channels["welcome"];
+            _loggingChannelId = _constants.Channels["o5"];
+            _classCRoleId = _constants.Roles["classC"];
+            _intRoleId = _constants.Roles["INT"];
         }
 
         protected override Task ExecuteAsync(CancellationToken cancellationToken)
@@ -59,13 +59,13 @@ namespace thorn.Services
             var user = (IGuildUser) cacheable.Value.Author;
 
             // TODO: Maybe create another service for this?
-            if (Equals(emote, Emote.Parse(_pairs.GetString("999_EMOTE"))))
+            if (Equals(emote, Emote.Parse((string) _constants.Strings.emote.nine)))
                 await AssignRole(cacheable, reaction, user, UserActions.ClassC);
-            else if (Equals(emote, Emote.Parse(_pairs.GetString("POGEY_EMOTE"))))
+            else if (Equals(emote, Emote.Parse((string) _constants.Strings.emote.pogey)))
                 await AssignRole(cacheable, reaction, user, UserActions.Int);
-            else if (Equals(emote, Emote.Parse(_pairs.GetString("SAD_EMOTE"))))
+            else if (Equals(emote, Emote.Parse((string) _constants.Strings.emote.sad)))
                 await AssignRole(cacheable, reaction, user, UserActions.Underage);
-            else if (Equals(emote, Emote.Parse(_pairs.GetString("RAGEY_EMOTE"))))
+            else if (Equals(emote, Emote.Parse((string) _constants.Strings.emote.ragey)))
             {
                 await user.BanAsync();
                 Logger.LogWarning("Emergency ban enacted by {ReactionUser} on {User} ({UserId})", reaction.User, user, user.Id);

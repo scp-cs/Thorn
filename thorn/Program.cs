@@ -57,7 +57,7 @@ namespace thorn
                     collection.AddHostedService<ReactionHandler>();
                     collection.AddHostedService<QuartzHostedService>();
 
-                    collection.AddSingleton<PairsService>();
+                    collection.AddSingleton<ConstantsService>();
                     collection.AddSingleton<DataStorageService>();
                     collection.AddSingleton<UserAccountsService>();
                     collection.AddSingleton<ScpService>();

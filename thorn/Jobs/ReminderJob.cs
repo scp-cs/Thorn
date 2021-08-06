@@ -13,16 +13,16 @@ namespace thorn.Jobs
     {
         private readonly ILogger<ReminderJob> _logger;
         private readonly SocketTextChannel _channel;
-        private readonly PairsService _pairs;
+        private readonly ConstantsService _constants;
 
         private readonly Dictionary<string, string> _daily;
         
-        public ReminderJob(ILogger<ReminderJob> logger, DiscordSocketClient client, PairsService pairs, DataStorageService data)
+        public ReminderJob(ILogger<ReminderJob> logger, DiscordSocketClient client, ConstantsService constants, DataStorageService data)
         {
             _logger = logger;
-            _pairs = pairs;
+            _constants = constants;
 
-            _channel = client.GetChannel(ulong.Parse(pairs.GetString("GENERAL_CHANNEL_ID"))) as SocketTextChannel;
+            _channel = client.GetChannel(_constants.Channels["general"]) as SocketTextChannel;
             _daily = data.GetDictionary<string>("Config/daily.json");
         }
         
@@ -30,7 +30,7 @@ namespace thorn.Jobs
         {
             var day = DateTime.Now;
             var description = _daily[day.ToString("dd MM")] +
-                              $"\n\nPřeji hezký den {_pairs.GetString("AGRLOVE_EMOTE")}";
+                              $"\n\nPřeji hezký den {_constants.Strings.emote.agrlove}";
 
             var embed = new EmbedBuilder
             {

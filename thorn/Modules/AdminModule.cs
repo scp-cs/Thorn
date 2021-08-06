@@ -10,16 +10,16 @@ namespace thorn.Modules
     public class AdminModule : ModuleBase<SocketCommandContext>
     {
         private readonly DiscordSocketClient _client;
-        private readonly PairsService _pairs;
+        private readonly ConstantsService _constants;
         private readonly UserAccountsService _accounts;
         private readonly ILogger<AdminModule> _logger;
 
-        public AdminModule(ILogger<AdminModule> logger, DiscordSocketClient client, PairsService pairs,
+        public AdminModule(ILogger<AdminModule> logger, DiscordSocketClient client, ConstantsService constants,
             UserAccountsService accounts)
         {
             _logger = logger;
             _client = client;
-            _pairs = pairs;
+            _constants = constants;
             _accounts = accounts;
         }
 
@@ -29,7 +29,7 @@ namespace thorn.Modules
             await ReplyAsync(embed: new EmbedBuilder
             {
                 Title = "Thorn.aic",
-                Description = $"{_pairs.GetString("INFO")}\n\n**Ping:** {_client.Latency}ms",
+                Description = $"{_constants.Strings.info}\n\n**Ping:** {_client.Latency}ms",
                 ThumbnailUrl = _client.CurrentUser.GetAvatarUrl(),
                 Color = new Color(153, 204, 0)
             }.Build());
@@ -132,7 +132,7 @@ namespace thorn.Modules
         [RequireUserPermission(GuildPermission.Administrator)]
         public async Task ReloadStringsCommand()
         {
-            await _pairs.ReloadStrings();
+            _constants.ReloadConstants();
             _logger.LogInformation("{ContextUser} reloaded strings", Context.User);
             await ReplyAsync("Reloaded!");
         }
@@ -149,9 +149,9 @@ namespace thorn.Modules
 
         private async Task AddVoteEmotes(IMessage msg)
         {
-            await msg.AddReactionAsync(Emote.Parse(_pairs.GetString("YES_EMOTE")));
-            await msg.AddReactionAsync(Emote.Parse(_pairs.GetString("NO_EMOTE")));
-            await msg.AddReactionAsync(Emote.Parse(_pairs.GetString("ABSTAIN_EMOTE")));
+            await msg.AddReactionAsync(Emote.Parse((string) _constants.Strings.emote.yes));
+            await msg.AddReactionAsync(Emote.Parse((string) _constants.Strings.emote.no));
+            await msg.AddReactionAsync(Emote.Parse((string) _constants.Strings.emote.abstain));
 
             // I swear to god, since when are there 2 different eye emojis?
             // await msg.AddReactionAsync(new Emoji("👁️")); This one doesn't work, I think

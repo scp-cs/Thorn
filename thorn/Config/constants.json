@@ -1,0 +1,44 @@
+{
+  "channels" : {
+    "welcome" : 666672988883779585,
+    "news" : 537063810121334784,
+    "o5" : 661982623085625364,
+    "general" : 537064369725636611,
+    "console" : 537380917157691392
+  },
+  
+  "roles" : {
+    "classC" : 537322727225163776,
+    "INT" : 537023765163409439
+  },
+
+  "help" : ["OBECNÉ\n**`.help [1 - 3]`** - Hádej :)\n\n**`.help [pasní/překlad/korekce/členství]`** - Hádej :)\n\n**`.info`** - Info o botovi\n\n**`.ping`** - Pong!", "PROFIL\nProfil je místo, kde jsou uložené vaše body, osobní stránky a podobné informace.\n\n**`.profile`** - Zobrazí váš profil\n\n**`.leaderboard `** - Překladatelské/Spisovatelské/Korektorské bodové pořadí\n\n**`.profile set [položka] [hodnota]`** - Nastaví položku na vašem profilu\n\n**`.profile remove [položka]`** - Smaže položku na vašem profilu\n\n**Dostupné položky:**\n- **`wikidot`** vaše uživatelské jméno na Wikidotu\n- **`description`** popis vašeho účtu\n- **`author-page`** odkaz na vaši autorskou stránku\n- **`translator-page`** odkaz na vaši překladatelskou stránku\n- **`private-page`** odkaz na vaši osobní stránku (pokud máte spisovatelskou a překladatelskou složku sloučenou)\n- **`sandbox`** odkaz na váš sandbox\n- **`profile-color`** barva vašeho porfilu\n\nVšechno můžete zkrátit na samotná písmenka pro ušetření času, takže `.profile translator-page http://scp-cs.wikidot.com/prekladatelska-slozka-chamik` je to samé, jako `.p tp http://scp-cs.wikidot.com/prekladatelska-slozka-chamik`", "ADMIN\n***Všechny tyto příkazy mohou být použity pouze zaměstnanci, takže to ani nezkoušej.***\n\n**`.stop`** - Pošle stopku\n\n**`.reloadp`** - Manuální aktualizace profilů\n\n**`.reloads`** - Manuální aktualizace stringů\n\n**`.say [zpráva]`** - Pošle zprávu do aktuálního kanálu\n\n**`.say [kanál] [zpráva]`** - Pošle zprávu do daného kanálu\n\n**`.edit [ID zprávy] [zpráva]`** - Upraví zprávu\n\n**`.vote [hlasování]`** - Zahájí hlasování v aktuálním kanálu\n\n**`.vote [kanál] [hlasování]`** - Zahájí hlasování v daném kanálu\n\n**`.points [translation/writing/correction]`** - Nahrání souboru s překladatelskými/spisovatelskými/korektorskými body\n\n**`.status [mode] [status]`** - Změní status\n\n**Reakce ve #welcome:**\n<:999:796489160546320384> - Přijmi jako Class C\n<:pogey:796489167726444585> - Přijmi jako INT\n<:sad:796489168384950292> - Nepřijmi (věková hranice)\n<:ragey:796489167655010344> - Emergency ban\n\n**Hlasovací reakce:\n<:yes:778188278574612491> - Ano\n<:no:778188289797521419> - Ne\n <:abstain:778188303789850645> - Zdržuji se\n 👁 - Vím o hlasování**"],
+  
+  "strings" : {
+    "info" : "https://github.com/scp-cs/Thorn",
+    "emote" : {
+      "agrlove" : "<:agrlove:841710845871783947>",
+      "sad": "<:sad:796489168384950292>",
+      "nine": "<:999:796489160546320384>",
+      "pogey": "<:pogey:796489167726444585>",
+      "ping": "ng:796489166144929792>",
+      "ragey": "<:ragey:796489167655010344>",
+      "yes": "<:yes:778188278574612491>",
+      "no": "<:no:778188289797521419>",
+      "abstain": "<:abstain:778188303789850645>"
+    },
+    "specificHelp" : {
+      "translation": "[Návod pro Překladatele](http://scp-cs.wikidot.com/guide-for-translators)\n[Potřebné Překlady](http://scp-cs.wikidot.com/translation-requests)\n[Překladatelské Stránky](http://scp-cs.wikidot.com/translators-pages)",
+      "writing": "[Jak napsat SCP](http://scp-cs.wikidot.com/how-to-write-an-scp)\n[Pravidla Kritizování](http://scp-cs.wikidot.com/criticism-policy)\n[Autorské Stránky](http://scp-cs.wikidot.com/authors-pages)",
+      "correction": "[Terminologie](http://scp-cs.wikidot.com/terminologie)\n[Korektorský hub](http://scp-cs.wikidot.com/korektorsky-hub)",
+      "join": "[Návod pro Nováčky](http://scp-cs.wikidot.com/guide-for-newbies)\n[Připoj se ke Stránce](http://scp-cs.wikidot.com/system:join)\n[Pravidla Stránky](http://scp-cs.wikidot.com/site-rules)\n"
+    },
+    "bodies" : {
+      "trigger": "Nepoznávám ta těla ve vodě",
+      "error": "[✘] Zamítnuto. CRV uživatele není v přijatelných hodnotách. CRV uživatele je ovlivněno aktivními kognitohazardy. Prosím, zůstaňte na místě, člen lékařského tým[''///afe44/25\\\\23 s vámi bude za chvíli.",
+      "success": "[✅] Přijato. CRV uživatele je v přijatelných hodnotách.",
+      "ohgodohfuckTrigger": "Poznávám ta těla ve vodě",
+      "ohgodohfuck": "<:monkaw:796489170440159252>"
+    }
+  }
+}

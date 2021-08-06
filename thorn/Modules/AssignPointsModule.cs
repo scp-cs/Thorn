@@ -20,14 +20,14 @@ namespace thorn.Modules
         private readonly WebClient _webClient;
 
         private readonly UserAccountsService _accounts;
-        private readonly PairsService _pairs;
+        private readonly ConstantsService _constants;
         private readonly ILogger<AssignPointsModule> _logger;
         private readonly DiscordSocketClient _client;
 
-        public AssignPointsModule(UserAccountsService accounts, PairsService pairs, ILogger<AssignPointsModule> logger, DiscordSocketClient client)
+        public AssignPointsModule(UserAccountsService accounts, ConstantsService constants, ILogger<AssignPointsModule> logger, DiscordSocketClient client)
         {
             _accounts = accounts;
-            _pairs = pairs;
+            _constants = constants;
             _logger = logger;
             _client = client;
 
@@ -104,7 +104,7 @@ namespace thorn.Modules
             }
             
             changes.Append($"\n{typeString} body aktualizovány u {numOfChanges} lidí. Díky, " +
-                           $"{Context.User.Username} {_pairs.GetString("AGRLOVE_EMOTE")}");
+                           $"{Context.User.Username} {_constants.Strings.emote.agrlove}");
 
             var message = changes.ToString();
             
@@ -116,7 +116,7 @@ namespace thorn.Modules
 
             await ReplyAsync(message);
 
-            if (!(_client.GetChannel(ulong.Parse(_pairs.GetString("LOGGING_CHANNEL_ID"))) is SocketTextChannel o5) 
+            if (!(_client.GetChannel(_constants.Channels["o5"]) is SocketTextChannel o5) 
                 || numOfChanges == 0) return;
             await o5.SendMessageAsync(message);
         }
