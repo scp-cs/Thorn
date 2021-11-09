@@ -1,5 +1,5 @@
 # Thorn
-[![.NET Actions Status](https://github.com/scp-cs/Thorn/workflows/.NET/badge.svg)](https://github.com/scp-cs/Thorn/actions) [![Discord chat](https://img.shields.io/discord/536983829437480984?logo=discord)](https://discord.gg/ZAdfEJ4) [![Release](https://img.shields.io/github/release/scp-cs/Thorn.svg)](https://github.com/scp-cs/Thorn/releases) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![CI/CD](https://github.com/scp-cs/Thorn/actions/workflows/main.yml/badge.svg)](https://github.com/scp-cs/Thorn/actions/workflows/main.yml) [![Discord chat](https://img.shields.io/discord/536983829437480984?logo=discord)](https://discord.gg/ZAdfEJ4) [![Release](https://img.shields.io/github/release/scp-cs/Thorn.svg)](https://github.com/scp-cs/Thorn/releases) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Thorn is a Discord Bot made specifically for the Czech branch Discord chat. Listed below are some notable features:
 
