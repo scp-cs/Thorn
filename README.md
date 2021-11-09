@@ -11,7 +11,6 @@ Thorn is a Discord Bot made specifically for the Czech branch Discord chat. List
 * RSS Feed posting
 * Quick links to important guides/hubs, and mentioned SCP articles
 * Daily reminder with important events in the past and name-days
-* Wiki search
 
 ## Other stuff
 
