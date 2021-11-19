@@ -47,11 +47,8 @@ namespace thorn
                     config.Token = context.Configuration["token"];
                     config.LogFormat = (message, exception) => $"{message.Source}: {message.Message}";
                 })
-                .UseCommandService((context, config) =>
-                {
-                    config.LogLevel = LogSeverity.Info;
-                })
-                .ConfigureServices((context, collection) =>
+                .UseCommandService((_, config) => { config.LogLevel = LogSeverity.Info; })
+                .ConfigureServices((_, collection) =>
                 {
                     collection.AddHostedService<CommandHandler>();
                     collection.AddHostedService<ReactionHandler>();
@@ -65,7 +62,7 @@ namespace thorn
 
                     collection.AddSingleton<IJobFactory, SingletonJobFactory>();
                     collection.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
-                    
+
                     collection.AddSingleton<ReminderJob>();
 
                     collection.AddSingleton(new JobSchedule(
