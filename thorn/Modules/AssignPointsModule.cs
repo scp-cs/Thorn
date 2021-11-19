@@ -104,7 +104,7 @@ namespace thorn.Modules
             }
             
             changes.Append($"\n{typeString} body aktualizovány u {numOfChanges} lidí. Díky, " +
-                           $"{Context.User.Username} {_constants.Strings.emote.agrlove}");
+                           $"{Context.User.Username} ❤️");
 
             var message = changes.ToString();
             

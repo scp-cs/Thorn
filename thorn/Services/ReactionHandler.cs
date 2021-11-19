@@ -59,17 +59,12 @@ namespace thorn.Services
             var user = (IGuildUser) cacheable.Value.Author;
 
             // TODO: Maybe create another service for this?
-            if (Equals(emote, Emote.Parse((string) _constants.Strings.emote.nine)))
+            if (Equals(emote, new Emoji("👍")))
                 await AssignRole(cacheable, reaction, user, UserActions.ClassC);
-            else if (Equals(emote, Emote.Parse((string) _constants.Strings.emote.pogey)))
+            else if (Equals(emote, new Emoji("😄")))
                 await AssignRole(cacheable, reaction, user, UserActions.Int);
-            else if (Equals(emote, Emote.Parse((string) _constants.Strings.emote.sad)))
+            else if (Equals(emote, new Emoji("😔")))
                 await AssignRole(cacheable, reaction, user, UserActions.Underage);
-            else if (Equals(emote, Emote.Parse((string) _constants.Strings.emote.ragey)))
-            {
-                await user.BanAsync();
-                Logger.LogWarning("Emergency ban enacted by {ReactionUser} on {User} ({UserId})", reaction.User, user, user.Id);
-            }
         }
 
         private async Task AssignRole(Cacheable<IUserMessage, ulong> cacheable, SocketReaction reaction,

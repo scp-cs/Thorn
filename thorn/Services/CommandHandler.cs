@@ -65,13 +65,13 @@ namespace thorn.Services
         private async Task<bool> HahaFunni(SocketMessage m)
         {
             if (m.Content.Equals("good bot", StringComparison.OrdinalIgnoreCase))
-                await m.AddReactionAsync(Emote.Parse((string) _constants.Strings.emote.agrlove));
+                await m.AddReactionAsync(new Emoji("❤️"));
             
             else if (m.Content.Equals("bad bot", StringComparison.OrdinalIgnoreCase))
-                await m.AddReactionAsync(Emote.Parse((string) _constants.Strings.emote.sad));
+                await m.AddReactionAsync(new Emoji("😔"));
             
             else if (m.Content.Equals("Díky Thorne", StringComparison.OrdinalIgnoreCase)) // TODO: change this to a regex
-                await m.AddReactionAsync(Emote.Parse((string) _constants.Strings.emote.agrlove));
+                await m.AddReactionAsync(new Emoji("❤️"));
             
             else if (m.Content.Equals(_constants.Strings.bodies.trigger, StringComparison.OrdinalIgnoreCase)) // TODO: change this to a regex as well
                 await m.Channel.SendMessageAsync(_random.Next(2) == 0 ?

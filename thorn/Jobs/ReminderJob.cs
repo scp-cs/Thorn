@@ -30,7 +30,7 @@ namespace thorn.Jobs
         {
             var day = DateTime.Now;
             var description = _daily[day.ToString("dd MM")] +
-                              $"\n\nPřeji hezký den {_constants.Strings.emote.agrlove}";
+                              $"\n\nPřeji hezký den ❤️";
 
             var embed = new EmbedBuilder
             {
