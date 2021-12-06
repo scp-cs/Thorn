@@ -29,10 +29,8 @@
       "join": "[Návod pro Nováčky](http://scp-cs.wikidot.com/guide-for-newbies)\n[Připoj se ke Stránce](http://scp-cs.wikidot.com/system:join)\n[Pravidla Stránky](http://scp-cs.wikidot.com/site-rules)\n"
     },
     "bodies": {
-      "trigger": "Nepoznávám ta těla ve vodě",
       "error": "[✘] Zamítnuto. CRV uživatele není v přijatelných hodnotách. CRV uživatele je ovlivněno aktivními kognitohazardy. Prosím, zůstaňte na místě, člen lékařského tým[''///afe44/25\\\\23 s vámi bude za chvíli.",
       "success": "[✅] Přijato. CRV uživatele je v přijatelných hodnotách.",
-      "ohgodohfuckTrigger": "Poznávám ta těla ve vodě",
       "ohgodohfuck": "<:monkaw:796489170440159252>"
     }
   }

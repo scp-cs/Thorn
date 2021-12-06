@@ -1,5 +1,6 @@
 using System;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Discord;
@@ -64,21 +65,21 @@ namespace thorn.Services
 
         private async Task<bool> HahaFunni(SocketMessage m)
         {
-            if (m.Content.Equals("good bot", StringComparison.OrdinalIgnoreCase))
-                await m.AddReactionAsync(new Emoji("❤️"));
-            
-            else if (m.Content.Equals("bad bot", StringComparison.OrdinalIgnoreCase))
+            if (m.Content.Equals("good bot", StringComparison.InvariantCultureIgnoreCase))
+                await m.AddReactionAsync(new Emoji("💕"));
+
+            else if (m.Content.Equals("bad bot", StringComparison.InvariantCultureIgnoreCase))
                 await m.AddReactionAsync(new Emoji("😔"));
             
-            else if (m.Content.Equals("Díky Thorne", StringComparison.OrdinalIgnoreCase)) // TODO: change this to a regex
+            else if (Regex.IsMatch(m.Content, @"d[íi]ky(, |,| )thorne", RegexOptions.IgnoreCase))
                 await m.AddReactionAsync(new Emoji("❤️"));
             
-            else if (m.Content.Equals(_constants.Strings.bodies.trigger, StringComparison.OrdinalIgnoreCase)) // TODO: change this to a regex as well
+            else if (Regex.IsMatch(m.Content, @"nepozn[áa]v[áa]m t[ay] t[ěe]la ve vod[ěe]", RegexOptions.IgnoreCase))
                 await m.Channel.SendMessageAsync(_random.Next(2) == 0 ?
                     _constants.Strings.bodies.error :
                     _constants.Strings.bodies.success);
             
-            else if (m.Content.Equals(_constants.Strings.bodies.ohgodohfuckTrigger, StringComparison.OrdinalIgnoreCase)) // TODO: and this as well
+            else if (Regex.IsMatch(m.Content, @"pozn[áa]v[áa]m t[ay] t[ěe]la ve vod[ěe]", RegexOptions.IgnoreCase))
                 await m.Channel.SendMessageAsync(_constants.Strings.bodies.ohgodohfuck);
             
             else return false;
