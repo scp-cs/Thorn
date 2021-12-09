@@ -6,3 +6,5 @@ obj/
 thorn.sln.DotSettings.user
 /.vs
 backup/
+.vscode/
+scripts/

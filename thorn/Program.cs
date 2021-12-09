@@ -13,68 +13,67 @@ using Serilog.Events;
 using thorn.Jobs;
 using thorn.Services;
 
-namespace thorn
+namespace thorn;
+
+internal static class Program
 {
-    internal static class Program
+    private static async Task Main()
     {
-        private static async Task Main()
-        {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
-                .WriteTo.Console()
-                .WriteTo.File("log/log.txt", rollingInterval: RollingInterval.Day)
-                .CreateLogger();
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Information()
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
+            .WriteTo.Console()
+            .WriteTo.File("log/log.txt", rollingInterval: RollingInterval.Day)
+            .CreateLogger();
 
-            var hostBuilder = Host.CreateDefaultBuilder()
-                .ConfigureAppConfiguration(x =>
+        var hostBuilder = Host.CreateDefaultBuilder()
+            .ConfigureAppConfiguration(x =>
+            {
+                x.AddJsonFile("Config/config.json");
+                x.Build();
+            })
+            .UseSerilog()
+            .ConfigureDiscordHost((context, config) =>
+            {
+                config.SocketConfig = new DiscordSocketConfig
                 {
-                    x.AddJsonFile("Config/config.json");
-                    x.Build();
-                })
-                .UseSerilog()
-                .ConfigureDiscordHost((context, config) =>
-                {
-                    config.SocketConfig = new DiscordSocketConfig
-                    {
-                        AlwaysDownloadUsers = true,
-                        DefaultRetryMode = RetryMode.RetryRatelimit,
-                        ExclusiveBulkDelete = true,
-                        MessageCacheSize = 50,
-                        LogLevel = LogSeverity.Info
-                    };
+                    AlwaysDownloadUsers = true,
+                    DefaultRetryMode = RetryMode.RetryRatelimit,
+                    ExclusiveBulkDelete = true,
+                    MessageCacheSize = 50,
+                    LogLevel = LogSeverity.Info
+                };
 
-                    config.Token = context.Configuration["token"];
-                    config.LogFormat = (message, exception) => $"{message.Source}: {message.Message}";
-                })
-                .UseCommandService((_, config) => { config.LogLevel = LogSeverity.Info; })
-                .ConfigureServices((_, collection) =>
-                {
-                    collection.AddHostedService<CommandHandler>();
-                    collection.AddHostedService<ReactionHandler>();
-                    collection.AddHostedService<QuartzHostedService>();
+                config.Token = context.Configuration["token"];
+                config.LogFormat = (message, exception) => $"{message.Source}: {message.Message}";
+            })
+            .UseCommandService((_, config) => { config.LogLevel = LogSeverity.Info; })
+            .ConfigureServices((_, collection) =>
+            {
+                collection.AddHostedService<CommandHandler>();
+                collection.AddHostedService<ReactionHandler>();
+                collection.AddHostedService<QuartzHostedService>();
 
-                    collection.AddSingleton<ConstantsService>();
-                    collection.AddSingleton<DataStorageService>();
-                    collection.AddSingleton<UserAccountsService>();
-                    collection.AddSingleton<ScpService>();
-                    collection.AddSingleton<QuicklinkService>();
+                collection.AddSingleton<ConstantsService>();
+                collection.AddSingleton<DataStorageService>();
+                collection.AddSingleton<UserAccountsService>();
+                collection.AddSingleton<ScpService>();
+                collection.AddSingleton<QuicklinkService>();
 
-                    collection.AddSingleton<IJobFactory, SingletonJobFactory>();
-                    collection.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+                collection.AddSingleton<IJobFactory, SingletonJobFactory>();
+                collection.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
 
-                    collection.AddSingleton<ReminderJob>();
+                collection.AddSingleton<ReminderJob>();
 
-                    collection.AddSingleton(new JobSchedule(
-                        typeof(ReminderJob),
-                        "0 0 0 * * ?")); // Every day at midnight
-                    collection.AddSingleton<RssJob>();
-                    collection.AddSingleton(new JobSchedule(
-                        typeof(RssJob),
-                        "0 0/2 * * * ?")); // Every two minutes
-                });
+                collection.AddSingleton(new JobSchedule(
+                    typeof(ReminderJob),
+                    "0 0 0 * * ?")); // Every day at midnight
+                collection.AddSingleton<RssJob>();
+                collection.AddSingleton(new JobSchedule(
+                    typeof(RssJob),
+                    "0 0/2 * * * ?")); // Every two minutes
+            });
 
-            await hostBuilder.RunConsoleAsync();
-        }
+        await hostBuilder.RunConsoleAsync();
     }
 }

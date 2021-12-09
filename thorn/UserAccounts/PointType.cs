@@ -1,9 +1,8 @@
-namespace thorn.UserAccounts
+namespace thorn.UserAccounts;
+
+public enum PointType
 {
-    public enum PointType
-    {
-        Translation,
-        Writing,
-        Correction
-    }
+    Translation,
+    Writing,
+    Correction
 }

@@ -1,13 +1,12 @@
-namespace thorn.UserAccounts
+namespace thorn.UserAccounts;
+
+public enum AccountItem
 {
-    public enum AccountItem
-    {
-        WikidotUsername,
-        Description,
-        AuthorPage,
-        TranslatorPage,
-        PrivatePage,
-        Sandbox,
-        ProfileColor
-    }
+    WikidotUsername,
+    Description,
+    AuthorPage,
+    TranslatorPage,
+    PrivatePage,
+    Sandbox,
+    ProfileColor
 }
