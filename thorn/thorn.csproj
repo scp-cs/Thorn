@@ -10,7 +10,7 @@
         <PackageReference Include="Discord.Addons.Hosting" Version="4.0.2"/>
         <PackageReference Include="Discord.Addons.Preconditions" Version="2.2.0-dev3"/>
         <PackageReference Include="Discord.Net" Version="2.4.0"/>
-        <PackageReference Include="GraphQL.Client" Version="4.0.1"/>
+        <PackageReference Include="GraphQL.Client" Version="4.0.2"/>
         <PackageReference Include="GraphQL.Client.Serializer.Newtonsoft" Version="4.0.2"/>
         <PackageReference Include="Html2Markdown" Version="5.0.0.468"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0"/>
