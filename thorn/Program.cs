@@ -63,10 +63,15 @@ internal static class Program
                 collection.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
 
                 collection.AddSingleton<ReminderJob>();
-
                 collection.AddSingleton(new JobSchedule(
                     typeof(ReminderJob),
                     "0 0 0 * * ?")); // Every day at midnight
+
+                collection.AddSingleton<KickInactiveJob>();
+                collection.AddSingleton(new JobSchedule(
+                    typeof(KickInactiveJob),
+                    "0 0 0 * * ?")); // Every day at midnight
+                
                 collection.AddSingleton<RssJob>();
                 collection.AddSingleton(new JobSchedule(
                     typeof(RssJob),
