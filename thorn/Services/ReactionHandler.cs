@@ -39,13 +39,13 @@ public class ReactionHandler : DiscordClientService
         return Task.CompletedTask;
     }
 
-    private async Task ClientOnReactionAdded(Cacheable<IUserMessage, ulong> cacheable,
-        Cacheable<IMessageChannel, ulong> cacheable1, SocketReaction reaction)
+    private async Task ClientOnReactionAdded(Cacheable<IUserMessage, ulong> messageCache,
+        Cacheable<IMessageChannel, ulong> channelCache, SocketReaction reaction)
     {
         if (reaction.UserId == _client.CurrentUser.Id) return;
 
         // Reaction handling in the #welcome channel
-        if (reaction.Channel.Id == _welcomeChannelId) await HandleWelcomeReactions(cacheable, reaction);
+        if (reaction.Channel.Id == _welcomeChannelId) await HandleWelcomeReactions(messageCache, reaction);
 
         // User requested quick link delete
         if (Equals(reaction.Emote, new Emoji("🗞️")) && _quicklink.IsRecentQuicklink(reaction.MessageId))

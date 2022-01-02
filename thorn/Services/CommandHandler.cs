@@ -48,7 +48,7 @@ public class CommandHandler : DiscordClientService
 
     private async Task HandleCommandAsync(SocketMessage m)
     {
-        if (!(m is SocketUserMessage msg) || m.Source == MessageSource.Bot) return;
+        if (m is not SocketUserMessage msg || m.Source == MessageSource.Bot) return;
 
         var argPos = 0;
 

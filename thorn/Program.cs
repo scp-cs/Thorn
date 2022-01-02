@@ -44,7 +44,7 @@ internal static class Program
                 };
 
                 config.Token = context.Configuration["token"];
-                config.LogFormat = (message, exception) => $"{message.Source}: {message.Message}";
+                config.LogFormat = (message, _) => $"{message.Source}: {message.Message}";
             })
             .UseCommandService((_, config) => { config.LogLevel = LogSeverity.Info; })
             .ConfigureServices((_, collection) =>
