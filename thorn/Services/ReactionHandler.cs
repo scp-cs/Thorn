@@ -40,7 +40,7 @@ public class ReactionHandler : DiscordClientService
     }
 
     private async Task ClientOnReactionAdded(Cacheable<IUserMessage, ulong> cacheable,
-        ISocketMessageChannel messageChannel, SocketReaction reaction)
+        Cacheable<IMessageChannel, ulong> cacheable1, SocketReaction reaction)
     {
         if (reaction.UserId == _client.CurrentUser.Id) return;
 

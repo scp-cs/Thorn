@@ -39,9 +39,8 @@ internal static class Program
                 {
                     AlwaysDownloadUsers = true,
                     DefaultRetryMode = RetryMode.RetryRatelimit,
-                    ExclusiveBulkDelete = true,
                     MessageCacheSize = 50,
-                    LogLevel = LogSeverity.Info
+                    LogLevel = LogSeverity.Info,
                 };
 
                 config.Token = context.Configuration["token"];
