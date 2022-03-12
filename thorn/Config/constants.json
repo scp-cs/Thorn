@@ -17,6 +17,7 @@
   ],
   "strings": {
     "info": "https://github.com/scp-cs/Thorn",
+    "kick": "Ahoj, protože jsi neodpověděl na otázky ve #welcome, byl jsi ze serveru kicknut. Pokud chceš, můžeš se připojit a zkusit to ještě jednou: https://discord.gg/ZAdfEJ4 ❤️",
     "emote": {
       "yes": "<:yes:778188278574612491>",
       "no": "<:no:778188289797521419>",

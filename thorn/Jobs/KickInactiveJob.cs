@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Discord;
 using Discord.WebSocket;
 using Microsoft.Extensions.Logging;
 using Quartz;
@@ -41,6 +42,7 @@ public class KickInactiveJob : IJob
                 _cachedUsers.Add(user.Id);
             else
             {
+                await user.SendMessageAsync((string) _constants.Strings.kick);
                 await user.KickAsync("Neaktivita");
                 kickedUsers.Append($"`{user}`");
 
