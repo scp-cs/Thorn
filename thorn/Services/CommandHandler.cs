@@ -77,11 +77,11 @@ public class CommandHandler : DiscordClientService
 
         else if (Regex.IsMatch(m.Content, @"nepozn[áa]v[áa]m t[ay] t[ěe]la ve vod[ěe]", RegexOptions.IgnoreCase))
             await m.Channel.SendMessageAsync(_random.Next(2) == 0
-                ? _constants.Strings.bodies.error
-                : _constants.Strings.bodies.success);
+                ? (string) _constants.Strings.bodies.error
+                : (string) _constants.Strings.bodies.success);
 
         else if (Regex.IsMatch(m.Content, @"pozn[áa]v[áa]m t[ay] t[ěe]la ve vod[ěe]", RegexOptions.IgnoreCase))
-            await m.Channel.SendMessageAsync(_constants.Strings.bodies.ohgodohfuck);
+            await m.Channel.SendMessageAsync((string) _constants.Strings.bodies.ohgodohfuck);
 
         else return false;
         return true;
