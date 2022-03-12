@@ -117,8 +117,7 @@ public class AssignPointsModule : ModuleBase<SocketCommandContext>
 
         await ReplyAsync(message);
 
-        if (!(_client.GetChannel(_constants.Channels["o5"]) is SocketTextChannel o5)
-            || numOfChanges == 0) return;
+        if (_client.GetChannel(_constants.Channels["o5"]) is not SocketTextChannel o5 || numOfChanges == 0) return;
         await o5.SendMessageAsync(message);
     }
 
