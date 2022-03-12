@@ -16,7 +16,7 @@
     "ADMIN\n***Všechny tyto příkazy mohou být použity pouze zaměstnanci, takže to ani nezkoušej.***\n\n**`.stop`** - Pošle stopku\n\n**`.reloadp`** - Manuální aktualizace profilů\n\n**`.reloads`** - Manuální aktualizace stringů\n\n**`.say [zpráva]`** - Pošle zprávu do aktuálního kanálu\n\n**`.say [kanál] [zpráva]`** - Pošle zprávu do daného kanálu\n\n**`.edit [ID zprávy] [zpráva]`** - Upraví zprávu\n\n**`.vote [hlasování]`** - Zahájí hlasování v aktuálním kanálu\n\n**`.vote [kanál] [hlasování]`** - Zahájí hlasování v daném kanálu\n\n**`.points [translation/writing/correction]`** - Nahrání souboru s překladatelskými/spisovatelskými/korektorskými body\n\n**`.status [mode] [status]`** - Změní status\n\n**Reakce ve #welcome:**\n:thumbsup: - Přijmi jako Class C\n:smile: - Přijmi jako INT\n:pensive: - Nepřijmi (věková hranice)\n\n**Hlasovací reakce:\n<:yes:778188278574612491> - Ano\n<:no:778188289797521419> - Ne\n <:abstain:778188303789850645> - Zdržuji se\n 👁 - Vím o hlasování**"
   ],
   "strings": {
-    "info": "https://github.com/scp-cs/Thorn",
+    "info": "**Verze:** v2.5.1\n**Source:** https://github.com/scp-cs/Thorn",
     "kick": "Ahoj, protože jsi neodpověděl na otázky ve #welcome, byl jsi ze serveru kicknut. Pokud chceš, můžeš se připojit a zkusit to ještě jednou: https://discord.gg/ZAdfEJ4 ❤️",
     "emote": {
       "yes": "<:yes:778188278574612491>",
