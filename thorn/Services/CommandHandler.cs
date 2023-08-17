@@ -19,13 +19,12 @@ public class CommandHandler : DiscordClientService
     private readonly DiscordSocketClient _client;
     private readonly CommandService _command;
     private readonly IConfiguration _config;
-    private readonly QuicklinkService _quicklink;
 
     private readonly ConstantsService _constants;
     private readonly Random _random;
 
     public CommandHandler(IServiceProvider provider, DiscordSocketClient client, CommandService commandService,
-        IConfiguration config, ConstantsService constants, QuicklinkService quicklink, ILogger<CommandHandler> logger) :
+        IConfiguration config, ConstantsService constants, ILogger<CommandHandler> logger) :
         base(client, logger)
     {
         _provider = provider;
@@ -33,7 +32,6 @@ public class CommandHandler : DiscordClientService
         _command = commandService;
         _config = config;
         _constants = constants;
-        _quicklink = quicklink;
         _random = new Random();
     }
 
@@ -55,7 +53,6 @@ public class CommandHandler : DiscordClientService
         if (!msg.HasStringPrefix(_config["prefix"], ref argPos))
         {
             if (await HahaFunni(m)) return;
-            if (await _quicklink.CheckForScpReference(msg)) return;
         }
         else
         {

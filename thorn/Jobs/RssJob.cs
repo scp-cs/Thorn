@@ -25,15 +25,13 @@ public class RssJob : IJob
     private readonly List<FeedConfig> _configs;
     private readonly Dictionary<ulong, SocketTextChannel> _channels;
     private readonly WebClient _webClient;
-    private readonly UserAccountsService _accounts;
     private readonly DiscordSocketClient _client;
     private Dictionary<FeedConfig, DateTime?> _lastUpdates;
 
-    public RssJob(ILogger<ReminderJob> logger, DiscordSocketClient client, UserAccountsService accounts)
+    public RssJob(ILogger<ReminderJob> logger, DiscordSocketClient client)
     {
         _logger = logger;
         _client = client;
-        _accounts = accounts;
         _channels = new Dictionary<ulong, SocketTextChannel>();
         _lastUpdates = new Dictionary<FeedConfig, DateTime?>();
         _webClient = new WebClient();
@@ -151,8 +149,6 @@ public class RssJob : IJob
 
         if (!(author is null))
         {
-            var account = _accounts.GetAccountByWikidot(author);
-
             // TODO: fix this
             /*
             if (!(account is null))

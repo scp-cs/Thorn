@@ -41,6 +41,7 @@ internal static class Program
                     DefaultRetryMode = RetryMode.RetryRatelimit,
                     MessageCacheSize = 50,
                     LogLevel = LogSeverity.Info,
+                    GatewayIntents = GatewayIntents.All,
                 };
 
                 config.Token = context.Configuration["token"];
@@ -55,9 +56,6 @@ internal static class Program
 
                 collection.AddSingleton<ConstantsService>();
                 collection.AddSingleton<DataStorageService>();
-                collection.AddSingleton<UserAccountsService>();
-                collection.AddSingleton<ScpService>();
-                collection.AddSingleton<QuicklinkService>();
 
                 collection.AddSingleton<IJobFactory, SingletonJobFactory>();
                 collection.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();

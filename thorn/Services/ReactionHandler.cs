@@ -12,7 +12,6 @@ public class ReactionHandler : DiscordClientService
 {
     private readonly DiscordSocketClient _client;
     private readonly ConstantsService _constants;
-    private readonly QuicklinkService _quicklink;
 
     // TODO: replace with SocketTextChannel
     private readonly ulong _welcomeChannelId;
@@ -20,12 +19,10 @@ public class ReactionHandler : DiscordClientService
     private readonly ulong _classCRoleId;
     private readonly ulong _intRoleId;
 
-    public ReactionHandler(DiscordSocketClient client, ConstantsService constants, ILogger<ReactionHandler> logger,
-        QuicklinkService quicklink) : base(client, logger)
+    public ReactionHandler(DiscordSocketClient client, ConstantsService constants, ILogger<ReactionHandler> logger) : base(client, logger)
     {
         _client = client;
         _constants = constants;
-        _quicklink = quicklink;
 
         _welcomeChannelId = _constants.Channels["welcome"];
         _loggingChannelId = _constants.Channels["o5"];
@@ -46,10 +43,6 @@ public class ReactionHandler : DiscordClientService
 
         // Reaction handling in the #welcome channel
         if (reaction.Channel.Id == _welcomeChannelId) await HandleWelcomeReactions(messageCache, reaction);
-
-        // User requested quick link delete
-        if (Equals(reaction.Emote, new Emoji("🗞️")) && _quicklink.IsRecentQuicklink(reaction.MessageId))
-            await reaction.Message.Value.DeleteAsync();
     }
 
     private async Task HandleWelcomeReactions(Cacheable<IUserMessage, ulong> cacheable, SocketReaction reaction)

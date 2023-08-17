@@ -11,16 +11,13 @@ public class AdminModule : ModuleBase<SocketCommandContext>
 {
     private readonly DiscordSocketClient _client;
     private readonly ConstantsService _constants;
-    private readonly UserAccountsService _accounts;
     private readonly ILogger<AdminModule> _logger;
 
-    public AdminModule(ILogger<AdminModule> logger, DiscordSocketClient client, ConstantsService constants,
-        UserAccountsService accounts)
+    public AdminModule(ILogger<AdminModule> logger, DiscordSocketClient client, ConstantsService constants)
     {
         _logger = logger;
         _client = client;
         _constants = constants;
-        _accounts = accounts;
     }
 
     [Command("info")]
@@ -136,16 +133,6 @@ public class AdminModule : ModuleBase<SocketCommandContext>
     {
         _constants.ReloadConstants();
         _logger.LogInformation("{ContextUser} reloaded strings", Context.User);
-        await ReplyAsync("Reloaded!");
-    }
-
-    [Command("loadp")]
-    [Alias("load-profiles")]
-    [RequireUserPermission(GuildPermission.Administrator)]
-    public async Task ReloadProfilesCommand()
-    {
-        await _accounts.LoadAccountsAsync();
-        _logger.LogInformation("{ContextUser} reloaded profiles", Context.User);
         await ReplyAsync("Reloaded!");
     }
 
