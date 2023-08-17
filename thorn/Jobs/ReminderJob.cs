@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Quartz;
 using thorn.Services;
@@ -17,14 +18,13 @@ public class ReminderJob : IJob
 
     private readonly Dictionary<string, string> _daily;
 
-    public ReminderJob(ILogger<ReminderJob> logger, DiscordSocketClient client, ConstantsService constants,
-        DataStorageService data)
+    public ReminderJob(ILogger<ReminderJob> logger, DiscordSocketClient client, ConstantsService constants, IConfiguration config)
     {
         _logger = logger;
         _constants = constants;
 
         _channel = client.GetChannel(_constants.Channels["general"]) as SocketTextChannel;
-        _daily = data.GetDictionary<string>("Config/daily.json");
+        _daily = config.GetSection("daily").Get<Dictionary<string, string>>();
     }
 
     public async Task Execute(IJobExecutionContext context)

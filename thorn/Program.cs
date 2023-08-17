@@ -30,6 +30,7 @@ internal static class Program
             .ConfigureAppConfiguration(x =>
             {
                 x.AddJsonFile("Config/config.json");
+                x.AddJsonFile("Config/daily.json");
                 x.Build();
             })
             .UseSerilog()
@@ -55,7 +56,6 @@ internal static class Program
                 collection.AddHostedService<QuartzHostedService>();
 
                 collection.AddSingleton<ConstantsService>();
-                collection.AddSingleton<DataStorageService>();
 
                 collection.AddSingleton<IJobFactory, SingletonJobFactory>();
                 collection.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
@@ -63,7 +63,7 @@ internal static class Program
                 collection.AddSingleton<ReminderJob>();
                 collection.AddSingleton(new JobSchedule(
                     typeof(ReminderJob),
-                    "0 0 0 * * ?")); // Every day at midnight
+                    "0 0/1 * 1/1 * ? *")); // Every day at midnight
 
                 collection.AddSingleton<RssJob>();
                 collection.AddSingleton(new JobSchedule(
