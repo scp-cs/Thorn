@@ -11,10 +11,10 @@
         <PackageReference Include="Discord.Addons.Preconditions" Version="2.2.0-dev3" />
         <PackageReference Include="Discord.Net" Version="3.4.1" />
         
-        <PackageReference Include="GraphQL.Client.Serializer.Newtonsoft" Version="4.0.2" />
+        <PackageReference Include="GraphQL.Client.Serializer.Newtonsoft" Version="6.0.0" />
         <PackageReference Include="Discord.Net" Version="3.9.0" />
         <PackageReference Include="GraphQL.Client" Version="6.0.0" />
-        <PackageReference Include="GraphQL.Client.Serializer.Newtonsoft" Version="5.1.1" />
+        <PackageReference Include="GraphQL.Client.Serializer.Newtonsoft" Version="6.0.0" />
         <PackageReference Include="Html2Markdown" Version="5.1.0.703" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
         <PackageReference Include="Quartz" Version="3.4.0" />
