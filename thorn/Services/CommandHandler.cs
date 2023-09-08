@@ -80,7 +80,16 @@ public class CommandHandler : DiscordClientService
         else if (Regex.IsMatch(m.Content, @"pozn[áa]v[áa]m t[ay] t[ěe]la ve vod[ěe]", RegexOptions.IgnoreCase))
             await m.Channel.SendMessageAsync((string) _constants.Strings.bodies.ohgodohfuck);
 
+        else if (Regex.IsMatch(m.Content, @"pls penis"))
+            await m.Channel.SendMessageAsync(GeneratePenis(m.Author));
+
         else return false;
         return true;
+    }
+
+    private string GeneratePenis(SocketUser usr)
+    {
+        var len = _random.Next(15);
+        return $"{usr.Mention} tvůj pele: `8{new string('=', len)}D`";
     }
 }
