@@ -83,6 +83,9 @@ public class CommandHandler : DiscordClientService
         else if (Regex.IsMatch(m.Content, @"pls penis"))
             await m.Channel.SendMessageAsync(GeneratePenis(m.Author));
 
+	else if (Regex.IsMatch(m.Content, @":3"))
+	    await m.Channel.SendMessageAsync(":33");
+
         else return false;
         return true;
     }
