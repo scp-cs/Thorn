@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -15,7 +16,6 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Quartz;
 using thorn.Config;
-using thorn.Services;
 
 namespace thorn.Jobs;
 
@@ -24,7 +24,7 @@ public class RssJob : IJob
     private readonly ILogger<ReminderJob> _logger;
     private readonly List<FeedConfig> _configs;
     private readonly Dictionary<ulong, SocketTextChannel> _channels;
-    private readonly WebClient _webClient;
+    private readonly HttpClient _webClient;
     private readonly DiscordSocketClient _client;
     private Dictionary<FeedConfig, DateTime?> _lastUpdates;
 
@@ -34,7 +34,7 @@ public class RssJob : IJob
         _client = client;
         _channels = new Dictionary<ulong, SocketTextChannel>();
         _lastUpdates = new Dictionary<FeedConfig, DateTime?>();
-        _webClient = new WebClient();
+        _webClient = new HttpClient();
 
         _configs = JsonConvert.DeserializeObject<List<FeedConfig>>(File.ReadAllText("Config/feeds.json"));
 
@@ -76,13 +76,17 @@ public class RssJob : IJob
         {
             feed = await FeedReader.ReadAsync(feedConfig.Link);
         }
+        // TODO: I don't have time for a refactor now, but this whole section is broken anyway. Maintenance is in order here.
+        // else
+        // {
+        //     // Basic HTTP auth
+        //     _webClient.Credentials = new NetworkCredential(feedConfig.Username, feedConfig.Password);
+        //     var response = _webClient.DownloadString(feedConfig.Link);
+        //     feed = FeedReader.ReadFromString(response);
+        // }
         else
-        {
-            // Basic HTTP auth
-            _webClient.Credentials = new NetworkCredential(feedConfig.Username, feedConfig.Password);
-            var response = _webClient.DownloadString(feedConfig.Link);
-            feed = FeedReader.ReadFromString(response);
-        }
+            return new List<FeedItem>();
+        // don't @ me
 
         var lastUpdate = _lastUpdates[feedConfig];
 

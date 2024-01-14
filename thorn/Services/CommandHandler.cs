@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -83,8 +84,11 @@ public class CommandHandler : DiscordClientService
         else if (Regex.IsMatch(m.Content, @"pls penis"))
             await m.Channel.SendMessageAsync(GeneratePenis(m.Author));
 
-	else if (Regex.IsMatch(m.Content, @":3"))
-	    await m.Channel.SendMessageAsync(":33");
+	    else if (Regex.IsMatch(m.Content, @":3"))
+	        await m.Channel.SendMessageAsync(":33");
+
+        else if (Regex.IsMatch(m.Content, @"how waifu[\?]?", RegexOptions.IgnoreCase))
+            await m.Channel.SendMessageAsync(HowWaifu(m.Author));
 
         else return false;
         return true;
@@ -94,5 +98,26 @@ public class CommandHandler : DiscordClientService
     {
         var len = _random.Next(15);
         return $"{usr.Mention} tvůj pele: `8{new string('=', len)}D`";
+    }
+
+    private string HowWaifu(SocketUser usr)
+    {
+        var p = _random.Next(101);
+        var mention = $"{usr.Mention} ";
+        
+        if (p == 0)
+            mention += $"Jsi druhý příchod kristova vědomí (0% waifu) \\o/";
+        if (p < 15)
+            mention += $"Nic moc kamaráde, dnes jsi jen {p}% waifu :(";
+        else if (p < 50)
+            mention += $"Ujde to příteli! Jsi z {p}% waifu.";
+        else if (p < 80)
+            mention += $"Sluší ti to :) jsi {p} procentní waifu!";
+        else if (p < 100)
+            mention += $"Neuvěřitelné! Jsi waifu ze skvělých {p}% :D";
+        else
+            mention += $"おお！ 100％！ あなたは完全にワイフです!! 😳";
+
+        return mention;
     }
 }
