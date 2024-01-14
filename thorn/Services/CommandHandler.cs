@@ -88,7 +88,7 @@ public class CommandHandler : DiscordClientService
 	        await m.Channel.SendMessageAsync(":33");
 
         else if (Regex.IsMatch(m.Content, @"how waifu[\?]?", RegexOptions.IgnoreCase))
-            await m.Channel.SendMessageAsync(HowWaifu(m.Author));
+            await m.Channel.SendMessageAsync(HowWaifu(m.MentionedUsers.First() ?? m.Author));
 
         else return false;
         return true;
