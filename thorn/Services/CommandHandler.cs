@@ -107,7 +107,7 @@ public class CommandHandler : DiscordClientService
         
         if (p == 0)
             mention += $"Jsi druhý příchod kristova vědomí (0% waifu) \\o/";
-        if (p < 15)
+        else if (p < 15)
             mention += $"Nic moc kamaráde, dnes jsi jen {p}% waifu :(";
         else if (p < 50)
             mention += $"Ujde to příteli! Jsi z {p}% waifu.";
