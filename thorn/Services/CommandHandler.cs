@@ -87,8 +87,13 @@ public class CommandHandler : DiscordClientService
 	    else if (Regex.IsMatch(m.Content, @":3"))
 	        await m.Channel.SendMessageAsync(":33");
 
-        else if (Regex.IsMatch(m.Content, @"how waifu[\?]?", RegexOptions.IgnoreCase))
-            await m.Channel.SendMessageAsync(HowWaifu(m.MentionedUsers.First() ?? m.Author));
+        else if (Regex.IsMatch(m.Content, @"how waifu[\?]?", RegexOptions.IgnoreCase)){
+            SocketUser usr;
+            try { usr = m.MentionedUsers.First(); }
+            catch { usr = m.Author; }
+
+            await m.Channel.SendMessageAsync(HowWaifu(usr));
+        }
 
         else return false;
         return true;
@@ -116,7 +121,7 @@ public class CommandHandler : DiscordClientService
         else if (p < 100)
             mention += $"Neuvěřitelné! Jsi waifu ze skvělých {p}% :D";
         else
-            mention += $"おお！ 100％！ あなたは完全にワイフです!! 😳";
+            mention += $"Honto？ 100％！ Omae wa waifu no materiaru da yo!! Sugoi!!! 😳";
 
         return mention;
     }
