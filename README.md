@@ -3,9 +3,10 @@
 
 Thorn is a Discord Bot made specifically for the Czech branch Discord chat. Listed below are some notable features:
 
-* RSS Feed posting
+* Wiki RSS Feed posting
 * Quick links to important guides/hubs
 * Daily reminder with important events in the past and name-days
+* Streamlined accepting of new members
 
 ## Other stuff
 
@@ -18,4 +19,4 @@ And go read some [tales](http://scp-cs.wikidot.com/foundation-tales), they're fu
 ![Discord Banner 3](https://discordapp.com/api/guilds/536983829437480984/widget.png?style=banner3)
 
 ## License
-All of the code is licensed under the [MIT license](https://opensource.org/licenses/MIT). All of the images (namely the [stop sign](https://github.com/scp-cs/Thorn/blob/master/thorn/Media/stop.png)) are licensed under the [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) license.
+All of the code is licensed under the [MIT license](https://opensource.org/licenses/MIT). All of the images (everything in the  [`Media` folder](https://github.com/scp-cs/Thorn/blob/master/thorn/Media)) are licensed under the [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) license.
