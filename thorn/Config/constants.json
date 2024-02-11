@@ -8,7 +8,9 @@
   },
   "roles": {
     "classC": 537322727225163776,
-    "INT": 537023765163409439
+    "INT": 537023765163409439,
+    "O5": 536984757410463764,
+    "O4": 938104159993995265
   },
   "help": [
     "OBECNÉ\n**`.help [1 - 3]`** - Hádej :)\n\n**`.help [pasní/překlad/korekce/členství]`** - Hádej :)\n\n**`.info`** - Info o botovi\n\n**`.ping`** - Pong!",

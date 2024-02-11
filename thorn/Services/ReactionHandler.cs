@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Discord;
@@ -18,6 +19,8 @@ public class ReactionHandler : DiscordClientService
     private readonly ulong _loggingChannelId;
     private readonly ulong _classCRoleId;
     private readonly ulong _intRoleId;
+    private readonly ulong _o5RoleId;
+    private readonly ulong _o4RoleId;
 
     public ReactionHandler(DiscordSocketClient client, ConstantsService constants, ILogger<ReactionHandler> logger) : base(client, logger)
     {
@@ -28,6 +31,8 @@ public class ReactionHandler : DiscordClientService
         _loggingChannelId = _constants.Channels["o5"];
         _classCRoleId = _constants.Roles["classC"];
         _intRoleId = _constants.Roles["INT"];
+        _o5RoleId = _constants.Roles["O5"];
+        _o4RoleId = _constants.Roles["O4"];
     }
 
     protected override Task ExecuteAsync(CancellationToken cancellationToken)
@@ -47,7 +52,9 @@ public class ReactionHandler : DiscordClientService
 
     private async Task HandleWelcomeReactions(Cacheable<IUserMessage, ulong> cacheable, SocketReaction reaction)
     {
-        if (!((IGuildUser)reaction.User.Value).GuildPermissions.Administrator) return;
+        var guildUser = (IGuildUser)reaction.User.Value;
+        if (!guildUser.RoleIds.ToList().Contains(_o5RoleId) && !guildUser.RoleIds.ToList().Contains(_o4RoleId))
+            return;
 
         var emote = reaction.Emote;
         var user = (IGuildUser)cacheable.Value.Author;
