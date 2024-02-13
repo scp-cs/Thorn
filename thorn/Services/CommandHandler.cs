@@ -84,9 +84,6 @@ public class CommandHandler : DiscordClientService
         else if (Regex.IsMatch(m.Content, @"pls penis"))
             await m.Channel.SendMessageAsync(GeneratePenis(m.Author));
 
-	    else if (Regex.IsMatch(m.Content, @":3"))
-	        await m.Channel.SendMessageAsync(":33");
-
         else if (Regex.IsMatch(m.Content, @"how waifu[\?]?", RegexOptions.IgnoreCase)){
             SocketUser usr;
             try { usr = m.MentionedUsers.First(); }
