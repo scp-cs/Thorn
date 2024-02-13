@@ -75,16 +75,20 @@ public class CommandHandler : DiscordClientService
 
         else if (Regex.IsMatch(m.Content, @"nepozn[áa]v[áa]m t[ay] t[ěe]la ve vod[ěe]", RegexOptions.IgnoreCase))
             await m.Channel.SendMessageAsync(_random.Next(2) == 0
-                ? (string) _constants.Strings.bodies.error
-                : (string) _constants.Strings.bodies.success);
+                ? (string)_constants.Strings.bodies.error
+                : (string)_constants.Strings.bodies.success);
 
         else if (Regex.IsMatch(m.Content, @"pozn[áa]v[áa]m t[ay] t[ěe]la ve vod[ěe]", RegexOptions.IgnoreCase))
-            await m.Channel.SendMessageAsync((string) _constants.Strings.bodies.ohgodohfuck);
+            await m.Channel.SendMessageAsync((string)_constants.Strings.bodies.ohgodohfuck);
 
         else if (Regex.IsMatch(m.Content, @"pls penis"))
             await m.Channel.SendMessageAsync(GeneratePenis(m.Author));
 
-        else if (Regex.IsMatch(m.Content, @"how waifu[\?]?", RegexOptions.IgnoreCase)){
+        else if (Regex.IsMatch(m.Content, @":3"))
+            await m.Channel.SendMessageAsync(":33");
+
+        else if (Regex.IsMatch(m.Content, @"how waifu[\?]?", RegexOptions.IgnoreCase))
+        {
             SocketUser usr;
             try { usr = m.MentionedUsers.First(); }
             catch { usr = m.Author; }
@@ -106,7 +110,7 @@ public class CommandHandler : DiscordClientService
     {
         var p = _random.Next(101);
         var mention = $"{usr.Mention} ";
-        
+
         if (p == 0)
             mention += $"Jsi druhý příchod kristova vědomí (0% waifu) \\o/";
         else if (p < 15)
