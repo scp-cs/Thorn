@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Discord;
 using Discord.Addons.Hosting;
+using Discord.Interactions;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -49,9 +50,15 @@ internal static class Program
                 config.LogFormat = (message, _) => $"{message.Source}: {message.Message}";
             })
             .UseCommandService((_, config) => { config.LogLevel = LogSeverity.Info; })
+            .UseInteractionService((_, config) =>
+            {
+                config.LogLevel = LogSeverity.Info;
+                config.UseCompiledLambda = true;
+            })
             .ConfigureServices((_, collection) =>
             {
                 collection.AddHostedService<CommandHandler>();
+                collection.AddHostedService<InteractionHandler>();
                 collection.AddHostedService<ReactionHandler>();
                 collection.AddHostedService<QuartzHostedService>();
 
