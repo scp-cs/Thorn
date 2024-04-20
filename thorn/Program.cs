@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Discord;
 using Discord.Addons.Hosting;
 using Discord.Interactions;
@@ -13,6 +14,7 @@ using Serilog;
 using Serilog.Events;
 using thorn.Jobs;
 using thorn.Services;
+using QuartzHostedService = Quartz.QuartzHostedService;
 
 namespace thorn;
 
@@ -46,7 +48,7 @@ internal static class Program
                     GatewayIntents = GatewayIntents.All,
                 };
 
-                config.Token = context.Configuration["token"];
+                config.Token = context.Configuration["token"] ?? throw new Exception("No bot token provided");
                 config.LogFormat = (message, _) => $"{message.Source}: {message.Message}";
             })
             .UseCommandService((_, config) => { config.LogLevel = LogSeverity.Info; })
