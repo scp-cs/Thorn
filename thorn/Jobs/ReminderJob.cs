@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
@@ -14,16 +15,15 @@ public class ReminderJob : IJob
 {
     private readonly ILogger<ReminderJob> _logger;
     private readonly SocketTextChannel _channel;
-    private readonly ConstantsService _constants;
 
     private readonly Dictionary<string, string> _daily;
 
-    public ReminderJob(ILogger<ReminderJob> logger, DiscordSocketClient client, ConstantsService constants, IConfiguration config)
+    public ReminderJob(ILogger<ReminderJob> logger, DiscordSocketClient client, IConfiguration config)
     {
         _logger = logger;
-        _constants = constants;
+        var generalId = ulong.Parse(config["channels:general"] ?? throw new Exception("No general channel configured"), NumberStyles.Any);
 
-        _channel = client.GetChannel(_constants.Channels["general"]) as SocketTextChannel;
+        _channel = client.GetChannel(generalId) as SocketTextChannel;
         _daily = config.GetSection("daily").Get<Dictionary<string, string>>();
     }
 
