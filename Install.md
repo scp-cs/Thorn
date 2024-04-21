@@ -1,6 +1,6 @@
 # Install
 
-This Discord bot is made *very specifically* for the [Czech branch Discord chat](https://discord.gg/ZAdfEJ4); other then for testing purposes,
+This Discord bot is made *very specifically* for the [Czech branch Discord chat](https://discord.gg/ZAdfEJ4); other than for testing purposes,
 there is probably no need for you to try to run this bot, or even read this guide. Why am I writing this.
 
 ## Setup
