@@ -9,7 +9,6 @@ using Discord.Addons.Hosting;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Logging;
-using thorn.UserAccounts;
 
 namespace thorn.Services;
 
@@ -26,9 +25,6 @@ public class MessageHandler(
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
         _client.MessageReceived += HandleMessageAsync;
-
-        commandService.AddTypeReader(typeof(PointType), new PointTypeTypeReader());
-        commandService.AddTypeReader(typeof(AccountItem), new AccountItemTypeReader());
         await commandService.AddModulesAsync(Assembly.GetEntryAssembly(), provider);
     }
 
