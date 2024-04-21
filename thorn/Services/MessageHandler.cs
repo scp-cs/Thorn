@@ -57,7 +57,7 @@ public class MessageHandler(
 	    else if (Regex.IsMatch(m.Content, @":3"))
 	        await m.Channel.SendMessageAsync(":33");
         
-        else if (Regex.IsMatch(m.Content, @"among\s?us"))
+        else if (Regex.IsMatch(m.Content, @"amo[n]?g\s?us"))
             await m.Channel.SendMessageAsync("ඞ");
 
         else return false;
