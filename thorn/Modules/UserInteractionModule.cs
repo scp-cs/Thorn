@@ -22,7 +22,6 @@ public class UserInteractionModule(IConfiguration config) : InteractionModuleBas
     public async Task Ping() => await RespondAsync("pong!");
 
     [SlashCommand("pomoc", "Pomoc s překládáním, psaním, korekcí a připojením na stránku.")]
-    [RequireRole("xd")]
     public async Task Help([Summary("téma", "o čem zobrazit pomoc?")] Help choice)
     {
         switch (choice)

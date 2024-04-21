@@ -1,6 +1,5 @@
 {
   "token": "YOUR-TOKEN",
-  "prefix": ".",
   "helpText": {
     "translate": "[Návod pro Překladatele](http://scp-cs.wikidot.com/guide-for-translators)\n[Potřebné Překlady](http://scp-cs.wikidot.com/translation-requests)\n[Překladatelské Stránky](http://scp-cs.wikidot.com/translators-pages)",
     "write": "[Jak napsat SCP](http://scp-cs.wikidot.com/how-to-write-an-scp)\n[Pravidla Kritizování](http://scp-cs.wikidot.com/criticism-policy)\n[Autorské Stránky](http://scp-cs.wikidot.com/authors-pages)",
