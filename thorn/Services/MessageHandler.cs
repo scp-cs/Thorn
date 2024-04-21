@@ -54,45 +54,13 @@ public class MessageHandler(
         else if (Regex.IsMatch(m.Content, @"pozn[áa]v[áa]m t[ay] t[ěe]la ve vod[ěe]", RegexOptions.IgnoreCase))
             await m.Channel.SendMessageAsync("<:monkaw:939084023190421504>");
 
-        else if (Regex.IsMatch(m.Content, @"pls penis"))
-            await m.Channel.SendMessageAsync(GeneratePenis(m.Author));
-
 	    else if (Regex.IsMatch(m.Content, @":3"))
 	        await m.Channel.SendMessageAsync(":33");
-
-        else if (Regex.IsMatch(m.Content, @"how waifu[\?]?", RegexOptions.IgnoreCase)){
-            SocketUser usr;
-            try { usr = m.MentionedUsers.First(); }
-            catch { usr = m.Author; }
-
-            await m.Channel.SendMessageAsync(HowWaifu(usr));
-        }
+        
+        else if (Regex.IsMatch(m.Content, @"among\s?us"))
+            await m.Channel.SendMessageAsync("ඞ");
 
         else return false;
         return true;
-    }
-
-    private string GeneratePenis(SocketUser usr)
-    {
-        var len = _random.Next(15);
-        return $"{usr.Mention} tvůj pele: `8{new string('=', len)}D`";
-    }
-
-    private string HowWaifu(SocketUser usr)
-    {
-        var p = _random.Next(101);
-        var mention = $"{usr.Mention} ";
-
-        mention += p switch
-        {
-            0 => "Jsi druhý příchod kristova vědomí (0% waifu) \\o/",
-            < 15 => $"Nic moc kamaráde, dnes jsi jen {p}% waifu :(",
-            < 50 => $"Ujde to příteli! Jsi z {p}% waifu.",
-            < 80 => $"Sluší ti to :) jsi {p} procentní waifu!",
-            < 100 => $"Neuvěřitelné! Jsi waifu ze skvělých {p}% :D",
-            _ => "Honto？ 100％！ Omae wa waifu no materiaru da yo!! Sugoi!!! 😳"
-        };
-
-        return mention;
     }
 }

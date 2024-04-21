@@ -7,8 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Quartz;
-using Quartz.Impl;
-using Quartz.Spi;
 using Serilog;
 using Serilog.Events;
 using thorn.Jobs;
@@ -40,10 +38,9 @@ internal static class Program
             config.SocketConfig = new DiscordSocketConfig
             {
                 LogLevel = LogSeverity.Info,
-                AlwaysDownloadUsers = true,
                 MessageCacheSize = 50,
-                // TODO: figure out what intents are actually needed
-                GatewayIntents = GatewayIntents.All,
+                GatewayIntents = GatewayIntents.MessageContent | GatewayIntents.Guilds | GatewayIntents.GuildMessages |
+                                 GatewayIntents.GuildMessageReactions
             };
 
             config.Token = builder.Configuration["token"]!;

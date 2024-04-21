@@ -12,7 +12,6 @@ namespace thorn.Modules;
 public class AdminInteractionModule(ILogger<AdminInteractionModule> logger, IConfiguration config) : InteractionModuleBase<SocketInteractionContext>
 {
     [SlashCommand("stop", "Pošle stopku")]
-    // [RequireUserPermission(ChannelPermission.ManageEmojis)] // a crude way to hide this command from plebs
     [RequireRole("O5", Group = "Admins")]
     [RequireRole("O4", Group = "Admins")]
     public async Task Stop()
@@ -22,7 +21,6 @@ public class AdminInteractionModule(ILogger<AdminInteractionModule> logger, ICon
     }
 
     [SlashCommand("řekni", "Něco řekne")]
-    // [RequireUserPermission(ChannelPermission.ManageEmojis)] // a crude way to hide this command from plebs
     [RequireRole("O5", Group = "Admins")]
     [RequireRole("O4", Group = "Admins")]
     public async Task Say([ChannelTypes(ChannelType.Text)] ISocketMessageChannel channel, string text)
@@ -32,7 +30,6 @@ public class AdminInteractionModule(ILogger<AdminInteractionModule> logger, ICon
     }
     
     [SlashCommand("hlasování", "Zahájí hlasování")]
-    // [RequireUserPermission(ChannelPermission.ManageEmojis)] // a crude way to hide this command from plebs
     [RequireRole("O5", Group = "Admins")]
     [RequireRole("O4", Group = "Admins")]
     public async Task Vote([ChannelTypes(ChannelType.Text)] ISocketMessageChannel channel, string text)
