@@ -1,0 +1,17 @@
+[
+  {
+    "Link": "http://scp-cs.wikidot.com/feed/site-changes.xml",
+    "ChannelIds": [800776102236324294],
+    "Filter": ["new page"],
+    "EmbedColor": 16711680,
+    "NewPageAnnouncement": true,
+    "RequireAuth": false
+  },
+  {
+    "Link": "http://scp-cs.wikidot.com/feed/site-changes.xml",
+    "ChannelIds": [735012092329918297],
+    "EmbedColor": 16711680,
+    "NewPageAnnouncement": false,
+    "RequireAuth": false
+  }
+]

@@ -1,6 +1,7 @@
 # Install
 
-This Discord bot is made *very specifically* for the [Czech branch Discord chat](https://discord.gg/ZAdfEJ4); other then for testing purposes, there is probably no need for you to try to run this bot, or even read this guide. Why am I writing this.
+This Discord bot is made *very specifically* for the [Czech branch Discord chat](https://discord.gg/ZAdfEJ4); other then for testing purposes,
+there is probably no need for you to try to run this bot, or even read this guide. Why am I writing this.
 
 ## Setup
 
@@ -20,45 +21,14 @@ $ dotnet build -c Release
 And you're all set! The output is in `thorn/bin/Release/net8.0/`
 
 ## Configuration
-Now the fun part. This bot has multiple configuration files that need to be set up appropriately.
+`config.json` is where most of the magic happens. Be sure to fill out the token field.
 
-### `config.json`
-This is self-explanatory
+`feeds.json` is for configuring the RSS fetching. If you don't wish to fetch any RSS
+feeds, just put `[]` (an ampty array) in the file.
 
-```json
-{
-  "token": "YOUR-BOT-TOKEN",
-  "prefix": "-"
-}
-```
+There are examples in `config.example.json` and `feeds.example.json` respectively. 
 
-### `feeds.json`
-This is a file that defines how and what RSS feeds are being read. Below is an example of such one.
-
-```json
-[
-   {
-    "Link": "http://scp-cs.wikidot.com/feed/site-changes.xml",
-    "ChannelIds": [800776102236324294],
-    "Filter": ["new page"],
-    "EmbedColor": 16711680,
-    "NewPageAnnouncement": true,
-    "RequireAuth": false
-  },
-  {
-    "Link": "http://scp-cs.wikidot.com/feed/site-changes.xml",
-    "ChannelIds": [735012092329918297],
-    "EmbedColor": 16711680,
-    "NewPageAnnouncement": false,
-    "RequireAuth": false
-  }
-]
-```
-You don't have to have any feeds set up (in that case just put `[]` in the file).
-
-### `constants.json` and `daily.json`
-
-These are static configuration files and they are not meant to be changed, but you can do so if you wish.
+`daily.json` is not really meant to be edited, but you surely get the idea.
 
 ## Done
 
