@@ -1,39 +1,27 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Addons.Hosting;
 using Discord.WebSocket;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace thorn.Services;
 
-public class ReactionHandler : DiscordClientService
+public class ReactionHandler(DiscordSocketClient client, IConfiguration config, ILogger<ReactionHandler> logger)
+    : DiscordClientService(client, logger)
 {
-    private readonly DiscordSocketClient _client;
-    private readonly ConstantsService _constants;
-
-    // TODO: replace with SocketTextChannel
-    private readonly ulong _welcomeChannelId;
-    private readonly ulong _loggingChannelId;
-    private readonly ulong _classCRoleId;
-    private readonly ulong _intRoleId;
-    private readonly ulong _o5RoleId;
-    private readonly ulong _o4RoleId;
-
-    public ReactionHandler(DiscordSocketClient client, ConstantsService constants, ILogger<ReactionHandler> logger) : base(client, logger)
-    {
-        _client = client;
-        _constants = constants;
-
-        _welcomeChannelId = _constants.Channels["welcome"];
-        _loggingChannelId = _constants.Channels["o5"];
-        _classCRoleId = _constants.Roles["classC"];
-        _intRoleId = _constants.Roles["INT"];
-        _o5RoleId = _constants.Roles["O5"];
-        _o4RoleId = _constants.Roles["O4"];
-    }
+    private readonly DiscordSocketClient _client = client;
+    
+    private readonly ulong _welcomeChannelId = ulong.Parse(config["channels:welcome"] ?? throw new Exception("Welcome channel is not configured"), NumberStyles.Any);
+    private readonly ulong _loggingChannelId = ulong.Parse(config["channels:o5"] ?? throw new Exception("O5 channel is not configured"), NumberStyles.Any);
+    private readonly ulong _classCRoleId = ulong.Parse(config["roles:classC"] ?? throw new Exception("Role Class C is not configured"), NumberStyles.Any);
+    private readonly ulong _intRoleId = ulong.Parse(config["roles:INT"] ?? throw new Exception("Role INT is not configured"), NumberStyles.Any);
+    private readonly ulong _o5RoleId = ulong.Parse(config["roles:O5"] ?? throw new Exception("Role O5 is not configured"), NumberStyles.Any);
+    private readonly ulong _o4RoleId = ulong.Parse(config["roles:O4"] ?? throw new Exception("Role O4 is not configured"), NumberStyles.Any);
 
     protected override Task ExecuteAsync(CancellationToken cancellationToken)
     {
@@ -45,8 +33,7 @@ public class ReactionHandler : DiscordClientService
         Cacheable<IMessageChannel, ulong> channelCache, SocketReaction reaction)
     {
         if (reaction.UserId == _client.CurrentUser.Id) return;
-
-        // Reaction handling in the #welcome channel
+        
         if (reaction.Channel.Id == _welcomeChannelId) await HandleWelcomeReactions(messageCache, reaction);
     }
 

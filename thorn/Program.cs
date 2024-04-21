@@ -5,9 +5,8 @@ using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Quartz;
-using Quartz.Impl;
-using Quartz.Spi;
 using Serilog;
 using Serilog.Events;
 using thorn.Jobs;
@@ -26,51 +25,58 @@ internal static class Program
             .WriteTo.File("log/log.txt", rollingInterval: RollingInterval.Day)
             .CreateLogger();
 
-        var hostBuilder = Host.CreateDefaultBuilder()
-            .ConfigureAppConfiguration(x =>
+        var builder = Host.CreateApplicationBuilder();
+
+        builder.Configuration.AddJsonFile("Config/config.json");
+        builder.Configuration.AddJsonFile("Config/daily.json");
+
+        builder.Logging.ClearProviders();
+        builder.Logging.AddSerilog();
+        
+        builder.Services.AddDiscordHost((config, _) =>
+        {
+            config.SocketConfig = new DiscordSocketConfig
             {
-                x.AddJsonFile("Config/config.json");
-                x.AddJsonFile("Config/daily.json");
-                x.Build();
-            })
-            .UseSerilog()
-            .ConfigureDiscordHost((context, config) =>
-            {
-                config.SocketConfig = new DiscordSocketConfig
-                {
-                    AlwaysDownloadUsers = true,
-                    DefaultRetryMode = RetryMode.RetryRatelimit,
-                    MessageCacheSize = 50,
-                    LogLevel = LogSeverity.Info,
-                    GatewayIntents = GatewayIntents.All,
-                };
+                LogLevel = LogSeverity.Info,
+                MessageCacheSize = 50,
+                GatewayIntents = GatewayIntents.MessageContent | GatewayIntents.Guilds | GatewayIntents.GuildMessages |
+                                 GatewayIntents.GuildMessageReactions
+            };
 
-                config.Token = context.Configuration["token"];
-                config.LogFormat = (message, _) => $"{message.Source}: {message.Message}";
-            })
-            .UseCommandService((_, config) => { config.LogLevel = LogSeverity.Info; })
-            .ConfigureServices((_, collection) =>
-            {
-                collection.AddHostedService<CommandHandler>();
-                collection.AddHostedService<ReactionHandler>();
-                collection.AddHostedService<QuartzHostedService>();
+            config.Token = builder.Configuration["token"]!;
+            config.LogFormat = (message, _) => $"{message.Source}: {message.Message}";
+        });
+        
+        builder.Services.AddCommandService((config, _) => { config.LogLevel = LogSeverity.Info; });
+        builder.Services.AddInteractionService((config, _) =>
+        {
+            config.LogLevel = LogSeverity.Info;
+            config.UseCompiledLambda = true;
+        });
 
-                collection.AddSingleton<ConstantsService>();
+        builder.Services.AddHostedService<MessageHandler>();
+        builder.Services.AddHostedService<InteractionHandler>();
+        builder.Services.AddHostedService<ReactionHandler>();
+        
+        builder.Services.AddSingleton<RssJob>();
+        builder.Services.AddSingleton<ReminderJob>();
 
-                collection.AddSingleton<IJobFactory, SingletonJobFactory>();
-                collection.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+        builder.Services.AddQuartz(configure =>
+        {
+            var twoMinSchedule = CronScheduleBuilder.CronSchedule("0 */2 * ? * *");
+            var rssJob = new JobKey(nameof(RssJob));
+            configure.AddJob<RssJob>(rssJob)
+                .AddTrigger(t => t.ForJob(rssJob).WithSchedule(twoMinSchedule));
 
-                collection.AddSingleton<ReminderJob>();
-                collection.AddSingleton(new JobSchedule(
-                    typeof(ReminderJob),
-                    "0 0 0 * * ?")); // Every day at midnight
+            var dailySchedule = CronScheduleBuilder.CronSchedule("0 0 0 * * ?");
+            var reminderJob = new JobKey(nameof(ReminderJob));
+            configure.AddJob<ReminderJob>(reminderJob)
+                .AddTrigger(t => t.ForJob(reminderJob).WithSchedule(dailySchedule));
+        });
+        builder.Services.AddQuartzHostedService();
 
-                collection.AddSingleton<RssJob>();
-                collection.AddSingleton(new JobSchedule(
-                    typeof(RssJob),
-                    "0 0/2 * * * ?")); // Every two minutes
-            });
+        var host = builder.Build();
 
-        await hostBuilder.RunConsoleAsync();
+        await host.RunAsync();
     }
 }
