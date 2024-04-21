@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -24,17 +22,13 @@ public class RssJob : IJob
     private readonly ILogger<ReminderJob> _logger;
     private readonly List<FeedConfig> _configs;
     private readonly Dictionary<ulong, SocketTextChannel> _channels;
-    private readonly HttpClient _webClient;
-    private readonly DiscordSocketClient _client;
     private Dictionary<FeedConfig, DateTime?> _lastUpdates;
 
     public RssJob(ILogger<ReminderJob> logger, DiscordSocketClient client)
     {
         _logger = logger;
-        _client = client;
         _channels = new Dictionary<ulong, SocketTextChannel>();
         _lastUpdates = new Dictionary<FeedConfig, DateTime?>();
-        _webClient = new HttpClient();
 
         _configs = JsonConvert.DeserializeObject<List<FeedConfig>>(File.ReadAllText("Config/feeds.json"));
 
@@ -70,24 +64,7 @@ public class RssJob : IJob
 
     private async Task<List<FeedItem>> GetNewItems(FeedConfig feedConfig)
     {
-        Feed feed;
-
-        if (!feedConfig.RequireAuth)
-        {
-            feed = await FeedReader.ReadAsync(feedConfig.Link);
-        }
-        // TODO: I don't have time for a refactor now, but this whole section is broken anyway. Maintenance is in order here.
-        // else
-        // {
-        //     // Basic HTTP auth
-        //     _webClient.Credentials = new NetworkCredential(feedConfig.Username, feedConfig.Password);
-        //     var response = _webClient.DownloadString(feedConfig.Link);
-        //     feed = FeedReader.ReadFromString(response);
-        // }
-        else
-            return new List<FeedItem>();
-        // don't @ me
-
+        var feed = await FeedReader.ReadAsync(feedConfig.Link);
         var lastUpdate = _lastUpdates[feedConfig];
 
         if (lastUpdate is null)
@@ -108,20 +85,11 @@ public class RssJob : IJob
 
     private Embed GetEmbed(FeedItem feedItem, FeedConfig feedConfig)
     {
-        // TODO: Get UserAccount and link to appropriate pages, these bugs relate to that: 
-        // - Exits when null exception (no user with that username):
-        //      - Just catch it and pass a placeholder "user unknown" or something
-        // - People with space in their name. Haven't tested this yet but I am pretty sure it won't work
-
         var description = new Converter().Convert(feedItem.Description)
             .Replace("<span class=\"printuser\">", "").Replace("</span>", "");
 
         if (feedConfig.NewPageAnnouncement)
             return GetAnnouncementEmbed(feedItem, feedConfig, description);
-
-        // There is a bug in the Html2Markdown library that inserts about 10 newlines instead of like 2 so this has to be in place
-        // (not needed cuz I got rid of the whole section lol)
-        // description = Regex.Replace(description, @"\n{4,}", "\n\n\n");
 
         // Remove two redundant lines
         var split = description.Split("\n").ToList();
@@ -151,24 +119,11 @@ public class RssJob : IJob
         var author = GetUsername(text);
         var description = new StringBuilder("Nový článek na wiki! Yay! \\o/\n");
 
-        if (!(author is null))
-        {
-            // TODO: fix this
-            /*
-            if (!(account is null))
-            {
-                var user = _client.GetUser(account.Id) as SocketGuildUser;
-                description.Append($"[{title}]({feedItem.Link}) od uživatele {user?.Mention}");
-            }
-            */
-            // else
+        if (author is not null)
             description.Append($"[{title}]({feedItem.Link}) od uživatele `{author}`");
-        }
         else
-        {
             description.Append($"[{title}]({feedItem.Link}) od kdoví koho :/");
-        }
-
+        
         return new EmbedBuilder
         {
             Title = title,

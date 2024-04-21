@@ -7,7 +7,6 @@ using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Quartz;
-using thorn.Services;
 
 namespace thorn.Jobs;
 
@@ -37,8 +36,6 @@ public class ReminderJob : IJob
         {
             Title = "Krásné dobré ráno!",
             Description = description,
-            ThumbnailUrl =
-                "https://cdn.discordapp.com/attachments/537064369725636611/733080455217283131/calendar-flat.png",
             Color = Color.Green
         }.Build();
 
