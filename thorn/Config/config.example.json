@@ -1,10 +1,10 @@
 {
   "token": "YOUR-TOKEN",
   "helpText": {
-    "translate": "[Návod pro Překladatele](http://scp-cs.wikidot.com/guide-for-translators)\n[Potřebné Překlady](http://scp-cs.wikidot.com/translation-requests)\n[Překladatelské Stránky](http://scp-cs.wikidot.com/translators-pages)",
-    "write": "[Jak napsat SCP](http://scp-cs.wikidot.com/how-to-write-an-scp)\n[Pravidla Kritizování](http://scp-cs.wikidot.com/criticism-policy)\n[Autorské Stránky](http://scp-cs.wikidot.com/authors-pages)",
-    "correction": "[Terminologie](http://scp-cs.wikidot.com/terminologie)\n[Korektorský hub](http://scp-cs.wikidot.com/korektorsky-hub)",
-    "join": "[Návod pro Nováčky](http://scp-cs.wikidot.com/guide-for-newbies)\n[Připoj se ke Stránce](http://scp-cs.wikidot.com/system:join)\n[Pravidla Stránky](http://scp-cs.wikidot.com/site-rules)\n"
+    "translate": "[Návod pro Překladatele](<http://scp-cs.wikidot.com/guide-for-translators>)\n[Rychlý Start pro Překladatele](<http://scp-cs.wikidot.com/translator-quickstart>)\n[Potřebné Překlady](<http://scp-cs.wikidot.com/translation-requests>)\n[Překladatelské Stránky](<http://scp-cs.wikidot.com/translators-pages>)",
+    "write": "[Jak napsat SCP](<http://scp-cs.wikidot.com/how-to-write-an-scp>)\n[Pravidla Kritizování](<http://scp-cs.wikidot.com/criticism-policy>)\n[Autorské Stránky](<http://scp-cs.wikidot.com/authors-pages>)",
+    "correction": "[Terminologie](<http://scp-cs.wikidot.com/terminologie>)\n[Korektorský hub](<http://scp-cs.wikidot.com/korektorsky-hub>)",
+    "join": "[Návod pro Nováčky](<http://scp-cs.wikidot.com/guide-for-newbies>)\n[Připoj se ke Stránce](<http://scp-cs.wikidot.com/system:join>)\n[Pravidla Stránky](<http://scp-cs.wikidot.com/site-rules>)\n"
   },
   "miscText": {
     "info": "**Verze:** v3.0.0\n**Source:** https://github.com/scp-cs/Thorn"
