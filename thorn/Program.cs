@@ -47,14 +47,12 @@ internal static class Program
             config.LogFormat = (message, _) => $"{message.Source}: {message.Message}";
         });
         
-        builder.Services.AddCommandService((config, _) => { config.LogLevel = LogSeverity.Info; });
         builder.Services.AddInteractionService((config, _) =>
         {
             config.LogLevel = LogSeverity.Info;
             config.UseCompiledLambda = true;
         });
-
-        builder.Services.AddHostedService<MessageHandler>();
+        
         builder.Services.AddHostedService<InteractionHandler>();
         builder.Services.AddHostedService<ReactionHandler>();
         
