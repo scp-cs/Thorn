@@ -34,9 +34,9 @@ public class AdminInteractionModule(ILogger<AdminInteractionModule> logger, ICon
     [RequireRole("O4", Group = "Admins")]
     public async Task Vote([ChannelTypes(ChannelType.Text)] ISocketMessageChannel channel, string text)
     {
+        await RespondAsync($"hlasování zahájeno v kanálu {channel}!", ephemeral: true);
         var msg = await channel.SendMessageAsync(text);
         await AddVoteEmotes(msg);
-        await RespondAsync($"hlasování zahájeno v kanálu {channel}!", ephemeral: true);
     }
     
     private async Task AddVoteEmotes(RestUserMessage msg)
