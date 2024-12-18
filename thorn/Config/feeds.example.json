@@ -38,5 +38,18 @@
     "ChannelIds": [710575651664429127],
     "EmbedColor": 16645526,
     "NewPageAnnouncement": false
+  },
+  {
+    "Link": "http://wanderers-library-cs.wikidot.com/feed/site-changes.xml",
+    "ChannelIds": [710575651664429127],
+    "EmbedColor": 16761088,
+    "NewPageAnnouncement": false
+  },
+  {
+    "Link": "http://wanderers-library-cs.wikidot.com/feed/site-changes.xml",
+    "ChannelIds": [537063810121334784],
+    "Filter": ["nová stránka"],
+    "EmbedColor": 16761088,
+    "NewPageAnnouncement": true
   }
 ]
