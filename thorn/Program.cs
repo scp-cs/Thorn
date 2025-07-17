@@ -59,6 +59,9 @@ internal static class Program
         builder.Services.AddSingleton<RssJob>();
         builder.Services.AddSingleton<ReminderJob>();
 
+        // useful for debugging :)
+        // var tenSecSchedule = CronScheduleBuilder.CronSchedule("*/10 * * * * ?");
+
         builder.Services.AddQuartz(configure =>
         {
             var twoMinSchedule = CronScheduleBuilder.CronSchedule("0 */2 * ? * *");
