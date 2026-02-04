@@ -11,13 +11,19 @@ using Quartz;
 
 namespace thorn.Jobs;
 
+public class DayInfo
+{
+    public string Header { get; set; } = "";
+    public Dictionary<string, List<string>> Events { get; set; } = new();
+}
+
 public class ReminderJob : IJob
 {
     private readonly ILogger<ReminderJob> _logger;
     private readonly SocketTextChannel _channel;
     private readonly Random _random;
 
-    private readonly Dictionary<string, string> _daily;
+    private readonly Dictionary<string, DayInfo> _daily;
 
     public ReminderJob(ILogger<ReminderJob> logger, DiscordSocketClient client, IConfiguration config)
     {
@@ -25,16 +31,33 @@ public class ReminderJob : IJob
         var generalId = ulong.Parse(config["channels:general"] ?? throw new Exception("No general channel configured"), NumberStyles.Any);
 
         _channel = client.GetChannel(generalId) as SocketTextChannel;
-        _daily = config.GetSection("daily").Get<Dictionary<string, string>>();
+        _daily = config.GetSection("daily").Get<Dictionary<string, DayInfo>>();
         _random = new Random();
     }
 
     public async Task Execute(IJobExecutionContext context)
     {
         var day = DateTime.Now;
-        var dayString = _daily[day.ToString("dd MM")];
+        var dayInfo = _daily[day.ToString("dd MM")];
         var description = new StringBuilder();
+        
+        if (!string.IsNullOrWhiteSpace(dayInfo.Header))
+        {
+            description.AppendLine(dayInfo.Header);
+            description.AppendLine();
+        }
+        
+        if (dayInfo.Events.Count > 0)
+        {
+            description.AppendLine("**Události:**");
+            description.AppendLine();
 
+            foreach (var (year, events) in dayInfo.Events)
+                foreach (var evt in events)
+                    description.AppendLine($"**{year}** – {evt}");
+        }
+
+        var dayString = description.ToString();
         const int maxLength = 4096 - 100;
 
         if (dayString.Length > maxLength)
@@ -46,16 +69,12 @@ public class ReminderJob : IJob
                 cutoffIndex++;
             else
                 cutoffIndex = startSearch;
-            
-            var trimmed = dayString[cutoffIndex..];
+
+            description.Clear();
             description.Append("...bylo to delší, zkrátil jsem to, sorry :(\n");
-            description.Append(trimmed);
+            description.Append(dayString[cutoffIndex..]);
         }
-        else
-        {
-            description.Append(dayString);
-        }
-        
+
         var closeoff = _random.Next(7) switch
         {
             0 => "Přeji krásný nový den!",

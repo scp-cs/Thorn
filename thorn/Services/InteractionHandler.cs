@@ -74,7 +74,7 @@ public class InteractionHandler(
         else if (Regex.IsMatch(m.Content, @":3"))
             await m.Channel.SendMessageAsync(":33");
         
-        else if (Regex.IsMatch(m.Content, @"amo[n]?g\s?us"))
+        else if (Regex.IsMatch(m.Content, @"amo[n]?g(\s?us|)"))
             await m.Channel.SendMessageAsync("ඞ");
     }
 }
