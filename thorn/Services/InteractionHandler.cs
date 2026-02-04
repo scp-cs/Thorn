@@ -8,6 +8,7 @@ using Discord.Addons.Hosting;
 using Discord.Addons.Hosting.Util;
 using Discord.Interactions;
 using Discord.WebSocket;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace thorn.Services;
@@ -16,22 +17,27 @@ public class InteractionHandler(
     DiscordSocketClient client,
     ILogger<InteractionHandler> logger,
     InteractionService handler,
-    IServiceProvider provider)
+    IServiceProvider provider,
+    IConfiguration config)
     : DiscordClientService(client, logger)
 {
     private readonly Random _random = new();
-    
+
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
         await handler.AddModulesAsync(Assembly.GetEntryAssembly(), provider);
-        
+
         Client.InteractionCreated += HandleInteraction;
         handler.InteractionExecuted += HandleExecuted;
         Client.MessageReceived += HandleMessage;
-        
+
         await Client.WaitForReadyAsync(cancellationToken);
-        
-        await handler.RegisterCommandsGloballyAsync();
+
+        if (config["guildId"] is not null)
+        {
+            var guildId = ulong.Parse(config["guildId"]);
+            await handler.RegisterCommandsToGuildAsync(guildId);
+        }
     }
 
     private async Task HandleMessage(SocketMessage m)
