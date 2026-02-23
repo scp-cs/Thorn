@@ -1,8 +1,9 @@
 [
-   {
+  {
     "Link": "http://scp-cs.wikidot.com/feed/site-changes.xml",
     "ChannelIds": [537063810121334784],
     "Filter": ["nová stránka"],
+    "FilterIgnore": ["fragment:"],
     "EmbedColor": 16711680,
     "NewPageAnnouncement": true
   },
@@ -28,6 +29,13 @@
   },
   {
     "Link": "http://scp-cs-sandbox-2.wikidot.com/feed/site-changes.xml",
+    "ChannelIds": [710575651664429127],
+    "Filter": ["nová stránka"],
+    "EmbedColor": 3329330,
+    "NewPageAnnouncement": false
+  },
+  {
+    "Link": "http://scp-cs-sandbox-3.wikidot.com/feed/site-changes.xml",
     "ChannelIds": [710575651664429127],
     "Filter": ["nová stránka"],
     "EmbedColor": 3329330,
