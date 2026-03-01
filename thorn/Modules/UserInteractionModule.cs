@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Interactions;
 using Microsoft.Extensions.Configuration;
+using thorn.Services;
 
 namespace thorn.Modules;
 
@@ -14,7 +15,7 @@ public enum Help
     [ChoiceDisplay("Korekce")] Correction,
 }
 
-public class UserInteractionModule(IConfiguration config) : InteractionModuleBase<SocketInteractionContext>
+public class UserInteractionModule(IConfiguration config, ScuttleService scuttleService) : InteractionModuleBase<SocketInteractionContext>
 {
     private readonly Random _random = new();
     
@@ -70,9 +71,9 @@ public class UserInteractionModule(IConfiguration config) : InteractionModuleBas
     {
         if (user == Context.Client.CurrentUser)
             await RespondAsync("já jsem ta nejlepší waifu :3");
-        
+
         user ??= Context.User;
-        
+
         var p = _random.Next(101);
         var mention = $"{user.Mention} ";
 
@@ -88,6 +89,33 @@ public class UserInteractionModule(IConfiguration config) : InteractionModuleBas
 
         await RespondAsync(mention);
     }
-    
-    
+
+    [SlashCommand("profil", "Zobrazí scuttle profil překladatele.")]
+    public async Task Profile([Summary("uživatel", "Uživatel, jehož profil zobrazit")] IUser user = null)
+    {
+        user ??= Context.User;
+
+        var scuttleUser = await scuttleService.SearchUser(user.Id.ToString());
+
+        if (scuttleUser == null)
+        {
+            await RespondAsync($"{user.Mention} nemá Scuttle profil.", ephemeral: true);
+            return;
+        }
+
+        var points = scuttleUser.Points.ToString("F1");
+        var embed = new EmbedBuilder
+        {
+            Title = scuttleUser.Nickname,
+            Description = $"[Profil na SCUTTLE](https://scuttle.scp-wiki.cz/user/{scuttleUser.Id})\nCelkově bodů: {points}",
+            Color = new Color(127, 131, 142),
+            ThumbnailUrl = user.GetAvatarUrl(),
+        };
+
+        embed.AddField("Originály", scuttleUser.OrigCount, inline: true);
+        embed.AddField("Překlady", scuttleUser.TrCount, inline: true);
+        embed.AddField("Korekce", scuttleUser.CrCount, inline: true);
+
+        await RespondAsync(embed: embed.Build());
+    }
 }
