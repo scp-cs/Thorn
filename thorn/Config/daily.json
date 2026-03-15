@@ -3,13 +3,13 @@
     "01 01": {
       "header": "**ŠŤASTNÝ NOVÝ ROK \\o/**",
       "events": {
-        "660 př. n. l.": [
+        "-660": [
           "Džimmu, legendární zakladatel císařské dynastie v Japonsku, nastoupil na trůn."
         ],
-        "153 př. n. l.": [
+        "-153": [
           "V římském konzulátním kalendáři se 1. leden stal začátkem roku. Do této doby rok začínal 1. březnem."
         ],
-        "45 př. n. l.": [
+        "-45": [
           "V Římské říši se začal používat juliánský kalendář, zavedený Juliem Caesarem."
         ],
         "404": [
@@ -489,7 +489,7 @@
     "10 01": {
       "header": "Svátek má **Břetislav**",
       "events": {
-        "49 př. n. l.": [
+        "-49": [
           "Julius Caesar překročil řeku Rubikon se slovy „Kostky jsou vrženy“, čímž začala další občanská válka."
         ],
         "1308": [
@@ -757,7 +757,7 @@
     "16 01": {
       "header": "Svátek má **Ctirad**",
       "events": {
-        "27 př. n. l.": [
+        "-27": [
           "Římský Senát uděluje císaři Octaviánovi titul Augustus."
         ],
         "1219": [
@@ -781,7 +781,7 @@
     "17 01": {
       "header": "Svátek má **Drahoslav**",
       "events": {
-        "38 př. n. l.": [
+        "-38": [
           "Císař Octavian se rozvedl se Scribonií a oženil se s Livií Drusillou, čímž skončil křehký mír mezi druhým triumvirátem a Sextem Pompeiem"
         ],
         "395": [
@@ -1899,9 +1899,6 @@
         "1881": [
           "V Paříži začala vydávat aktivistka Hubertine Auclertová 1. feministické noviny La Citoyenne"
         ],
-        "1992": [
-          "Oficiální připojení ČSFR k Internetu. Jako první bylo připojeno ČVUT v Praze"
-        ],
         "1932": [
           "Skončily III. Zimní olympijské hry"
         ],
@@ -1910,6 +1907,9 @@
         ],
         "1988": [
           "Byly zahájeny zimní olympijské hry v Calgary, Kanadě"
+        ],
+        "1992": [
+          "Oficiální připojení ČSFR k Internetu. Jako první bylo připojeno ČVUT v Praze"
         ],
         "1997": [
           "Byla zahájena mise STS-82 raketoplánu Discovery, při níž proběhly opravné práce na Hubbleově vesmírném dalekohledu"
@@ -1966,7 +1966,7 @@
     "15 02": {
       "header": "Svátek má **Jiřina**\n*Singles Awareness Day*",
       "events": {
-        "399 př. n. l.": [
+        "-399": [
           "Řecký filozof Sókratés byl odsouzen k smrti"
         ],
         "1493": [
@@ -2405,13 +2405,13 @@
     "01 03": {
       "header": "Svátek má **Bedřich**",
       "events": {
-        "509 př. n. l.": [
+        "-509": [
           "Publius Valerius Publicola oslavil svůj první triumf Římské republiky po svém vítězství nad svrženým králem Lucius Tarquinius Superbus v bitvě u Silva Arsia"
         ],
-        "86 př. n. l.": [
+        "-86": [
           "Lucius Cornelius Sulla v čele římské armády vstoupil do Athén, odstranil tyrana, podporovaného Mithridatém VI. Pontským a ukončil tak obléhání Athén a Pirea"
         ],
-        "1 př. n. l.": [
+        "-1": [
           "V Římě se začal používat upravený Juliánský kalendář"
         ],
         "293": [
@@ -2623,14 +2623,14 @@
         "1946": [
           "Ho Či Min podepsal dohodu s Francií, která v ní uznala Vietnam jako autonomní stát"
         ],
-        "1990": [
-          "Z názvu České socialistické republiky jako součásti Československa bylo zákonem České národní rady vypuštěno slovo socialistický"
-        ],
         "1986": [
           "Sovětská kosmická sonda Vega 1 prolétla ve vzdálenosti 8 900 kilometrů kolem Halleyovy komety"
         ],
         "1987": [
           "Při havárii britského trajektu Herald of Free Enterprise zahynulo 193 cestujících"
+        ],
+        "1990": [
+          "Z názvu České socialistické republiky jako součásti Československa bylo zákonem České národní rady vypuštěno slovo socialistický"
         ],
         "1992": [
           "Do počítačů celého světa se začíná šířit počítačový virus Michelangelo"
@@ -2733,7 +2733,7 @@
     "09 03": {
       "header": "Svátek má **Františka**",
       "events": {
-        "141 př. n. l.": [
+        "-141": [
           "Novým čínským císařem se stává Wu-ti z dynastie Chan"
         ],
         "1009": [
@@ -2777,7 +2777,7 @@
     "10 03": {
       "header": "Svátek má **Viktorie**",
       "events": {
-        "241 př. n. l.": [
+        "-241": [
           "proběhlo v rámci první punské války rozhodující námořní střetnutí mezi flotami Kartága a římské republiky – bitva u Aegatských ostrovů."
         ],
         "298": [
@@ -2941,7 +2941,7 @@
     "14 03": {
       "header": "Svátek má **Matylda a Růt**",
       "events": {
-        "44 př. n. l.": [
+        "-44": [
           "Casca a Cassius rozhodli noc před zavražděním Julia Caesara, že nechají Marka Antonia žít."
         ],
         "313": [
@@ -2985,7 +2985,7 @@
     "15 03": {
       "header": "Svátek má **Ida**",
       "events": {
-        "44 př. n. l.": [
+        "-44": [
           "V tento den byly v Římě Březnové idy, kdy byl zavražděn Julius Caesar."
         ],
         "1848": [
@@ -3055,7 +3055,7 @@
     "17 03": {
       "header": "Svátek má **Vlastimil**",
       "events": {
-        "45 př. n. l.": [
+        "-45": [
           "Ve svém posledním vítězství porazil Julius Caesar pompejské vojsko Tita Labiena a Pompeia mladšího v bitvě u Munda."
         ],
         "180": [
@@ -3687,7 +3687,7 @@
     "27 03": {
       "header": "Svátek má **Dita**",
       "events": {
-        "196 př. n. l.": [
+        "-196": [
           "Faraón Ptolemaios V. Epifanés usedl na egyptský trůn"
         ],
         "1188": [
@@ -3835,7 +3835,7 @@
     "30 03": {
       "header": "Svátek má **Arnošt**",
       "events": {
-        "239 př. n. l.": [
+        "-239": [
           "První zaznamenaný průlet Halleyovy komety."
         ],
         "1856": [
@@ -4151,7 +4151,7 @@
     "05 04": {
       "header": "Svátek má **Miroslava**",
       "events": {
-        "56 př. n. l.": [
+        "-56": [
           "Římští vojevůdci Gaius Julius Caesar, Marcus Licinius Crassus a Gnaeus Pompeius potvrdili dohodu o tzv. prvním triumvirátu, který je zavazoval jednat v říši ve shodě mezi sebou."
         ],
         "1242": [
@@ -4186,7 +4186,7 @@
     "06 04": {
       "header": "Svátek má **Vendula**",
       "events": {
-        "648 př. n. l.": [
+        "-648": [
           "Úplné zatmění Slunce zaznamenáno v řeckých kronikách."
         ],
         "402": [
@@ -4870,7 +4870,7 @@
     "21 04": {
       "header": "Svátek má **Alexandra**",
       "events": {
-        "753 př. n. l.": [
+        "-753": [
           "Podle římské tradice bylo založeno město Řím."
         ],
         "1757": [
@@ -4917,7 +4917,7 @@
     "22 04": {
       "header": "Svátek má **Evžénie**",
       "events": {
-        "687 př. n. l.": [
+        "-687": [
           "Nejstarší čínský zápis o sprše meteorů v souhvězdí Lyry."
         ],
         "1370": [
@@ -5159,7 +5159,7 @@
     "27 04": {
       "header": "Svátek má **Jaroslav**",
       "events": {
-        "4977 př. n. l.": [
+        "-4977": [
           "Johannes Kepler vypočítal vznik vesmíru na tento den"
         ],
         "1296": [
@@ -5341,12 +5341,12 @@
         "1959": [
           "Začal vycházet slovinský deník Delo."
         ],
-        "1969": [
-          "Byla založena americká hardwarová společnost Advanced Micro Devices (zkráceně AMD)."
-        ],
         "1960": [
           "Nigérie vyhlásila nezávislost.",
           "Americký pilot Francis Gary Powers byl sestřelen v průzkumném letadle U-2 nad Sovětským svazem."
+        ],
+        "1969": [
+          "Byla založena americká hardwarová společnost Advanced Micro Devices (zkráceně AMD)."
         ],
         "1970": [
           "V Seattlu propukly protesty po oznámení prezidenta Richarda Nixona, že americké síly ve Vietnamu mohou pronásledovat nepřátelské jednotky do neutrální Kambodži."
@@ -5428,11 +5428,11 @@
     "03 05": {
       "header": "Svátek má **Alexej**",
       "events": {
-        "1494": [
-          "Kryštof Kolumbus poprvé uviděl zemi, jež byla později nazvána Jamajka."
-        ],
         "1455": [
           "Židé museli opustit Španělsko nebo konvertovat ke katolické víře."
+        ],
+        "1494": [
+          "Kryštof Kolumbus poprvé uviděl zemi, jež byla později nazvána Jamajka."
         ],
         "1512": [
           "Papež Julius II. zahájil pátý lateránský koncil v Římě, který trval až do roku 1517 s papežem Lvem X."
@@ -6447,11 +6447,11 @@
         "1498": [
           "Portugalský mořeplavec Vasco da Gama doplul do Kóžikkótu, čímž se Portugalcům otevřela cesta k asijským trhům s kořením."
         ],
-        "1631": [
-          "Třicetiletá válka: Vojevůdce Katolické ligy hrabě Jan Tserclaes Tilly dobyl Magdeburg."
-        ],
         "1570": [
           "První vydání Orteliova Theatrum Orbis Terrarum, prvního moderního atlasu."
+        ],
+        "1631": [
+          "Třicetiletá válka: Vojevůdce Katolické ligy hrabě Jan Tserclaes Tilly dobyl Magdeburg."
         ],
         "1873": [
           "Levi Strauss získal patent na džíny."
@@ -7143,14 +7143,14 @@
     "25 05": {
       "header": "Svátek má **Viola**",
       "events": {
-        "1810": [
-          "Vyhlášení nezávislosti Argentiny."
-        ],
         "1721": [
           "V bitvě u Selångeru během Severní války zvítězilo Rusko nad Švédskem."
         ],
         "1793": [
           "Francouzské revoluční války: royalisté vedení markýzem de Lescure porazili francouzskou republikánskou armádu vedenou generálem Alexisem Chalbosem v bitvě u Fontenay-le-Comte."
+        ],
+        "1810": [
+          "Vyhlášení nezávislosti Argentiny."
         ],
         "1948": [
           "Ve vykonstruovaném politickém procesu byl popraven Witold Pilecki, polský protinacistický a protikomunistický bojovník."
@@ -7251,7 +7251,7 @@
     "28 05": {
       "header": "Svátek má **Vilém**",
       "events": {
-        "585 př. n. l.": [
+        "-585": [
           "Zatmění Slunce, předpovězené Thaletem z Milétu, přerušilo bitvu u řeky Halys mezi Lydijci a Medijci, kteří po 6 letech uzavřeli mír."
         ],
         "1037": [
@@ -7438,7 +7438,7 @@
     "31 05": {
       "header": "Svátek má **Kamila**",
       "events": {
-        "1279 př. n. l.": [
+        "-1279": [
           "Ramesse II. se stal faraónem starověkého Egypta."
         ],
         "455": [
@@ -7971,7 +7971,7 @@
     "09 06": {
       "header": "Svátek má **Stanislava**",
       "events": {
-        "411 př. n. l.": [
+        "-411": [
           "Athénský převrat uspěl, a podařilo se mu v Athénách nastolit vládu hrstky mocných oligarchii, která ovšem netrvala dlouho."
         ],
         "53": [
@@ -8137,11 +8137,11 @@
         "671": [
           "Japonský císař Tenji představil vodní hodiny (klepsydra) nazvané Rokoku. Přístroj měřící čas a ukazující hodinu, je umístěn v hlavním městě Ócu v prefektuře Šiga."
         ],
-        "1194": [
-          "Katedrála ve městě Chartres byla zničena požárem."
-        ],
         "1179": [
           "Bitva u Mardž Ajjúnu mezi křižáckým Jeruzalémským královstvím a egyptským sultánem Saladinem"
+        ],
+        "1194": [
+          "Katedrála ve městě Chartres byla zničena požárem."
         ],
         "1692": [
           "Salemský hon na čarodějnice: Bridget Bishopová byla oběšena pro čarodějnictví a stala se tak první obětí procesů."
@@ -8335,7 +8335,7 @@
     "15 06": {
       "header": "Svátek má **Vít**",
       "events": {
-        "763 př. n. l.": [
+        "-763": [
           "Asyřané zaznamenali úplné zatmění Slunce, které později posloužilo k upřesnění chronologie mezopotámské historie."
         ],
         "1085": [
@@ -8630,7 +8630,7 @@
     "19 06": {
       "header": "Svátek má **Leoš**",
       "events": {
-        "240 př. n. l.": [
+        "-240": [
           "Eratosthenés z Kyrény vypočítal obvod Země"
         ],
         "325": [
@@ -8651,11 +8651,11 @@
         "1807": [
           "Armády Ruska a Osmanské říše se střetly v bitvě u Athu."
         ],
-        "1846": [
-          "V Hobokenu v New Jersey se konal první moderní baseballový zápas."
-        ],
         "1816": [
           "Válka o pemikan: Došlo k bitvě u Sedmi dubů, nejkrvavějšímu střetu mezi Společností Hudsonova zálivu a Severozápadní společností."
+        ],
+        "1846": [
+          "V Hobokenu v New Jersey se konal první moderní baseballový zápas."
         ],
         "1860": [
           "Louise Nassau-Orania a král Karel XV. Švédska a Norska se vzali."
@@ -8730,7 +8730,7 @@
     "21 06": {
       "header": "Svátek má **Alois**",
       "events": {
-        "217 př. n. l.": [
+        "-217": [
           "Hannibal rozdrtil římská vojska konzula Gaia Flaminia v Bitvě u Trasimenského jezera."
         ],
         "68": [
@@ -8810,7 +8810,7 @@
     "22 06": {
       "header": "Svátek má **Pavla**",
       "events": {
-        "168 př. n. l.": [
+        "-168": [
           "Bitva u Pydny, konec 3. makedonské války."
         ],
         "431": [
@@ -9337,7 +9337,7 @@
     "03 07": {
       "header": "Svátek má **Radomir**",
       "events": {
-        "362 př. n. l.": [
+        "-362": [
           "Řecká města Sparta a Théby se střetly v bitvě u Mantineie, která měla rozhodnout kdo se stane hegemonem Řecka,"
         ],
         "324": [
@@ -9974,7 +9974,7 @@
     "10 07": {
       "header": "Svátek má **Libuše a Amálie**",
       "events": {
-        "48 př. n. l.": [
+        "-48": [
           "Pompeius porazil Caesara v bitvě u Dyrrhachia."
         ],
         "431": [
@@ -10016,15 +10016,15 @@
         "1908": [
           "Nizozemský fyzik Heike Kamerlingh Onnes dokázal zkapalnit helium."
         ],
-        "1939": [
-          "Rumunsko vyhlásilo válku Bulharsku."
-        ],
         "1925": [
           "Založena tisková agentura Sovětského svazu (ITAR-TASS).",
           "V americkém státě Tennessee byl zahájen soud s Johnem T. Scopesem, který porušil tehdy platný státní zákon zakazující výuku evoluční teorie."
         ],
         "1938": [
           "Howard Hughes obletěl svět za 91 hodin a vytvořil tak nový rekord."
+        ],
+        "1939": [
+          "Rumunsko vyhlásilo válku Bulharsku."
         ],
         "1940": [
           "Druhá světová válka: začala letecká bitva o Británii – Luftwaffe začala útočit na britské konvoje v průlivu La Manche.",
@@ -10202,7 +10202,7 @@
     "13 07": {
       "header": "Svátek má **Markéta**",
       "events": {
-        "587 př. n. l.": [
+        "-587": [
           "Babylonské obléhání Jeruzaléma skončilo zničením Šalamounova chrámu"
         ],
         "574": [
@@ -10315,7 +10315,7 @@
     "15 07": {
       "header": "Svátek má **Jindřich**",
       "events": {
-        "484 př. n. l.": [
+        "-484": [
           "Zasvěcení chrámu Castora a Polluxe v antickém Římě"
         ],
         "70": [
@@ -10771,7 +10771,7 @@
     "21 07": {
       "header": "Svátek má **Vítězslav**",
       "events": {
-        "356 př. n. l.": [
+        "-356": [
           "Herostratos zapálil Artemidin chrám v Efezu, patřící mezi sedm divů světa, aby si získal věčnou slávu"
         ],
         "1718": [
@@ -11323,10 +11323,10 @@
     "02 08": {
       "header": "Svátek má **Gustav**",
       "events": {
-        "338 př. n. l.": [
+        "-338": [
           "Makedonský král Filip II. rozdrtil spojené síly Athén, Théb a jejich spojenců v bitvě u Chairóneie."
         ],
-        "216 př. n. l.": [
+        "-216": [
           "Punské války: v bitvě u Kann porazil Hannibal Barka početnější římské vojsko pod společným velením konzulů Lucia Aemilia Paulla a Gaia Terentia Varra."
         ],
         "1798": [
@@ -11668,7 +11668,7 @@
     "09 08": {
       "header": "Svátek má **Roman**",
       "events": {
-        "48 př. n. l.": [
+        "-48": [
           "Julius Caesar porazil vojsko početně dvojnásob silnějšího Pompeia v bitvě u Farsálu."
         ],
         "378": [
@@ -11745,13 +11745,13 @@
     "11 08": {
       "header": "Svátek má **Zuzana**",
       "events": {
-        "3114 př. n. l.": [
+        "-3114": [
           "Začátek Mesoamerického dlouhého kalendáře, který používala předkolumbovská mesoamerická civilizace, hlavně Mayové"
         ],
-        "2492 př. n. l.": [
+        "-2492": [
           "Tradiční datum porážky Bela bojovníkem Hajkem, zakladatelem arménského národa"
         ],
-        "480 př. n. l.": [
+        "-480": [
           "Řecko-perské války: Peršané vedení králem Xerxem I. porazili v bitvě u Thermopyl do posledního muže bojující Helény v čele se spartským králem Leonidem."
         ],
         "70": [
@@ -11766,9 +11766,6 @@
         "1492": [
           "Rodrigo Borgia byl zvolen papežem Alexandrem VI."
         ],
-        "1885": [
-          "Američané vybrali $100,000 na podstavec Sochy Svobody, kterou dostanou od Francouzů"
-        ],
         "1863": [
           "Kambodža se stává francouzským protektorátem"
         ],
@@ -11777,6 +11774,9 @@
         ],
         "1877": [
           "Americký astronom Asaph Hall objevil Marsův měsíc Deimos. Existenci měsíců Marsu předpověděl již Johannes Kepler v roce 1610."
+        ],
+        "1885": [
+          "Američané vybrali $100,000 na podstavec Sochy Svobody, kterou dostanou od Francouzů"
         ],
         "1906": [
           "První patent pro zvukový film udělen Eugen Lauste ve Francii"
@@ -12199,10 +12199,10 @@
     "19 08": {
       "header": "Svátek má **Ludvík**",
       "events": {
-        "295 př. n. l.": [
+        "-295": [
           "Quintus Fabius Maximus Cunctator dedikuje první chrám Venuši, římské bohyni lásky, krásy a plodnosti během 3. samnitské války"
         ],
-        "43 př. n. l.": [
+        "-43": [
           "Octavian, později známý jako Augustus, donutil římský senát, aby ho zvolili konzulem a prosadil zavržení Caesarových vrahů."
         ],
         "440": [
@@ -12338,11 +12338,11 @@
         "1680": [
           "Pueblané obsadili Santa Fe."
         ],
-        "1770": [
-          "James Cook formálně prohlásil východní Austrálii za britskou a pojmenoval ji Nový Jižní Wales."
-        ],
         "1751": [
           "Marie Terezie vydala Ohňový patent pro celou monarchii."
+        ],
+        "1770": [
+          "James Cook formálně prohlásil východní Austrálii za britskou a pojmenoval ji Nový Jižní Wales."
         ],
         "1772": [
           "Král Gustav III. Švédský dokončil státní převrat přijetím nové ústavy, čímž ukončil půl století trvající vládu parlamentu ve Švédsku, a ustavil se osvíceným samovládcem."
@@ -12359,11 +12359,11 @@
         "1831": [
           "Začalo povstání Nata Turnera v Southampton County ve Virginii."
         ],
-        "1883": [
-          "Tornádo zasáhlo Rochester v Minnesotě, což vedlo k vytvoření Kliniky Mayo."
-        ],
         "1859": [
           "Ministr vnitra Rakousko-Uherska Alexander Bach byl odvolán z funkce."
+        ],
+        "1883": [
+          "Tornádo zasáhlo Rochester v Minnesotě, což vedlo k vytvoření Kliniky Mayo."
         ],
         "1888": [
           "Ve Spojených státech byl patentován první sčítací stroj W. S. Burroughse."
@@ -12427,7 +12427,7 @@
     "23 08": {
       "header": "Svátek má **Sandra**",
       "events": {
-        "30 př. n. l.": [
+        "-30": [
           "Po úspěšné invazi Egypta popravil Octavianus Marca Antonia Antylla, nejstaršího syna Marka Antonia, a Caesariona, posledního krále Ptolemajovské dynastie, jediného syna Kleopatry a Julia Caesara"
         ],
         "79": [
@@ -12645,7 +12645,7 @@
     "27 08": {
       "header": "Svátek má **Otakar**",
       "events": {
-        "413 př. n. l.": [
+        "-413": [
           "Zatmění Měsíce způsobilo paniku v aténském loďstvu."
         ],
         "1301": [
@@ -12684,11 +12684,11 @@
         "1939": [
           "Vzlétl první proudový letoun – Heinkel He 178."
         ],
-        "1979": [
-          "Při bombovém atentátu zemřel britský šlechtic a politik Louis Mountbatten."
-        ],
         "1962": [
           "NASA vypustila sondu Mariner 2 pro výzkum planety Venuše."
+        ],
+        "1979": [
+          "Při bombovém atentátu zemřel britský šlechtic a politik Louis Mountbatten."
         ],
         "1991": [
           "Moldavsko vyhlásilo nezávislost na Sovětském svazu."
@@ -12937,7 +12937,7 @@
     "02 09": {
       "header": "Svátek má **Adéla**",
       "events": {
-        "31 př. n. l.": [
+        "-31": [
           "Octavianus zvítězil nad Marcem Antoniem a Kleopatrou v námořní bitvě u Actia."
         ],
         "1192": [
@@ -13008,7 +13008,7 @@
     "03 09": {
       "header": "Svátek má **Bronislav**",
       "events": {
-        "36 př. n. l.": [
+        "-36": [
           "Vítězství floty vedené Marcem Vipsaniem Agrippou nad loděmi Sexta Pompeiua v námořní bitvě u Naulochus ukončilo pompejské povstání, vyvolané odporem k druhému triumvirátu."
         ],
         "301": [
@@ -13430,7 +13430,7 @@
     "12 09": {
       "header": "Svátek má **Marie**",
       "events": {
-        "490 př. n. l.": [
+        "-490": [
           "Athénské vojsko posílené jednotkami Platajských v bitvě u Marathónu porazilo invazní jednotky perské říše."
         ],
         "1213": [
@@ -13701,7 +13701,7 @@
     "21 09": {
       "header": "Svátek má **Matouš**",
       "events": {
-        "19 př. n. l.": [
+        "-19": [
           "Římský básník Vergilius při návštěvě Řecka onemocněl a brzy na to po návratu zemřel"
         ],
         "455": [
@@ -13763,7 +13763,7 @@
     "22 09": {
       "header": "Svátek má **Darina**",
       "events": {
-        "480 př. n. l.": [
+        "-480": [
           "Bitva u Salamíny, kde řecké loďstvo zvítězilo nad perským. (datum není jisté)"
         ],
         "66": [
@@ -13938,7 +13938,7 @@
     "26 09": {
       "header": "Svátek má **Andrea**",
       "events": {
-        "46 př. n. l.": [
+        "-46": [
           "Julius Caesar dedikoval v Římě chrám Venuši Genetrix, aby tak naplnil slib, který dal před bitvou u Farsalu"
         ],
         "715": [
@@ -14074,7 +14074,7 @@
     "28 09": {
       "header": "Svátek má **Václav**",
       "events": {
-        "48 př. n. l.": [
+        "-48": [
           "Egyptský král Ptolemaios nechal zavraždit římského generála a politika Pompeia Velkého, jen co přistál v Egyptě"
         ],
         "351": [
@@ -14109,13 +14109,13 @@
     "29 09": {
       "header": "Svátek má **Michal**",
       "events": {
-        "522 př. n. l.": [
+        "-522": [
           "Dareios I. při ozbrojeném převratu zabil mága a vládce Gaumátu a stal se velkokrálem perské říše."
         ],
-        "480 př. n. l.": [
+        "-480": [
           "Řecká flotila Themistokla porazila Peršany, vedené králem Xerxem I., v námořní bitvě u Salamidy. Peršané ztratili 400 lodí"
         ],
-        "61 př. n. l.": [
+        "-61": [
           "Pompeius Veliký oslavil své třetí vítězství nad piráty a ukončení válek s pontským králem Mithridatem při svých 45. narozeninách"
         ],
         "885": [
@@ -14242,7 +14242,7 @@
     "01 10": {
       "header": "Svátek má **Igor**",
       "events": {
-        "331 př. n. l.": [
+        "-331": [
           "Makedonský král Alexandr Veliký porazil perského velkokrále Dareia III. v bitvě u Gaugamél, krátce poté byl korunován „králem Asie“."
         ],
         "1403": [
@@ -14488,7 +14488,7 @@
     "06 10": {
       "header": "Svátek má **Hanuš**",
       "events": {
-        "105 př. n. l.": [
+        "-105": [
           "Germáni v bitvě u Arausia drtivě porazili římskou armádu."
         ],
         "891": [
@@ -14578,7 +14578,7 @@
     "07 10": {
       "header": "Svátek má **Justýna**",
       "events": {
-        "3761 př. n. l.": [
+        "-3761": [
           "Začátek moderního židovského kalendáře."
         ],
         "1492": [
@@ -15207,7 +15207,7 @@
     "19 10": {
       "header": "Svátek má **Michaela**",
       "events": {
-        "202 př. n. l.": [
+        "-202": [
           "Bitva u Zamy, druhá punská válka končí porážkou Kartága."
         ],
         "1466": [
@@ -15292,7 +15292,7 @@
     "21 10": {
       "header": "Svátek má **Brigita**",
       "events": {
-        "63 př. n. l.": [
+        "-63": [
           "Římský filosof a republikánský politik Cicero přednesl slavnou řeč v senátě proti převratu vedenému Catilinou."
         ],
         "1520": [
@@ -15374,7 +15374,7 @@
     "23 10": {
       "header": "Svátek má **Teodora**",
       "events": {
-        "42 př. n. l.": [
+        "-42": [
           "Druhá bitva u Filipp - Brutova armáda je poražena armádou Marka Antonia a Oktaviána. Brutus spáchal sebevraždu."
         ],
         "1239": [
@@ -15664,7 +15664,7 @@
     "29 10": {
       "header": "Svátek má **Silvie**",
       "events": {
-        "539 př. n. l.": [
+        "-539": [
           "Kýros II. Veliký z Persie dobyl a obsadil bez boje Babylón. Osvobodil Židy a umožnil jim návrat domů."
         ],
         "312": [
@@ -17540,7 +17540,7 @@
     "18 12": {
       "header": "Svátek má **Miloslav**",
       "events": {
-        "218 př. n. l.": [
+        "-218": [
           "V bitvě u Trebie ve druhé punské válce porazili Kartaginci pod vedením Hannibala římskou armádu, které velel Tiberius Sempronius Longus."
         ],
         "1118": [
