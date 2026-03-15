@@ -3,23 +3,17 @@
     "01 01": {
       "header": "**ŠŤASTNÝ NOVÝ ROK \\o/**",
       "events": {
-        "660 př. n. l.": [
-          "Džimmu, legendární zakladatel císařské dynastie v Japonsku, nastoupil na trůn."
-        ],
-        "153 př. n. l.": [
-          "V římském konzulátním kalendáři se 1. leden stal začátkem roku. Do této doby rok začínal 1. březnem."
-        ],
-        "45 př. n. l.": [
-          "V Římské říši se začal používat juliánský kalendář, zavedený Juliem Caesarem."
-        ],
-        "404": [
-          "Poslední známé gladiátorské zápasy, předpokládá se, že jde o ty, během nichž rozlícení diváci ubili sv. Telemacha, který pronikl do arény, aby proti nim protestoval. Zápasy pak definitivně zakázal císař Honorius."
+        "1": [
+          "Test 2."
         ],
         "1001": [
           "Štěpán I. Svatý se stal prvním uherským králem."
         ],
         "1527": [
           "Chorvatská šlechta zvolila Ferdinanda I. Habsburského za svého krále."
+        ],
+        "153 př. n. l.": [
+          "V římském konzulátním kalendáři se 1. leden stal začátkem roku. Do této doby rok začínal 1. březnem."
         ],
         "1533": [
           "Anglický král Jindřich VIII. se oženil s Annou Boleynovou"
@@ -150,6 +144,15 @@
         ],
         "2023": [
           "Zavedení eura v Chorvatsku."
+        ],
+        "404": [
+          "Poslední známé gladiátorské zápasy, předpokládá se, že jde o ty, během nichž rozlícení diváci ubili sv. Telemacha, který pronikl do arény, aby proti nim protestoval. Zápasy pak definitivně zakázal císař Honorius."
+        ],
+        "45 př. n. l.": [
+          "V Římské říši se začal používat juliánský kalendář, zavedený Juliem Caesarem."
+        ],
+        "660 př. n. l.": [
+          "Džimmu, legendární zakladatel císařské dynastie v Japonsku, nastoupil na trůn."
         ]
       }
     },
