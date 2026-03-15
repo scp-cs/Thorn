@@ -21,6 +21,7 @@ internal static class Program
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Error)
+            .MinimumLevel.Override("System.Net.Http", LogEventLevel.Warning)
             .WriteTo.Console()
             .WriteTo.File("log/log.txt", rollingInterval: RollingInterval.Day)
             .CreateLogger();
@@ -51,7 +52,7 @@ internal static class Program
             config.LogLevel = LogSeverity.Info;
             config.UseCompiledLambda = true;
         });
-        
+
         builder.Services.AddHostedService<InteractionHandler>();
         builder.Services.AddHostedService<ReactionHandler>();
 
@@ -60,6 +61,12 @@ internal static class Program
 
         builder.Services.AddSingleton<RssJob>();
         builder.Services.AddSingleton<DailyJob>();
+
+        builder.Services.AddHttpClient();
+        builder.Services.AddSingleton<ScuttleService>();
+
+        // useful for debugging :)
+        // var tenSecSchedule = CronScheduleBuilder.CronSchedule("*/10 * * * * ?");
 
         builder.Services.AddQuartz(configure =>
         {

@@ -9,4 +9,4 @@ backup/
 .vscode/
 scripts/
 log/
-github-app.pem
+*.pem
