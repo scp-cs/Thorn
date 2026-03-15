@@ -19,12 +19,12 @@ namespace thorn.Jobs;
 
 public class RssJob : IJob
 {
-    private readonly ILogger<ReminderJob> _logger;
+    private readonly ILogger<RssJob> _logger;
     private readonly List<FeedConfig> _configs;
     private readonly Dictionary<ulong, SocketTextChannel> _channels;
     private Dictionary<FeedConfig, DateTime?> _lastUpdates;
 
-    public RssJob(ILogger<ReminderJob> logger, DiscordSocketClient client)
+    public RssJob(ILogger<RssJob> logger, DiscordSocketClient client)
     {
         _logger = logger;
         _channels = new Dictionary<ulong, SocketTextChannel>();
