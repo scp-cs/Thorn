@@ -78,12 +78,16 @@ public class RssJob : IJob
 
         _lastUpdates[feedConfig] = feed.LastUpdatedDate;
 
-        return feedConfig.Filter is null
-            ? feed.Items.Where(x => x.PublishingDate > lastUpdate && 
-                                    (feedConfig.FilterIgnore is null || !feedConfig.FilterIgnore.Any(x.Title.Contains))).ToList()
-            : feed.Items.Where(x => x.PublishingDate > lastUpdate && 
-                                    feedConfig.Filter.Any(x.Title.Contains) && 
-                                    (feedConfig.FilterIgnore is null || !feedConfig.FilterIgnore.Any(x.Title.Contains))).ToList();
+        var newItems = feed.Items.Where(x => x.PublishingDate > lastUpdate);
+
+        if (feedConfig.Filter is not null)
+            newItems = newItems.Where(x => feedConfig.Filter.Any(f => x.Title.Contains(f)));
+
+        if (feedConfig.FilterIgnore is not null)
+            newItems = newItems.Where(x => !feedConfig.FilterIgnore.Any(f =>
+                x.Title.Contains(f) || (x.Link?.Contains(f) ?? false)));
+
+        return newItems.ToList();
     }
 
     private Embed GetEmbed(FeedItem feedItem, FeedConfig feedConfig)
