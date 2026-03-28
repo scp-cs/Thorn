@@ -29,7 +29,6 @@ internal static class Program
         var builder = Host.CreateApplicationBuilder();
 
         builder.Configuration.AddJsonFile("Config/config.json");
-        builder.Configuration.AddJsonFile("Config/daily.json");
 
         builder.Logging.ClearProviders();
         builder.Logging.AddSerilog();
@@ -57,8 +56,11 @@ internal static class Program
         builder.Services.AddHostedService<InteractionHandler>();
         builder.Services.AddHostedService<ReactionHandler>();
 
+        builder.Services.AddSingleton<GitHubService>();
+        builder.Services.AddSingleton<DailyService>();
+
         builder.Services.AddSingleton<RssJob>();
-        builder.Services.AddSingleton<ReminderJob>();
+        builder.Services.AddSingleton<DailyJob>();
 
         builder.Services.AddHttpClient();
         builder.Services.AddSingleton<ScuttleService>();
@@ -74,8 +76,8 @@ internal static class Program
                 .AddTrigger(t => t.ForJob(rssJob).WithSchedule(twoMinSchedule));
 
             var dailySchedule = CronScheduleBuilder.CronSchedule("0 0 0 * * ?");
-            var reminderJob = new JobKey(nameof(ReminderJob));
-            configure.AddJob<ReminderJob>(reminderJob)
+            var reminderJob = new JobKey(nameof(DailyJob));
+            configure.AddJob<DailyJob>(reminderJob)
                 .AddTrigger(t => t.ForJob(reminderJob).WithSchedule(dailySchedule));
         });
         builder.Services.AddQuartzHostedService();
