@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Interactions;
@@ -10,23 +9,18 @@ namespace thorn.Modules;
 
 public enum Help
 {
-    [ChoiceDisplay("Připojení na stránku")]
-    Join,
+    [ChoiceDisplay("Připojení na stránku")] Join,
     [ChoiceDisplay("Překlad")] Translate,
     [ChoiceDisplay("Psaní")] Write,
-    [ChoiceDisplay("Korekce")] Correction
+    [ChoiceDisplay("Korekce")] Correction,
 }
 
-public class UserInteractionModule(IConfiguration config, ScuttleService scuttleService)
-    : InteractionModuleBase<SocketInteractionContext>
+public class UserInteractionModule(IConfiguration config, ScuttleService scuttleService) : InteractionModuleBase<SocketInteractionContext>
 {
     private readonly Random _random = new();
-
+    
     [SlashCommand("ping", "pong!")]
-    public async Task Ping()
-    {
-        await RespondAsync("pong!");
-    }
+    public async Task Ping() => await RespondAsync("pong!");
 
     [SlashCommand("pomoc", "Pomoc s překládáním, psaním, korekcí a připojením na stránku.")]
     public async Task Help([Summary("téma", "o čem zobrazit pomoc?")] Help choice)
@@ -71,9 +65,9 @@ public class UserInteractionModule(IConfiguration config, ScuttleService scuttle
         var len = _random.Next(15);
         await RespondAsync($"{Context.User.Mention} tvůj pele: `8{new string('=', len)}D`");
     }
-
+    
     [SlashCommand("waifu", "how waifu?")]
-    public async Task Waifu([Summary("uživatel", "jaký uživatel bude waifu?")] IUser user = null)
+    public async Task Waifu([Summary("uživatel", "jaký uživatel bude waifu?")] IUser user=null)
     {
         if (user == Context.Client.CurrentUser)
             await RespondAsync("já jsem ta nejlepší waifu :3");
@@ -113,33 +107,15 @@ public class UserInteractionModule(IConfiguration config, ScuttleService scuttle
         var embed = new EmbedBuilder
         {
             Title = scuttleUser.Nickname,
-            Description =
-                $"[Profil na SCUTTLE](https://scuttle.scp-wiki.cz/user/{scuttleUser.Id})\nCelkově bodů: {points}",
+            Description = $"[Profil na SCUTTLE](https://scuttle.scp-wiki.cz/user/{scuttleUser.Id})\nCelkově bodů: {points}",
             Color = new Color(127, 131, 142),
-            ThumbnailUrl = user.GetAvatarUrl()
+            ThumbnailUrl = user.GetAvatarUrl(),
         };
 
-        embed.AddField("Originály", scuttleUser.OrigCount, true);
-        embed.AddField("Překlady", scuttleUser.TrCount, true);
-        embed.AddField("Korekce", scuttleUser.CrCount, true);
+        embed.AddField("Originály", scuttleUser.OrigCount, inline: true);
+        embed.AddField("Překlady", scuttleUser.TrCount, inline: true);
+        embed.AddField("Korekce", scuttleUser.CrCount, inline: true);
 
         await RespondAsync(embed: embed.Build());
-    }
-
-    [SlashCommand("kůň", "Přidá reakci koně na poslední zprávu vybraného uživatele")]
-    public async Task AddHorseReact([Summary("uživatel")] IUser targetUser)
-    {
-        await DeferAsync(true);
-        var messages = await Context.Channel.GetMessagesAsync(10).FlattenAsync();
-        var targetMessage = messages.FirstOrDefault(m => m.Author.Id == targetUser.Id) as IUserMessage;
-        if (targetMessage == null)
-        {
-            await FollowupAsync($"V posledních 10 zprávách nebyla nalezena žádná zpráva od {targetUser.Mention}.",
-                ephemeral: true);
-            return;
-        }
-
-        await targetMessage.AddReactionAsync(new Emoji("🐴"));
-        await FollowupAsync("🐴", ephemeral: true);
     }
 }
