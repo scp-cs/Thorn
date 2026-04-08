@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -20,17 +21,13 @@ public class InteractionHandler(
     : DiscordClientService(client, logger)
 {
     private readonly Random _random = new();
-    
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
         await handler.AddModulesAsync(Assembly.GetEntryAssembly(), provider);
-        
         Client.InteractionCreated += HandleInteraction;
         handler.InteractionExecuted += HandleExecuted;
         Client.MessageReceived += HandleMessage;
-        
         await Client.WaitForReadyAsync(cancellationToken);
-        
         await handler.RegisterCommandsGloballyAsync();
     }
 
@@ -51,7 +48,6 @@ public class InteractionHandler(
         var context = new SocketInteractionContext(Client, interaction);
         await handler.ExecuteCommandAsync(context, provider);
     }
-    
     private async Task HahaFunni(SocketMessage m)
     {
         if (m.Content.Equals("good bot", StringComparison.InvariantCultureIgnoreCase))
@@ -73,8 +69,16 @@ public class InteractionHandler(
 
         else if (Regex.IsMatch(m.Content, @":3"))
             await m.Channel.SendMessageAsync(":33");
-        
         else if (Regex.IsMatch(m.Content, @"amo[n]?g(\s?us|)"))
             await m.Channel.SendMessageAsync("ඞ");
+        else if (Regex.IsMatch(m.Content, @"(?i)\b(?:thorne?[,\s]+)?horse\s+(?:reacts?\s+)?(?:this user|that user|the user|him|her|them)\b"))
+        {
+            var target = m.Reference?.MessageId.IsSpecified == true
+                ? await m.Channel.GetMessageAsync(m.Reference.MessageId.Value)
+                : (await m.Channel.GetMessagesAsync(m.Id, Direction.Before, 1).FlattenAsync()).FirstOrDefault();
+
+            if (target is IUserMessage userMessage)
+                await userMessage.AddReactionAsync(new Emoji("🐴"));
+        }
     }
 }
