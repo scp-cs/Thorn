@@ -73,11 +73,12 @@ public class InteractionHandler(
             await m.Channel.SendMessageAsync("ඞ");
         else if (Regex.IsMatch(m.Content, @"(?i)\b(?:thorne?[,\s]+)?horse\s+(?:reacts?\s+)?(?:this user|that user|the user|him|her|them)\b"))
         {
-            var messages = await m.Channel.GetMessagesAsync(m.Id, Direction.Before, 1).FlattenAsync();
-            if (messages.FirstOrDefault() is IUserMessage previousMessage)
-            {
-                await previousMessage.AddReactionAsync(new Emoji("🐴"));
-            }
+            var target = m.Reference?.MessageId.IsSpecified == true
+                ? await m.Channel.GetMessageAsync(m.Reference.MessageId.Value)
+                : (await m.Channel.GetMessagesAsync(m.Id, Direction.Before, 1).FlattenAsync()).FirstOrDefault();
+
+            if (target is IUserMessage userMessage)
+                await userMessage.AddReactionAsync(new Emoji("🐴"));
         }
     }
 }
