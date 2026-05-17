@@ -68,10 +68,10 @@ internal static class Program
 
         builder.Services.AddQuartz(configure =>
         {
-            var twoMinSchedule = CronScheduleBuilder.CronSchedule("0 */2 * ? * *");
+            var tenMinSchedule = CronScheduleBuilder.CronSchedule("0 */10 * ? * *");
             var rssJob = new JobKey(nameof(RssJob));
             configure.AddJob<RssJob>(rssJob)
-                .AddTrigger(t => t.ForJob(rssJob).WithSchedule(twoMinSchedule));
+                .AddTrigger(t => t.ForJob(rssJob).WithSchedule(tenMinSchedule));
 
             var dailySchedule = CronScheduleBuilder.CronSchedule("0 0 0 * * ?");
             var reminderJob = new JobKey(nameof(ReminderJob));
