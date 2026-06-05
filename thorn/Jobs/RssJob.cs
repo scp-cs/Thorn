@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -10,6 +12,7 @@ using CodeHollow.FeedReader;
 using Discord;
 using Discord.WebSocket;
 using Html2Markdown;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Quartz;
@@ -17,18 +20,24 @@ using thorn.Config;
 
 namespace thorn.Jobs;
 
-public class RssJob : IJob
+[DisallowConcurrentExecution] // there is shared state in this object
+public partial class RssJob : IJob
 {
+    public const int DefaultDelaySeconds = 10800;
+    public const string FeedIndexKey = "feedIndex";
+
     private readonly ILogger<ReminderJob> _logger;
     private readonly List<FeedConfig> _configs;
     private readonly Dictionary<ulong, SocketTextChannel> _channels;
-    private Dictionary<FeedConfig, DateTime?> _lastUpdates;
+    private readonly HttpClient _httpClient;
+    private readonly Dictionary<FeedConfig, DateTime?> _lastUpdates;
 
-    public RssJob(ILogger<ReminderJob> logger, DiscordSocketClient client)
+    public RssJob(ILogger<ReminderJob> logger, DiscordSocketClient client, IConfiguration configuration)
     {
         _logger = logger;
         _channels = new Dictionary<ulong, SocketTextChannel>();
         _lastUpdates = new Dictionary<FeedConfig, DateTime?>();
+        _httpClient = BuildHttpClient(configuration["rssProxy"]);
 
         _configs = JsonConvert.DeserializeObject<List<FeedConfig>>(File.ReadAllText("Config/feeds.json"));
 
@@ -43,28 +52,61 @@ public class RssJob : IJob
             _lastUpdates.Add(feedConfig, null);
     }
 
+    private HttpClient BuildHttpClient(string proxy)
+    {
+        if (string.IsNullOrWhiteSpace(proxy))
+        {
+            _logger.LogInformation("RSS proxy not configured");
+            return new HttpClient { Timeout = TimeSpan.FromSeconds(10) };
+        }
+
+        _logger.LogInformation("RSS routed through proxy {Proxy}", proxy);
+        var handler = new SocketsHttpHandler
+        {
+            Proxy = new WebProxy(proxy),
+            UseProxy = true
+        };
+        return new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(10) };
+    }
+
     public async Task Execute(IJobExecutionContext context)
     {
-        foreach (var config in _configs)
+        var index = context.MergedJobDataMap.GetInt(FeedIndexKey);
+        if (index < 0 || index >= _configs.Count)
         {
-            var newItems = await GetNewItems(config);
-            if (newItems is null) continue;
+            _logger.LogError("RssJob fired with out-of-range feed index {Index}", index);
+            return;
+        }
 
-            foreach (var feedItem in newItems)
-            foreach (var channelId in config.ChannelIds)
-            {
-                var channel = _channels[channelId];
-                if (channel is null) continue;
+        var config = _configs[index];
+        var newItems = await GetNewItems(config);
+        if (newItems is null) return;
 
-                await channel.SendMessageAsync(embed: GetEmbed(feedItem, config));
-                _logger.LogInformation("Sent RSS feed '{Title}' to #{Channel}", feedItem.Title, channel);
-            }
+        foreach (var feedItem in newItems)
+        foreach (var channelId in config.ChannelIds)
+        {
+            var channel = _channels[channelId];
+            if (channel is null) continue;
+
+            await channel.SendMessageAsync(embed: GetEmbed(feedItem, config));
+            _logger.LogInformation("Sent RSS feed '{Title}' to #{Channel}", feedItem.Title, channel);
         }
     }
 
     private async Task<List<FeedItem>> GetNewItems(FeedConfig feedConfig)
     {
-        var feed = await FeedReader.ReadAsync(feedConfig.Link);
+        Feed feed;
+        try
+        {
+            var content = await _httpClient.GetStringAsync(feedConfig.Link);
+            feed = FeedReader.ReadFromString(content);
+        }
+        catch (Exception e)
+        {
+            _logger.LogWarning(e, "Failed to fetch RSS feed {Link}", feedConfig.Link);
+            return null;
+        }
+
         var lastUpdate = _lastUpdates[feedConfig];
 
         if (lastUpdate is null)
@@ -122,7 +164,7 @@ public class RssJob : IJob
 
     private Embed GetAnnouncementEmbed(FeedItem feedItem, FeedConfig feedConfig, string text)
     {
-        var title = Regex.Match(feedItem.Title, "\"(.*)\" - .*").Groups[1].Value;
+        var title = GetTitle(feedItem.Title);
         var author = GetUsername(text);
         var description = new StringBuilder("Nový článek na wiki! Yay! \\o/\n");
 
@@ -142,8 +184,12 @@ public class RssJob : IJob
         }.Build();
     }
 
-    private string GetUsername(string source)
-    {
-        return Regex.Match(source, "user:info\\/([^)]*)").Groups[1].Value;
-    }
+    private string GetTitle(string source) => TitleRegex().Match(source).Groups[1].Value;
+    private string GetUsername(string source) => UsernameRegex().Match(source).Groups[1].Value;
+
+    [GeneratedRegex("user:info\\/([^)]*)")]
+    private static partial Regex UsernameRegex();
+    
+    [GeneratedRegex("\"(.*)\" - .*")]
+    private static partial Regex TitleRegex();
 }

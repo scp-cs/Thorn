@@ -1,5 +1,6 @@
 {
   "token": "YOUR-TOKEN",
+  "rssProxy": "socks5://10.64.0.1:1080",
   "helpText": {
     "translate": "[Návod pro Překladatele](<http://scp-cs.wikidot.com/guide-for-translators>)\n[Rychlý Start pro Překladatele](<http://scp-cs.wikidot.com/translator-quickstart>)\n[Potřebné Překlady](<http://scp-cs.wikidot.com/translation-requests>)\n[Překladatelské Stránky](<http://scp-cs.wikidot.com/translators-pages>)",
     "write": "[Jak napsat SCP](<http://scp-cs.wikidot.com/how-to-write-an-scp>)\n[Pravidla Kritizování](<http://scp-cs.wikidot.com/criticism-policy>)\n[Autorské Stránky](<http://scp-cs.wikidot.com/authors-pages>)",
