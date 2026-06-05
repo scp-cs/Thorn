@@ -9,4 +9,5 @@ public class FeedConfig
     public string CustomDescription { get; set; }
     public bool NewPageAnnouncement { get; set; }
     public uint EmbedColor { get; set; }
+    public int Delay { get; set; }
 }

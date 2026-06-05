@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using Discord;
 using Discord.Addons.Hosting;
 using Discord.WebSocket;
@@ -6,9 +9,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Quartz;
 using Serilog;
 using Serilog.Events;
+using thorn.Config;
 using thorn.Jobs;
 using thorn.Services;
 
@@ -68,10 +73,22 @@ internal static class Program
 
         builder.Services.AddQuartz(configure =>
         {
-            var tenMinSchedule = CronScheduleBuilder.CronSchedule("0 */10 * ? * *");
+            var feeds = JsonConvert.DeserializeObject<List<FeedConfig>>(File.ReadAllText("Config/feeds.json"));
             var rssJob = new JobKey(nameof(RssJob));
-            configure.AddJob<RssJob>(rssJob)
-                .AddTrigger(t => t.ForJob(rssJob).WithSchedule(tenMinSchedule));
+            configure.AddJob<RssJob>(rssJob);
+
+            // create a trigger for each feed
+            for (var i = 0; i < feeds.Count; i++)
+            {
+                var index = i;
+                var delay = feeds[i].Delay > 0 ? feeds[i].Delay : RssJob.DefaultDelaySeconds;
+                var startAt = DateTimeOffset.UtcNow.AddSeconds(5 + index * 5);
+                configure.AddTrigger(t => t
+                    .ForJob(rssJob)
+                    .UsingJobData(RssJob.FeedIndexKey, index)
+                    .StartAt(startAt)
+                    .WithSimpleSchedule(s => s.WithIntervalInSeconds(delay).RepeatForever()));
+            }
 
             var dailySchedule = CronScheduleBuilder.CronSchedule("0 0 0 * * ?");
             var reminderJob = new JobKey(nameof(ReminderJob));

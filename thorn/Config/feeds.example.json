@@ -5,14 +5,16 @@
     "Filter": ["nová stránka"],
     "FilterIgnore": ["fragment:"],
     "EmbedColor": 16711680,
-    "NewPageAnnouncement": true
+    "NewPageAnnouncement": true,
+    "Delay": 120
   },
 
   {
     "Link": "http://scp-cs.wikidot.com/feed/site-changes.xml",
     "ChannelIds": [710575651664429127],
     "EmbedColor": 16711680,
-    "NewPageAnnouncement": false
+    "NewPageAnnouncement": false,
+    "Delay": 120
   },
   {
     "Link": "http://o5command-cs.wikidot.com/feed/site-changes.xml",
@@ -25,21 +27,24 @@
     "ChannelIds": [710575651664429127],
     "Filter": ["nová stránka"],
     "EmbedColor": 3329330,
-    "NewPageAnnouncement": false
+    "NewPageAnnouncement": false,
+    "Delay": 300
   },
   {
     "Link": "http://scp-cs-sandbox-2.wikidot.com/feed/site-changes.xml",
     "ChannelIds": [710575651664429127],
     "Filter": ["nová stránka"],
     "EmbedColor": 3329330,
-    "NewPageAnnouncement": false
+    "NewPageAnnouncement": false,
+    "Delay": 300
   },
   {
     "Link": "http://scp-cs-sandbox-3.wikidot.com/feed/site-changes.xml",
     "ChannelIds": [710575651664429127],
     "Filter": ["nová stránka"],
     "EmbedColor": 3329330,
-    "NewPageAnnouncement": false
+    "NewPageAnnouncement": false,
+    "Delay": 300
   },
   {
     "Link": "http://scp-cs.wikidot.com/feed/forum/threads.xml",
