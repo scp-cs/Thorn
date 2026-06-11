@@ -45,8 +45,10 @@ internal static class Program
             {
                 LogLevel = LogSeverity.Info,
                 MessageCacheSize = 50,
+                AlwaysDownloadUsers = true,
                 GatewayIntents = GatewayIntents.MessageContent | GatewayIntents.Guilds | GatewayIntents.GuildMessages |
-                                 GatewayIntents.GuildMessageReactions
+                                 GatewayIntents.GuildMessageReactions | GatewayIntents.GuildMembers |
+                                 GatewayIntents.GuildBans
             };
 
             config.Token = builder.Configuration["token"]!;
@@ -61,6 +63,7 @@ internal static class Program
 
         builder.Services.AddHostedService<InteractionHandler>();
         builder.Services.AddHostedService<ReactionHandler>();
+        builder.Services.AddHostedService<AdminLogService>();
 
         builder.Services.AddSingleton<RssJob>();
         builder.Services.AddSingleton<ReminderJob>();
