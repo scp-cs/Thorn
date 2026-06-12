@@ -18,7 +18,7 @@ public class AdminLogService(DiscordSocketClient client, IConfiguration config, 
     private readonly DiscordSocketClient _client = client;
 
     private readonly ulong _consoleChannelId = ulong.Parse(
-        config["channels:adminConsole"] ?? throw new Exception("AdminConsole channel is not configured"), NumberStyles.Any);
+        config["channels:console"] ?? throw new Exception("Console channel is not configured"), NumberStyles.Any);
     
     private static readonly TimeSpan AuditLookback = TimeSpan.FromSeconds(15);
 
