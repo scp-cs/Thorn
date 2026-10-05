@@ -10,3 +10,4 @@ backup/
 scripts/
 log/
 *.pem
+deploy.sh

@@ -67,6 +67,7 @@ internal static class Program
 
         builder.Services.AddSingleton<RssJob>();
         builder.Services.AddSingleton<ReminderJob>();
+        builder.Services.AddSingleton<AssArticlesJob>();
 
         builder.Services.AddHttpClient();
         builder.Services.AddSingleton<ScuttleService>();
@@ -97,6 +98,13 @@ internal static class Program
             var reminderJob = new JobKey(nameof(ReminderJob));
             configure.AddJob<ReminderJob>(reminderJob)
                 .AddTrigger(t => t.ForJob(reminderJob).WithSchedule(dailySchedule));
+
+            var assArticlesJob = new JobKey(nameof(AssArticlesJob));
+            configure.AddJob<AssArticlesJob>(assArticlesJob)
+                .AddTrigger(t => t
+                    .ForJob(assArticlesJob)
+                    .StartAt(DateTimeOffset.UtcNow.AddSeconds(10))
+                    .WithSimpleSchedule(s => s.WithIntervalInSeconds(AssArticlesJob.IntervalSeconds).RepeatForever()));
         });
         builder.Services.AddQuartzHostedService();
 
