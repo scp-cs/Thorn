@@ -27,17 +27,17 @@ public class AssArticlesJob : IJob
             url: { startsWith: "http://scp-cs.wikidot.com" }
             wikidotInfo: { rating: { lte: -3 } }
           }) {
-            edges { node { url wikidotInfo { title rating } } }
+            edges { node { url wikidotInfo { title rating tags} } }
           }
         }
         """;
-    
+
     private static readonly TimeSpan HighlightAfter = TimeSpan.FromHours(23.5);
 
     private readonly ILogger<AssArticlesJob> _logger;
     private readonly IHttpClientFactory _httpFactory;
     private readonly SocketTextChannel _channel;
-    
+
     private readonly Dictionary<string, DateTimeOffset> _firstSeen = new();
 
     public AssArticlesJob(ILogger<AssArticlesJob> logger, IHttpClientFactory httpFactory, DiscordSocketClient client,
@@ -62,7 +62,7 @@ public class AssArticlesJob : IJob
             _logger.LogWarning(e, "Failed to fetch low rated pages");
             return;
         }
-        
+
         if (pages.Count == 0)
             return;
 
@@ -111,6 +111,7 @@ public class AssArticlesJob : IJob
         return edges
             .Select(e => e["node"])
             .Where(n => n?["wikidotInfo"]?.Type == JTokenType.Object)
+            .Where(n => n!["wikidotInfo"]!["tags"] is not JArray tags || tags.All(t => (string)t != "admin")) // Odfiltrovat články co mají mezi tagy "admin", protože admini chyby nedělají (doslova 1984)
             .Select(n => ((string)n!["url"]!, (string)n["wikidotInfo"]!["title"] ?? (string)n["url"]!,
                 (int)n["wikidotInfo"]!["rating"]!))
             .Where(n => n.Item1 != "http://scp-cs.wikidot.com/rip-jozin-z-bazin") // lol
