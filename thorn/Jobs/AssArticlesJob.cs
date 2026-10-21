@@ -24,10 +24,15 @@ public class AssArticlesJob : IJob
     private const string Query = """
         query assArticles {
           pages(filter: {
-            url: { startsWith: "http://scp-cs.wikidot.com" }
-            wikidotInfo: { rating: { lte: -3 } }
+            _and: [
+              { url: { startsWith: "http://scp-cs.wikidot.com" } }
+              { wikidotInfo: { rating: { lte: -3 } } }
+              { _not: { wikidotInfo: { tags: { eq: "admin" } } } } # Odfiltrovat články co mají mezi tagy "admin",
+                                                                   # protože admini chyby nedělají (doslova 1984)
+              { _not: { url: { eq: "http://scp-cs.wikidot.com/rip-jozin-z-bazin" } } } # lol
+            ]
           }) {
-            edges { node { url wikidotInfo { title rating tags} } }
+            edges { node { url wikidotInfo { title rating } } }
           }
         }
         """;
@@ -111,10 +116,8 @@ public class AssArticlesJob : IJob
         return edges
             .Select(e => e["node"])
             .Where(n => n?["wikidotInfo"]?.Type == JTokenType.Object)
-            .Where(n => n!["wikidotInfo"]!["tags"] is not JArray tags || tags.All(t => (string)t != "admin")) // Odfiltrovat články co mají mezi tagy "admin", protože admini chyby nedělají (doslova 1984)
             .Select(n => ((string)n!["url"]!, (string)n["wikidotInfo"]!["title"] ?? (string)n["url"]!,
                 (int)n["wikidotInfo"]!["rating"]!))
-            .Where(n => n.Item1 != "http://scp-cs.wikidot.com/rip-jozin-z-bazin") // lol
             .ToList();
     }
 }
