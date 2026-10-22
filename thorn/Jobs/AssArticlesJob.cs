@@ -24,20 +24,25 @@ public class AssArticlesJob : IJob
     private const string Query = """
         query assArticles {
           pages(filter: {
-            url: { startsWith: "http://scp-cs.wikidot.com" }
-            wikidotInfo: { rating: { lte: -3 } }
+            _and: [
+              { url: { startsWith: "http://scp-cs.wikidot.com" } }
+              { wikidotInfo: { rating: { lte: -3 } } }
+              { _not: { wikidotInfo: { tags: { eq: "admin" } } } } # Odfiltrovat články co mají mezi tagy "admin",
+                                                                   # protože admini chyby nedělají (doslova 1984)
+              { _not: { url: { eq: "http://scp-cs.wikidot.com/rip-jozin-z-bazin" } } } # lol
+            ]
           }) {
             edges { node { url wikidotInfo { title rating } } }
           }
         }
         """;
-    
+
     private static readonly TimeSpan HighlightAfter = TimeSpan.FromHours(23.5);
 
     private readonly ILogger<AssArticlesJob> _logger;
     private readonly IHttpClientFactory _httpFactory;
     private readonly SocketTextChannel _channel;
-    
+
     private readonly Dictionary<string, DateTimeOffset> _firstSeen = new();
 
     public AssArticlesJob(ILogger<AssArticlesJob> logger, IHttpClientFactory httpFactory, DiscordSocketClient client,
@@ -62,7 +67,7 @@ public class AssArticlesJob : IJob
             _logger.LogWarning(e, "Failed to fetch low rated pages");
             return;
         }
-        
+
         if (pages.Count == 0)
             return;
 
@@ -113,7 +118,6 @@ public class AssArticlesJob : IJob
             .Where(n => n?["wikidotInfo"]?.Type == JTokenType.Object)
             .Select(n => ((string)n!["url"]!, (string)n["wikidotInfo"]!["title"] ?? (string)n["url"]!,
                 (int)n["wikidotInfo"]!["rating"]!))
-            .Where(n => n.Item1 != "http://scp-cs.wikidot.com/rip-jozin-z-bazin") // lol
             .ToList();
     }
 }
